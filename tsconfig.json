@@ -15,7 +15,7 @@
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "jsx": "react-jsx", // changed from "preserve" to "react-jsx"
+    "jsx": "preserve", // changed from "preserve" to "react-jsx"
     "incremental": true,
     "tsBuildInfoFile": ".tsbuildinfo"
   },
