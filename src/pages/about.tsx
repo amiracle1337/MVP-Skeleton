@@ -1,6 +1,7 @@
 import React from "react"
+import { BlitzPage } from "@blitzjs/next"
 
-export const AboutPage = () => {
+const AboutPage: BlitzPage = () => {
   return (
     <div>
       <h1>about</h1>
