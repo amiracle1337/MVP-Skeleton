@@ -1,15 +1,21 @@
 import Head from "next/head"
 import React from "react"
-import { BlitzLayout } from "@blitzjs/next"
+import { BlitzLayout, Routes } from "@blitzjs/next"
 import { Suspense } from "react"
-import { Group, Flex, Text, Center } from "@mantine/core"
+import { Group, Flex, Text, Center, Anchor, Button, Loader } from "@mantine/core"
 import { AppShell } from "@mantine/core"
+import Link from "next/link"
+import logout from "src/features/auth/mutations/logout"
+import { useMutation } from "@blitzjs/rpc"
+import { useCurrentUser } from "src/features/users/hooks/useCurrentUser"
 
 const Layout: BlitzLayout<{ title?: string; children?: React.ReactNode }> = ({
   title,
   children,
 }) => {
   const thisYear = new Date().getFullYear()
+  const [logoutMutation] = useMutation(logout)
+  const user = useCurrentUser()
 
   return (
     <>
@@ -27,13 +33,36 @@ const Layout: BlitzLayout<{ title?: string; children?: React.ReactNode }> = ({
       >
         <AppShell.Header
           p={"10px"}
-          style={{ height: 45, display: "flex", alignItems: "center", justifyContent: "left" }}
+          style={{
+            height: 55,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+          }}
         >
-          <div>Eventio</div>
+          <Anchor
+            style={{ textDecoration: "none" }}
+            c="gray.7"
+            component={Link}
+            href={Routes.Home()}
+          >
+            Nova
+          </Anchor>
+          {user && (
+            <Button
+              size="xs"
+              variant="light"
+              onClick={async () => {
+                await logoutMutation()
+              }}
+            >
+              Logout
+            </Button>
+          )}
         </AppShell.Header>
 
         <AppShell.Main>
-          <Suspense fallback="Loading...">
+          <Suspense fallback={<Loader />}>
             <Group> {children}</Group>
           </Suspense>
         </AppShell.Main>
