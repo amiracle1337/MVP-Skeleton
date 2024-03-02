@@ -6,6 +6,7 @@ import { useMutation, useQuery } from "@blitzjs/rpc"
 import getTodos from "src/features/todos /queries/getTodos"
 import { Suspense } from "react"
 import addTodo from "src/features/todos /mutations/addTodo"
+import { notifications } from "@mantine/notifications"
 
 const Todos = () => {
   const [todos] = useQuery(getTodos, {
@@ -13,8 +14,11 @@ const Todos = () => {
   })
 
   const [addTodoMutation] = useMutation(addTodo, {
-    onSuccess: () => {
-      console.log("success")
+    onSuccess: (result) => {
+      notifications.show({
+        title: "You rock! 🎉",
+        message: result,
+      })
     },
   })
 

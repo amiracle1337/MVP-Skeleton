@@ -6,11 +6,14 @@ import "src/styles/globals.css"
 import { Suspense } from "react"
 import { MantineProvider } from "@mantine/core"
 import "@mantine/core/styles.css"
+import { Notifications } from "@mantine/notifications"
+import "@mantine/notifications/styles.css"
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <ErrorBoundary FallbackComponent={RootErrorFallback}>
       <MantineProvider defaultColorScheme={"light"} withCssVariables={true}>
+        <Notifications />
         <Suspense fallback="Loading...">
           <Component {...pageProps} />
         </Suspense>
