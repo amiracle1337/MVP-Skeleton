@@ -13,7 +13,7 @@ const Todos = () => {
     search: "12312",
   })
 
-  const [addTodoMutation] = useMutation(addTodo, {
+  const [$addTodo] = useMutation(addTodo, {
     onSuccess: (result) => {
       notifications.show({
         title: "You rock! 🎉",
@@ -26,7 +26,7 @@ const Todos = () => {
     <Stack>
       <Button
         onClick={() => {
-          addTodoMutation({ todoTitle: "new todo" })
+          $addTodo({ todoTitle: "new todo" })
         }}
       >
         Add todo
