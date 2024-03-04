@@ -90,6 +90,7 @@ export function AuthenticationForm(props: PaperProps) {
         <Stack>
           {type === "register" && (
             <TextInput
+              required
               label="Name"
               placeholder="Your name"
               {...form.getInputProps("name")}

@@ -1,14 +1,29 @@
 import { AuthClientPlugin } from "@blitzjs/auth"
 import { setupBlitzClient } from "@blitzjs/next"
-import { BlitzRpcPlugin } from "@blitzjs/rpc"
+import { BlitzRpcPlugin, getQueryClient } from "@blitzjs/rpc"
 
 export const authConfig = {
-  cookiePrefix: "evApp"
+  cookiePrefix: "evApp",
 }
-
 export const { withBlitz } = setupBlitzClient({
   plugins: [
     AuthClientPlugin(authConfig),
-    BlitzRpcPlugin({}),
+    BlitzRpcPlugin({
+      // optional
+      reactQueryOptions: {
+        queries: {
+          retry: 2,
+        },
+        // the magical lines:
+        mutations: {
+          // N.B. this will be overridden in case you
+          // define onSuccess() inside your `useMutation` options
+          onSuccess: async () => {
+            const queryClient = getQueryClient()
+            await queryClient.invalidateQueries()
+          },
+        },
+      },
+    }),
   ],
 })

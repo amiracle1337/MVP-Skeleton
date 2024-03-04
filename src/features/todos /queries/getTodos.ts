@@ -11,6 +11,9 @@ export default resolver.pipe(
   resolver.authorize(),
   async ({}, { session: { userId } }) => {
     const todos = await db.todo.findMany({
+      orderBy: {
+        createdAt: "asc",
+      },
       where: {
         userId: userId,
       },

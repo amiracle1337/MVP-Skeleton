@@ -49,15 +49,18 @@ const Layout: BlitzLayout<{ title?: string; children?: React.ReactNode }> = ({
             Nova
           </Anchor>
           {user && (
-            <Button
-              size="xs"
-              variant="light"
-              onClick={async () => {
-                await logoutMutation()
-              }}
-            >
-              Logout
-            </Button>
+            <Group>
+              <Text c="gray.7">{user.name}</Text>
+              <Button
+                size="xs"
+                variant="light"
+                onClick={async () => {
+                  await logoutMutation()
+                }}
+              >
+                Logout
+              </Button>
+            </Group>
           )}
         </AppShell.Header>
 
