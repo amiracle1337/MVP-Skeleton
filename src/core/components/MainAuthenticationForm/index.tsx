@@ -68,9 +68,12 @@ export function AuthenticationForm(props: PaperProps) {
     }
   }
 
-  const onSubmit = (values) => {
-    if (type === "login") onLogin(values)
-    else onSignup(values)
+  const onSubmit = async (values) => {
+    if (type === "login") {
+      await onLogin(values).catch((e) => console.error(e))
+    } else {
+      await onSignup(values).catch((e) => console.error(e))
+    }
   }
 
   return (
