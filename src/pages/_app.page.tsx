@@ -4,7 +4,7 @@ import { withBlitz } from "src/blitz-client"
 import { RootErrorFallback } from "src/core/components/RootErrorFallback"
 import "src/styles/globals.css"
 import { Suspense } from "react"
-import { MantineProvider } from "@mantine/core"
+import { Loader, MantineProvider } from "@mantine/core"
 import "@mantine/core/styles.css"
 import { Notifications } from "@mantine/notifications"
 import "@mantine/notifications/styles.css"
@@ -14,7 +14,7 @@ function MyApp({ Component, pageProps }: AppProps) {
     <ErrorBoundary FallbackComponent={RootErrorFallback}>
       <MantineProvider defaultColorScheme={"light"} withCssVariables={true}>
         <Notifications />
-        <Suspense fallback="Loading...">
+        <Suspense fallback={<Loader />}>
           <Component {...pageProps} />
         </Suspense>
       </MantineProvider>

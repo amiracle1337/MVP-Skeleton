@@ -14,14 +14,15 @@ const Todos = () => {
   const [todoTitle, setTodoTitle] = useState("")
   const [todos] = useQuery(getTodos, {})
   console.log(todos)
-  const [$addTodo] = useMutation(addTodo, {})
+  const [$addTodo, { isLoading }] = useMutation(addTodo, {})
   const [$cleanCompleted] = useMutation(cleanCompleted, {})
 
   const Todo = ({ todo }) => {
-    const [$toggleTodo] = useMutation(toggleTodo)
+    const [$toggleTodo, { isLoading }] = useMutation(toggleTodo)
     return (
       <Group>
         <Checkbox
+          disabled={isLoading}
           checked={todo.done}
           onClick={async () => {
             await $toggleTodo({ id: todo.id })
@@ -42,6 +43,7 @@ const Todos = () => {
       />
 
       <Button
+        loading={isLoading}
         onClick={async () => {
           await $addTodo({ todoTitle: todoTitle })
         }}
