@@ -1,6 +1,6 @@
 import Head from "next/head"
 import React from "react"
-import { BlitzLayout, Routes } from "@blitzjs/next"
+import { Routes } from "@blitzjs/next"
 import { Suspense } from "react"
 import { Group, Flex, Text, Center, Anchor, Button, Loader } from "@mantine/core"
 import { AppShell } from "@mantine/core"
@@ -9,10 +9,10 @@ import logout from "src/features/auth/mutations/logout"
 import { useMutation } from "@blitzjs/rpc"
 import { useCurrentUser } from "src/features/users/hooks/useCurrentUser"
 
-const Layout: BlitzLayout<{ title?: string; children?: React.ReactNode }> = ({
-  title,
-  children,
-}) => {
+const Layout: React.FC<{
+  title?: string
+  children?: React.ReactNode
+}> = ({ title, children }) => {
   const thisYear = new Date().getFullYear()
   const [logoutMutation] = useMutation(logout)
   const user = useCurrentUser()

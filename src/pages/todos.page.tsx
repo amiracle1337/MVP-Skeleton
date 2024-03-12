@@ -9,11 +9,16 @@ import addTodo from "src/features/todos /mutations/addTodo"
 import { useState } from "react"
 import toggleTodo from "src/features/todos /mutations/toggleTodo"
 import cleanCompleted from "src/features/todos /mutations/cleanCompleted"
+import { PromiseReturnType } from "blitz"
 
-const Todos = () => {
+type todoAsReturnedFromTheServer = PromiseReturnType<typeof getTodos>
+type TodoType = todoAsReturnedFromTheServer[0]
+
+const Todos: React.FC<{
+  todos: TodoType
+}> = () => {
   const [todoTitle, setTodoTitle] = useState("")
   const [todos] = useQuery(getTodos, {})
-  console.log(todos)
   const [$addTodo, { isLoading }] = useMutation(addTodo, {})
   const [$cleanCompleted] = useMutation(cleanCompleted, {})
 

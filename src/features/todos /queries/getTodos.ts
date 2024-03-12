@@ -17,6 +17,11 @@ export default resolver.pipe(
       where: {
         userId: userId,
       },
+      select: {
+        id: true,
+        title: true,
+        done: true,
+      },
     })
     return todos
   }
