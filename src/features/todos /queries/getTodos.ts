@@ -8,7 +8,7 @@ const Input = z.object({
 
 export default resolver.pipe(
   resolver.zod(Input),
-  resolver.authorize(),
+  resolver.authorize("ADMIN"),
   async ({}, { session: { userId } }) => {
     const todos = await db.todo.findMany({
       orderBy: {

@@ -2,12 +2,15 @@ import Head from "next/head"
 import React from "react"
 import { Routes } from "@blitzjs/next"
 import { Suspense } from "react"
-import { Group, Flex, Text, Center, Anchor, Button, Loader } from "@mantine/core"
+import { Group, Flex, Text, Tooltip, Anchor, Button, Loader } from "@mantine/core"
 import { AppShell } from "@mantine/core"
 import Link from "next/link"
 import logout from "src/features/auth/mutations/logout"
 import { useMutation } from "@blitzjs/rpc"
 import { useCurrentUser } from "src/features/users/hooks/useCurrentUser"
+import { IconUserShield } from "@tabler/icons-react"
+import { RootErrorFallback } from "src/core/components/RootErrorFallback"
+import { ErrorBoundary } from "@blitzjs/next"
 
 const Layout: React.FC<{
   title?: string
@@ -51,6 +54,11 @@ const Layout: React.FC<{
           {user && (
             <Group>
               <Text c="gray.7">{user.name}</Text>
+              {user.isAdmin && (
+                <Tooltip label="Admin">
+                  <IconUserShield size={14} />
+                </Tooltip>
+              )}
               <Button
                 size="xs"
                 variant="light"
@@ -65,9 +73,11 @@ const Layout: React.FC<{
         </AppShell.Header>
 
         <AppShell.Main>
-          <Suspense fallback={<Loader />}>
-            <Group> {children}</Group>
-          </Suspense>
+          <ErrorBoundary resetKeys={[user]} FallbackComponent={RootErrorFallback}>
+            <Suspense fallback={<Loader />}>
+              <Group> {children}</Group>
+            </Suspense>
+          </ErrorBoundary>
         </AppShell.Main>
 
         <AppShell.Footer p="md">

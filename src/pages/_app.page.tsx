@@ -11,14 +11,14 @@ import "@mantine/notifications/styles.css"
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <ErrorBoundary FallbackComponent={RootErrorFallback}>
-      <MantineProvider defaultColorScheme={"light"} withCssVariables={true}>
+    <MantineProvider defaultColorScheme={"light"} withCssVariables={true}>
+      <ErrorBoundary FallbackComponent={RootErrorFallback}>
         <Notifications />
         <Suspense fallback={<Loader />}>
           <Component {...pageProps} />
         </Suspense>
-      </MantineProvider>
-    </ErrorBoundary>
+      </ErrorBoundary>
+    </MantineProvider>
   )
 }
 
