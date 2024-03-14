@@ -10,7 +10,6 @@ export default resolver.pipe(
   resolver.zod(Input),
   resolver.authorize("ADMIN"),
   async ({}, { session: { userId } }) => {
-    throw new Error("You cannot access the database")
     const todos = await db.todo.findMany({
       orderBy: {
         createdAt: "asc",
