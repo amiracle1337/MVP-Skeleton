@@ -22,8 +22,8 @@ import { Flex } from "@mantine/core"
 
 export function AuthenticationForm(props: PaperProps) {
   const [type, toggle] = useToggle(["login", "register"])
-  const [$login] = useMutation(login)
-  const [$signup] = useMutation(signup)
+  const [$login, { isLoading: isLoggingIn }] = useMutation(login)
+  const [$signup, { isLoading: isSigningUp }] = useMutation(signup)
 
   const form = useForm({
     initialValues: {
@@ -47,8 +47,10 @@ export function AuthenticationForm(props: PaperProps) {
     }
   }
 
+  const isLoading = isLoggingIn || isSigningUp
+
   return (
-    <Flex style={{ height: "70vh", width: "100%" }} align="center" justify="center">
+    <Flex style={{ height: "100vh", width: "100%" }} align="center" justify="center">
       <Paper radius="md" p="xl" withBorder {...props}>
         <Text size="lg" fw={500}>
           Welcome to Nova, {type} med
@@ -104,7 +106,7 @@ export function AuthenticationForm(props: PaperProps) {
                 ? "Already have an account? Login"
                 : "Don't have an account? Register"}
             </Anchor>
-            <Button type="submit" radius="xl">
+            <Button loading={isLoading} type="submit" radius="xl">
               {upperFirst(type)}
             </Button>
           </Group>

@@ -11,6 +11,8 @@ import { useCurrentUser } from "src/features/users/hooks/useCurrentUser"
 import { IconUserShield } from "@tabler/icons-react"
 import { RootErrorFallback } from "src/core/components/RootErrorFallback"
 import { ErrorBoundary } from "@blitzjs/next"
+import { useRouter } from "next/router"
+import { FullPageLoader } from "../components/FullPageLoader"
 
 const Layout: React.FC<{
   title?: string
@@ -19,6 +21,7 @@ const Layout: React.FC<{
   const thisYear = new Date().getFullYear()
   const [logoutMutation] = useMutation(logout)
   const user = useCurrentUser()
+  const router = useRouter()
 
   return (
     <>
@@ -64,6 +67,7 @@ const Layout: React.FC<{
                 variant="light"
                 onClick={async () => {
                   await logoutMutation()
+                  router.push("/")
                 }}
               >
                 Logout
@@ -74,7 +78,7 @@ const Layout: React.FC<{
 
         <AppShell.Main>
           <ErrorBoundary resetKeys={[user]} FallbackComponent={RootErrorFallback}>
-            <Suspense fallback={<Loader />}>
+            <Suspense fallback={<FullPageLoader />}>
               <Group> {children}</Group>
             </Suspense>
           </ErrorBoundary>

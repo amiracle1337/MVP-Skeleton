@@ -68,7 +68,6 @@ const Todos: React.FC<{
 const todosPage: BlitzPage = () => {
   return (
     <Layout>
-      <Suspense fallback={<Loader />} />
       <Todos />
     </Layout>
   )

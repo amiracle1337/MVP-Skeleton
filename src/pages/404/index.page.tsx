@@ -1,13 +1,11 @@
 import Head from "next/head"
 import { ErrorComponent } from "@blitzjs/next"
-
-// ------------------------------------------------------
-// This page is rendered if a route match is not found
-// ------------------------------------------------------
+import Layout from "src/core/layouts/Layout"
+import { Flex } from "@mantine/core"
 
 export default function Page404() {
   const statusCode = 404
-  const title = "This page could not be foundddd"
+  const title = "This page could not be found"
   return (
     <>
       <Head>
@@ -15,7 +13,11 @@ export default function Page404() {
           {statusCode}: {title}
         </title>
       </Head>
-      <ErrorComponent statusCode={statusCode} title={title} />
+      <Layout>
+        <Flex justify="center" align="center" style={{ height: "100vh", width: "100vw" }}>
+          <ErrorComponent statusCode={statusCode} title={title} />
+        </Flex>
+      </Layout>
     </>
   )
 }
