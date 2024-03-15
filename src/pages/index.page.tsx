@@ -13,8 +13,8 @@ const Home: BlitzPage = () => {
     <Layout title="Home">
       {currentUser && currentUser.isAdmin && (
         <Button
-          onClick={() => {
-            $adminOnly({})
+          onClick={async () => {
+            await $adminOnly({})
           }}
         >
           Admin
