@@ -71,6 +71,7 @@ const Todos: React.FC<{
 const todosPage: BlitzPage = () => {
   return (
     <Layout>
+      {/* @ts-ignore */}
       <Todos />
     </Layout>
   )
