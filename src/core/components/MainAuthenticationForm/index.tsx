@@ -54,17 +54,11 @@ export function AuthenticationForm(props: PaperProps) {
         <Divider label="Or continue with email" labelPosition="center" my="lg" />
 
         <form
-          onSubmit={form.onSubmit(async (values) => {
-            try {
-              if (type === "login") {
-                await $login(values)
-              } else {
-                await $signup(values)
-              }
-            } catch (error) {
-              console.error("An error occurred during the authentication process", error)
-              // Here, you might want to update your UI to reflect the error state,
-              // for example, by showing an error message to the user.
+          onSubmit={form.onSubmit((values) => {
+            if (type === "login") {
+              $login(values)
+            } else {
+              $signup(values)
             }
           })}
         >
