@@ -16,10 +16,12 @@ export const Login = z.object({
   password,
 })
 
+export const name = z.string().min(2).max(30)
+
 export const SignupInput = z.object({
   email,
   password,
-  name: z.string(),
+  name: z.string().min(2).max(30),
   terms: z
     .boolean()
     .refine((val) => val === true, { message: "You must agree to the terms and conditions" }),
