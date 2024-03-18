@@ -11,12 +11,15 @@ import { useForm, Form, zodResolver } from "@mantine/form"
 import updateProfile from "src/features/users/mutations/updateProfile"
 import { UpdateProfileInput, UpdateProfileInputType } from "src/features/users/schemas"
 import { showNotification } from "@mantine/notifications"
+import { useRouter } from "next/router"
+import { Routes } from "@blitzjs/next"
 
 export const ProfilePage: BlitzPage = () => {
   const currentUser = useCurrentUser()
   const username = useStringParam("username")
   const [user] = useQuery(getUserForProfile, { username: username || "" }, { enabled: !!username })
   const [$updateProfile, { isLoading }] = useMutation(updateProfile, {})
+  const router = useRouter()
 
   if (!user) return <Text>User not found :(</Text>
 
@@ -24,6 +27,11 @@ export const ProfilePage: BlitzPage = () => {
   const [opened, { open, close }] = useDisclosure(false)
 
   const form = useForm<UpdateProfileInputType>({
+    initialValues: {
+      name: user?.name || "",
+      username: user?.username || "",
+      bio: user?.bio || "",
+    },
     validate: zodResolver(UpdateProfileInput),
     validateInputOnBlur: true,
   })
@@ -35,6 +43,12 @@ export const ProfilePage: BlitzPage = () => {
           form={form}
           onSubmit={async (values) => {
             await $updateProfile(values)
+            const { username } = values
+            if (username !== user.username) {
+              if (username) {
+                router.push(Routes.ProfilePage({ username }))
+              }
+            }
             showNotification({
               color: "green",
               title: "Profile updated",
@@ -57,7 +71,7 @@ export const ProfilePage: BlitzPage = () => {
               required
               label="Username"
               placeholder="Username"
-              {...form.getInputProps("Username")}
+              {...form.getInputProps("username")}
               radius="md"
             />
             <Textarea
