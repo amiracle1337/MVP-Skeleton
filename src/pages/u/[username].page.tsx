@@ -1,7 +1,7 @@
 import { useMutation } from "@blitzjs/rpc"
 import { BlitzPage } from "@blitzjs/auth"
 import { useQuery } from "@blitzjs/rpc"
-import { Text, Stack, Button, Modal, TextInput, Textarea, Flex, Box } from "@mantine/core"
+import { Text, Stack, Button, Modal } from "@mantine/core"
 import Layout from "src/core/layouts/Layout"
 import { useStringParam } from "src/utils/utils"
 import getUserForProfile from "src/features/users/queries/getUserForProfile"
@@ -10,8 +10,9 @@ import { useDisclosure } from "@mantine/hooks"
 import { useForm, Form, zodResolver } from "@mantine/form"
 import updateProfile from "src/features/users/mutations/updateProfile"
 import { UpdateProfileInput, UpdateProfileInputType } from "src/features/users/schemas"
-import { showNotification } from "@mantine/notifications"
 import { useRouter } from "next/router"
+import { EditProfileForm } from "src/features/users/forms/EditProfileForm"
+import { notifications } from "@mantine/notifications"
 import { Routes } from "@blitzjs/next"
 
 export const ProfilePage: BlitzPage = () => {
@@ -38,8 +39,14 @@ export const ProfilePage: BlitzPage = () => {
 
   return (
     <>
-      <Modal opened={opened} onClose={close} title="edit profile">
-        <Form
+      <Modal
+        opened={opened}
+        onClose={() => {
+          close(), form.reset()
+        }}
+        title="edit profile"
+      >
+        <EditProfileForm
           form={form}
           onSubmit={async (values) => {
             await $updateProfile(values)
@@ -49,44 +56,15 @@ export const ProfilePage: BlitzPage = () => {
                 router.push(Routes.ProfilePage({ username }))
               }
             }
-            showNotification({
+            notifications.show({
               color: "green",
-              title: "Profile updated",
-              message: "Your profile has been updated",
+              title: "Success!",
+              message: "Profile updated!",
             })
             close()
           }}
-        >
-          <Flex direction="column" gap={15}>
-            <TextInput
-              w="100%"
-              required
-              label="Name"
-              placeholder="Name"
-              {...form.getInputProps("name")}
-              radius="md"
-            />
-            <TextInput
-              w="100%"
-              required
-              label="Username"
-              placeholder="Username"
-              {...form.getInputProps("username")}
-              radius="md"
-            />
-            <Textarea
-              w="100%"
-              required
-              label="Bio"
-              placeholder="Bio"
-              {...form.getInputProps("bio")}
-              radius="md"
-            />
-            <Button disabled={!form.isValid()} loading={isLoading} type="submit">
-              Submit
-            </Button>
-          </Flex>
-        </Form>
+          isSubmitting={isLoading}
+        />
       </Modal>
 
       <Button>Open modal</Button>
