@@ -4,6 +4,7 @@
   "scripts": {
     "dev": "blitz dev",
     "build": "yarn blitz prisma migrate deploy && yarn blitz prisma generate && yarn blitz build",
+    "email": "cd mailers/react-email-starter && yarn dev --port 3009",
     "start": "blitz start",
     "db:studio": "BROWSER=none yarn blitz prisma studio",
     "db:migrate": "yarn blitz prisma migrate dev",
@@ -48,6 +49,7 @@
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-hook-form": "7.50.1",
+    "resend": "3.2.0",
     "secure-password": "4.0.0",
     "zod": "3.20.2",
     "zod-error": "1.5.0"

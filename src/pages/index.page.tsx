@@ -5,12 +5,21 @@ import { useCurrentUser } from "src/features/users/hooks/useCurrentUser"
 import { Button, Flex, Stack } from "@mantine/core"
 import adminOnlyMutation from "src/features/auth/mutations/adminOnlyMutation"
 import { useMutation } from "@blitzjs/rpc"
+import sendTestEmail from "src/features/users/mutations/sendTestEmail"
 
 const Home: BlitzPage = () => {
   const currentUser = useCurrentUser()
   const [$adminOnly] = useMutation(adminOnlyMutation)
+  const [$sendTestEmail] = useMutation(sendTestEmail)
   return (
     <Layout title="Home">
+      <Button
+        onClick={async () => {
+          await $sendTestEmail({})
+        }}
+      >
+        Test email
+      </Button>
       {currentUser && currentUser.isAdmin && (
         <Button
           onClick={async () => {
