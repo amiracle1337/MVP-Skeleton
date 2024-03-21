@@ -52,7 +52,7 @@ const Todos: React.FC<{
           await $addTodo(values)
         })}
       >
-        <Input placeholder="Add todo" {...form.getInputProps("todoTitle")} />
+        <Input mb={25} placeholder="Add todo" {...form.getInputProps("todoTitle")} />
 
         <Button loading={isLoading} type="submit">
           Create todo

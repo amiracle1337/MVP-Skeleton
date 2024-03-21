@@ -13,13 +13,6 @@ const Home: BlitzPage = () => {
   const [$sendTestEmail] = useMutation(sendTestEmail)
   return (
     <Layout title="Home">
-      <Button
-        onClick={async () => {
-          await $sendTestEmail({})
-        }}
-      >
-        Test email
-      </Button>
       {currentUser && currentUser.isAdmin && (
         <Button
           onClick={async () => {
@@ -29,6 +22,17 @@ const Home: BlitzPage = () => {
           Admin
         </Button>
       )}
+      <Button
+        onClick={async () => {
+          await $sendTestEmail({
+            html: "<div>Test email</div>",
+            subject: "Test email",
+            to: "amir@amiracle.xyz",
+          })
+        }}
+      >
+        Test email
+      </Button>
       {!currentUser && <AuthenticationForm />}
     </Layout>
   )
