@@ -15,7 +15,10 @@ import * as React from "react"
 
 const baseUrl = process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : ""
 
-export const StripeWelcomeEmail = () => (
+export const StripeWelcomeEmail: React.FC<{
+  content: string
+  buttonText: string
+}> = ({ content, buttonText }) => (
   <Html>
     <Head />
     <Preview>You're now ready to make live transactions with Stripe!</Preview>
@@ -24,16 +27,10 @@ export const StripeWelcomeEmail = () => (
         <Section style={box}>
           <Img src={`${baseUrl}/static/stripe-logo.png`} width="49" height="21" alt="Stripe" />
           <Hr style={hr} />
-          <Text style={paragraph}>
-            Thanks for submitting your account information. You're now ready to make live
-            transactions with Stripe!
-          </Text>
-          <Text style={paragraph}>
-            You can view your payments and a variety of other information about your account right
-            from your dashboard.
-          </Text>
+
+          <Text style={paragraph}>{content}</Text>
           <Button style={button} href="https://dashboard.stripe.com/login">
-            View your Stripe Dashboard
+            {buttonText}
           </Button>
           <Hr style={hr} />
           <Text style={paragraph}>
