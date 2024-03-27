@@ -12,7 +12,7 @@ import { FullPageLoader } from "src/core/components/FullPageLoader"
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <MantineProvider defaultColorScheme={"light"} withCssVariables={true}>
+    <MantineProvider defaultColorScheme={"dark"} withCssVariables={true}>
       <ErrorBoundary FallbackComponent={RootErrorFallback}>
         <Notifications />
         <Suspense fallback={<FullPageLoader />}>
