@@ -4,7 +4,7 @@ import db from "db"
 import { Role } from "types"
 import { SignupInput } from "src/features/auth/schemas"
 import React from "react"
-import StripeWelcomeEmail from "mailers/react-email-starter/emails/welcome"
+import EmailTemplateWelcome from "mailers/react-email-starter/emails/welcome"
 import { sendEmail } from "mailers/sendEmail"
 import { PrismaError } from "src/utils/blitz-utils"
 
@@ -20,7 +20,7 @@ export default resolver.pipe(resolver.zod(SignupInput), async ({ email, password
     await sendEmail({
       to: user.email,
       subject: "Change password",
-      react: React.createElement(StripeWelcomeEmail, {
+      react: React.createElement(EmailTemplateWelcome, {
         props: { name: user.name },
       }),
     })

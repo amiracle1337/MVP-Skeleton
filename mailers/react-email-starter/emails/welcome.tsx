@@ -15,7 +15,7 @@ import * as React from "react"
 
 const baseUrl = process.env.VERCEL_URL
   ? `https://${process.env.VERCEL_URL}`
-  : "http://localhost:3009"
+  : "http://localhost:3000"
 
 const defaultProps = {
   name: "test",
@@ -36,7 +36,7 @@ export const EmailTemplateWelcome: React.FC<{
       <Body style={main}>
         <Container style={container}>
           <Section style={box}>
-            <Img src={`${baseUrl}/static/stripe-logo.png`} width="49" height="21" alt="Stripe" />
+            <Img src={`${baseUrl}/images/logo.png`} width="49" height="21" alt="Stripe" />
             <Hr style={hr} />
 
             <Text style={paragraph}>{welcomeMessage}, Welcome to Nova.</Text>
