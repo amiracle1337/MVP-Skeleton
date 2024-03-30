@@ -15,12 +15,17 @@ import { EditProfileForm } from "src/features/users/forms/EditProfileForm"
 import { notifications } from "@mantine/notifications"
 import { Routes } from "@blitzjs/next"
 import { IconInfoCircle } from "@tabler/icons-react"
+import requestEmailVerification from "src/features/auth/mutations/requestVerificationEmail"
 
 export const ProfilePage: BlitzPage = () => {
   const currentUser = useCurrentUser()
   const username = useStringParam("username")
   const [user] = useQuery(getUserForProfile, { username: username || "" }, { enabled: !!username })
   const [$updateProfile, { isLoading }] = useMutation(updateProfile, {})
+  const [$requestEmailVerification, { isLoading: isSendingEmail }] = useMutation(
+    requestEmailVerification,
+    {}
+  )
   const router = useRouter()
   const icon = <IconInfoCircle />
 
@@ -79,9 +84,28 @@ export const ProfilePage: BlitzPage = () => {
                   Your email is not verified. Please check your inbox for the verification email.
                 </Text>
                 <Button
+                  loading={isSendingEmail}
                   size="xs"
                   gradient={{ from: "red", to: "red", deg: 340 }}
                   variant="gradient"
+                  onClick={async () => {
+                    try {
+                      await $requestEmailVerification()
+                      console.log("Verification email request sent.")
+                      notifications.show({
+                        color: "green",
+                        title: "Email sent!",
+                        message: "Please check your inbox for the verification email.",
+                      })
+                    } catch (error) {
+                      console.error("Failed to send verification email:", error)
+                      notifications.show({
+                        color: "red",
+                        title: "Error!",
+                        message: "Failed to send verification email. Please try again.",
+                      })
+                    }
+                  }}
                 >
                   Resend my verification email
                 </Button>

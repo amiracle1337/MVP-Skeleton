@@ -22,14 +22,12 @@ const defaultProps = {
   emailVerifyURL: "https://example.com",
 }
 
-export const EmailTemplateWelcome: React.FC<{
+export const EmailTemplateVerifyEmail: React.FC<{
   props: {
-    name?: string | null
-    emailVerifyURL: string | null
+    emailVerifyURL: string
   }
 }> = ({ props = defaultProps }) => {
-  const { name } = props
-  const welcomeMessage = name ? `Hi ${name},` : "Hey there,"
+  const { emailVerifyURL } = props
 
   return (
     <Html>
@@ -40,9 +38,11 @@ export const EmailTemplateWelcome: React.FC<{
           <Section style={box}>
             <Img src={`${baseUrl}/images/logo.png`} width="49" height="21" alt="Stripe" />
             <Hr style={hr} />
-
-            <Text style={paragraph}>{welcomeMessage}, Welcome to Nova.</Text>
-            <Button style={button} href="https://dashboard.stripe.com/login">
+            <Text style={paragraph}>
+              Hi! You requested an email to verify your account. If you didn't, please ignore this
+              email
+            </Text>
+            <Button style={button} href={emailVerifyURL}>
               Click here to verify your account!
             </Button>
             <Text style={paragraph}>— The Nova team</Text>
@@ -55,7 +55,7 @@ export const EmailTemplateWelcome: React.FC<{
   )
 }
 
-export default EmailTemplateWelcome
+export default EmailTemplateVerifyEmail
 
 const main = {
   backgroundColor: "#f6f9fc",
