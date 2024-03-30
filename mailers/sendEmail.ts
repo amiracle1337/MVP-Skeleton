@@ -1,3 +1,4 @@
+import { CreateEmailOptions } from "resend/dist/types"
 import { Resend } from "resend"
 import { isDev } from "src/config"
 import { nodemailerAppTransport } from "./transports/nodemailer-app-transports"

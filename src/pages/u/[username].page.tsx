@@ -1,7 +1,7 @@
 import { useMutation } from "@blitzjs/rpc"
 import { BlitzPage } from "@blitzjs/auth"
 import { useQuery } from "@blitzjs/rpc"
-import { Text, Stack, Button, Modal } from "@mantine/core"
+import { Text, Stack, Button, Modal, Alert } from "@mantine/core"
 import Layout from "src/core/layouts/Layout"
 import { useStringParam } from "src/utils/utils"
 import getUserForProfile from "src/features/users/queries/getUserForProfile"
@@ -14,6 +14,7 @@ import { useRouter } from "next/router"
 import { EditProfileForm } from "src/features/users/forms/EditProfileForm"
 import { notifications } from "@mantine/notifications"
 import { Routes } from "@blitzjs/next"
+import { IconInfoCircle } from "@tabler/icons-react"
 
 export const ProfilePage: BlitzPage = () => {
   const currentUser = useCurrentUser()
@@ -21,6 +22,7 @@ export const ProfilePage: BlitzPage = () => {
   const [user] = useQuery(getUserForProfile, { username: username || "" }, { enabled: !!username })
   const [$updateProfile, { isLoading }] = useMutation(updateProfile, {})
   const router = useRouter()
+  const icon = <IconInfoCircle />
 
   if (!user) return <Text>User not found :(</Text>
 
@@ -70,6 +72,22 @@ export const ProfilePage: BlitzPage = () => {
       <Button>Open modal</Button>
       <Layout>
         <Stack>
+          {isOwner && !currentUser.emailVerifiedAt && (
+            <Stack>
+              <Alert variant="light" color="red" radius="md" title="Warning!" icon={icon}>
+                <Text style={{ marginBottom: "15px" }}>
+                  Your email is not verified. Please check your inbox for the verification email.
+                </Text>
+                <Button
+                  size="xs"
+                  gradient={{ from: "red", to: "red", deg: 340 }}
+                  variant="gradient"
+                >
+                  Resend my verification email
+                </Button>
+              </Alert>
+            </Stack>
+          )}
           {isOwner && <Button onClick={open}>Edit your profile</Button>}
           <Text>hello {user.name}</Text>
           <Text>{user.bio}</Text>

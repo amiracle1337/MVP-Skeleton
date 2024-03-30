@@ -56,9 +56,14 @@ const Layout: React.FC<{
           </Anchor>
           {user && (
             <Group>
-              <Link href={Routes.editProfilePage()}>
+              <Link
+                href={Routes.ProfilePage({
+                  username: user.username,
+                })}
+              >
                 <Text c="gray.7">{user.name}</Text>
               </Link>
+
               {user.isAdmin && (
                 <Tooltip label="Admin">
                   <IconUserShield size={14} />
