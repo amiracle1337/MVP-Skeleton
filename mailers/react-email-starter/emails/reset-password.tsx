@@ -18,34 +18,33 @@ const baseUrl = process.env.VERCEL_URL
   : "http://localhost:3000"
 
 const defaultProps = {
-  name: "test",
-  emailVerifyURL: "https://example.com",
+  resetPasswordUrl: "https://example.com",
 }
 
-export const EmailTemplateVerifyEmail: React.FC<{
+export const EmailTemplateResetPassword: React.FC<{
   props: {
-    emailVerifyURL: string
+    resetPasswordUrl: string
   }
 }> = ({ props = defaultProps }) => {
-  const { emailVerifyURL } = props
-
+  const { resetPasswordUrl } = props
   return (
     <Html>
       <Head />
-      <Preview>Verify your email at </Preview>
+      <Preview>Reset your Nova password</Preview>
       <Body style={main}>
         <Container style={container}>
           <Section style={box}>
             <Img src={`${baseUrl}/images/logo.png`} width="49" height="21" alt="Stripe" />
             <Hr style={hr} />
+
             <Text style={paragraph}>
-              Hi! You requested an email to verify your account. If you didn't, please ignore this
-              email
+              Hey! You requested to reset your password. Click the button below to reset your
+              password. If you didn't, please ignore this email.
             </Text>
-            <Button style={button} href={emailVerifyURL}>
-              Click here to verify your account!
+            <Button style={button} href={resetPasswordUrl}>
+              Click here to reset your password!
             </Button>
-            <Text style={paragraph}>— The team</Text>
+            <Text style={paragraph}>— The Nova team</Text>
             <Hr style={hr} />
             <Text style={footer}>Stockholm, Sweden</Text>
           </Section>
@@ -55,7 +54,7 @@ export const EmailTemplateVerifyEmail: React.FC<{
   )
 }
 
-export default EmailTemplateVerifyEmail
+export default EmailTemplateResetPassword
 
 const main = {
   backgroundColor: "#f6f9fc",

@@ -12,6 +12,7 @@ import {
   Checkbox,
   Anchor,
   Stack,
+  Box,
 } from "@mantine/core"
 import { GoogleButton } from "./Icons/GoogleIcon"
 import { FacebookButton } from "./Icons/FacebookIcon"
@@ -22,6 +23,8 @@ import { Flex } from "@mantine/core"
 import { SignupInput } from "src/features/auth/schemas"
 import { z } from "zod"
 import { LoginInput } from "src/features/auth/schemas"
+import Link from "next/link"
+import { Routes } from "@blitzjs/next"
 
 type SignUpFormType = z.infer<typeof SignupInput>
 
@@ -88,6 +91,12 @@ export function AuthenticationForm(props: PaperProps) {
               {...form.getInputProps("password")}
               radius="md"
             />
+              <Box component={Link} href={Routes.ForgotPasswordPage()}>
+                <Text size="xs" c="dimmed">
+                  Forgot password?
+                </Text>
+              </Box>
+            </Flex>
 
             {type === "register" && (
               <Checkbox

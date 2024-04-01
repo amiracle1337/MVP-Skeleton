@@ -3,44 +3,45 @@ import { FORM_ERROR } from "src/core/components/Form"
 import forgotPassword from "src/features/auth/mutations/forgotPassword"
 import { useMutation } from "@blitzjs/rpc"
 import { BlitzPage } from "@blitzjs/next"
-import { Stack, TextInput, Button } from "@mantine/core"
-import { useForm } from "@mantine/form"
+import { Stack, TextInput, Button, Title } from "@mantine/core"
+import { useForm, zodResolver } from "@mantine/form"
+import { ForgotPAsswordInput, ForgotPasswordInputType } from "src/features/auth/schemas"
+import { notifications } from "@mantine/notifications"
 
 const ForgotPasswordPage: BlitzPage = () => {
-  const [forgotPasswordMutation, { isSuccess }] = useMutation(forgotPassword)
+  const [forgotPasswordMutation, { isSuccess, isLoading }] = useMutation(forgotPassword)
 
-  const form = useForm({
+  const form = useForm<ForgotPasswordInputType>({
     initialValues: {
       email: "",
     },
 
-    validate: {
-      email: (value) => (/^\S+@\S+$/.test(value) ? null : "Invalid email"),
-    },
+    validate: zodResolver(ForgotPAsswordInput),
   })
-
-  let onSubmit = async (values) => {
-    try {
-      await forgotPasswordMutation(values)
-    } catch (error: any) {
-      return { [FORM_ERROR]: "sorry we had an unexpected error, please try again." }
-    }
-  }
 
   return (
     <Layout title="Forgot Your Password?">
       {isSuccess ? (
-        <div>
-          <h2>Request Submitted</h2>
+        <Stack>
+          <Title order={3}>Request Submitted!</Title>
           <p>
             If your email is in our system, you will receive instructions to reset your password
             shortly.
           </p>
-        </div>
+        </Stack>
       ) : (
         <Stack>
-          <h1>Forgot your password?</h1>
-          <form onSubmit={form.onSubmit(onSubmit)}>
+          <Title order={3}>Forgot your password?</Title>
+          <form
+            onSubmit={form.onSubmit(async (values) => {
+              await forgotPasswordMutation(values)
+              notifications.show({
+                title: "Check your email",
+                message: "If your email is in our system, you will receive instructions shortly",
+                color: "teal",
+              })
+            })}
+          >
             <TextInput
               withAsterisk
               label="Email"
@@ -48,7 +49,9 @@ const ForgotPasswordPage: BlitzPage = () => {
               {...form.getInputProps("email")}
             />
 
-            <Button type="submit">Submit</Button>
+            <Button disabled={!form.isValid()} loading={isLoading} mt={10} type="submit">
+              Submit
+            </Button>
           </form>
         </Stack>
       )}

@@ -12,6 +12,7 @@ import {
   Text,
 } from "@react-email/components"
 import * as React from "react"
+import { APP_NAME } from "src/config"
 
 const baseUrl = process.env.VERCEL_URL
   ? `https://${process.env.VERCEL_URL}`
@@ -34,18 +35,20 @@ export const EmailTemplateWelcome: React.FC<{
   return (
     <Html>
       <Head />
-      <Preview>You're now ready to make live transactions with Stripe!</Preview>
+      <Preview>Welcome to {APP_NAME}</Preview>
       <Body style={main}>
         <Container style={container}>
           <Section style={box}>
             <Img src={`${baseUrl}/images/logo.png`} width="49" height="21" alt="Stripe" />
             <Hr style={hr} />
 
-            <Text style={paragraph}>{welcomeMessage}, Welcome to Nova.</Text>
+            <Text style={paragraph}>
+              {welcomeMessage}, Welcome to {APP_NAME}.
+            </Text>
             <Button style={button} href="https://dashboard.stripe.com/login">
               Click here to verify your account!
             </Button>
-            <Text style={paragraph}>— The Nova team</Text>
+            <Text style={paragraph}>— The {APP_NAME} team</Text>
             <Hr style={hr} />
             <Text style={footer}>Stockholm, Sweden</Text>
           </Section>
