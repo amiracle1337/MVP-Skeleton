@@ -91,6 +91,7 @@ export function AuthenticationForm(props: PaperProps) {
               {...form.getInputProps("password")}
               radius="md"
             />
+            <Flex justify="flex-end" mt={-10}>
               <Box component={Link} href={Routes.ForgotPasswordPage()}>
                 <Text size="xs" c="dimmed">
                   Forgot password?
