@@ -27,7 +27,11 @@ export const SignupInput = z.object({
     .refine((val) => val === true, { message: "You must agree to the terms and conditions" }),
 })
 
+export type SignupInputType = z.infer<typeof SignupInput>
+
 export const LoginInput = z.object({ email, password })
+
+export type LoginInputType = z.infer<typeof LoginInput>
 
 export let ForgotPAsswordInput = z.object({
   email,
