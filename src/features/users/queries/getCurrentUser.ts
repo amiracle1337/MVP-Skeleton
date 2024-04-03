@@ -6,7 +6,14 @@ export default async function getCurrentUser(_ = null, { session }: Ctx) {
 
   const user = await db.user.findUnique({
     where: { id: session.userId },
-    select: { id: true, name: true, email: true, role: true, emailVerifiedAt: true },
+    select: {
+      id: true,
+      name: true,
+      email: true,
+      role: true,
+      emailVerifiedAt: true,
+      username: true,
+    },
   })
 
   return user

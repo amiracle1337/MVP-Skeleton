@@ -56,13 +56,17 @@ const Layout: React.FC<{
           </Anchor>
           {user && (
             <Group>
-              <Link
-                href={Routes.ProfilePage({
-                  username: user.username,
-                })}
-              >
-                <Text c="gray.7">{user.name}</Text>
-              </Link>
+              {user.username && (
+                <Link
+                  href={Routes.ProfilePage({
+                    username: user.username,
+                  })}
+                >
+                  <Text c="gray.7">{user.username}</Text>
+                </Link>
+              )}
+
+              {!user.username && <Text c="gray.7">{user.name}</Text>}
 
               {user.isAdmin && (
                 <Tooltip label="Admin">
