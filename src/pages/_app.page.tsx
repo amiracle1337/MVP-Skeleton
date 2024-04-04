@@ -9,6 +9,7 @@ import "@mantine/core/styles.css"
 import { Notifications } from "@mantine/notifications"
 import "@mantine/notifications/styles.css"
 import { FullPageLoader } from "src/core/components/FullPageLoader"
+import "@uploadthing/react/styles.css"
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
