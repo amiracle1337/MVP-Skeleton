@@ -2,7 +2,7 @@ import Head from "next/head"
 import React from "react"
 import { Routes } from "@blitzjs/next"
 import { Suspense } from "react"
-import { Group, Flex, Text, Tooltip, Anchor, Button, Loader } from "@mantine/core"
+import { Group, Flex, Text, Tooltip, Anchor, Button, Loader, Avatar } from "@mantine/core"
 import { AppShell } from "@mantine/core"
 import Link from "next/link"
 import logout from "src/features/auth/mutations/logout"
@@ -62,7 +62,14 @@ const Layout: React.FC<{
                     username: user.username,
                   })}
                 >
-                  <Text c="gray.7">{user.username}</Text>
+                  <Group>
+                    <Avatar
+                      size="sm"
+                      src={`https://uploadthing.com/f/${user.avatarImageKey}`}
+                      radius="xl"
+                    ></Avatar>
+                    <Text c="gray.7">{user.username}</Text>
+                  </Group>
                 </Link>
               )}
 
