@@ -13,6 +13,8 @@ import { RootErrorFallback } from "src/core/components/RootErrorFallback"
 import { ErrorBoundary } from "@blitzjs/next"
 import { useRouter } from "next/router"
 import { FullPageLoader } from "../components/FullPageLoader"
+import { getAvatarFallbackName, getUploadthingUrl } from "src/utils/utils"
+import { UserAvatar } from "../components/UserAvatar"
 
 const Layout: React.FC<{
   title?: string
@@ -63,11 +65,7 @@ const Layout: React.FC<{
                   })}
                 >
                   <Group>
-                    <Avatar
-                      size="sm"
-                      src={`https://uploadthing.com/f/${user.avatarImageKey}`}
-                      radius="xl"
-                    ></Avatar>
+                    <UserAvatar user={user} size="md" />
                     <Text c="gray.7">{user.username}</Text>
                   </Group>
                 </Link>

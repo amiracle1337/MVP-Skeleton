@@ -10,3 +10,13 @@ export const useStringQueryParan = (name) => {
   let { query } = useRouter()
   return query[name]
 }
+
+export const getUploadthingUrl = (fileKey?: string | null) => {
+  return fileKey ? `https://uploadthing.com/f/${fileKey}` : ""
+}
+
+export const getAvatarFallbackName = (name?: string | null) => {
+  if (!name) return ""
+  const [first, second] = name.split(" ")
+  return `${first ? first[0] : ""}${second ? second[0] : ""}`
+}
