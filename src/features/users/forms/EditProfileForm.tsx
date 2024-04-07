@@ -1,11 +1,25 @@
-import { Button, TextInput, Textarea, Flex, FileInput, Text, Group, Loader } from "@mantine/core"
+import {
+  Button,
+  TextInput,
+  Textarea,
+  Flex,
+  FileInput,
+  Text,
+  Group,
+  Loader,
+  Image,
+  Stack,
+  Indicator,
+  ActionIcon,
+  Tooltip,
+} from "@mantine/core"
 import { Form, UseFormReturnType } from "@mantine/form"
 import { UpdateProfileInputType } from "src/features/users/schemas"
 import React, { useState } from "react"
 import { notifications } from "@mantine/notifications"
-import { IconPhoto } from "@tabler/icons-react"
+import { IconPhoto, IconX } from "@tabler/icons-react"
 import { useUploadThing } from "src/core/components/UploadThing"
-import useBoolean from "react-hanger/array/useBoolean"
+import { getUploadthingUrl } from "src/utils/utils"
 
 export const EditProfileForm: React.FC<{
   form: UseFormReturnType<UpdateProfileInputType>
@@ -29,6 +43,9 @@ export const EditProfileForm: React.FC<{
       })
     },
   })
+
+  const existingFileKey = form.values.avatarImageKey
+
   return (
     <Form form={form} onSubmit={onSubmit}>
       <Flex direction="column" gap={15}>
@@ -57,26 +74,54 @@ export const EditProfileForm: React.FC<{
           radius="md"
         />
       </Flex>
-      <FileInput
-        label={
-          <Group m={3}>
-            <Text>Profile picture</Text>
-            {isLoading && <Loader size="xs" />}
-          </Group>
-        }
-        mt={15}
-        style={{ width: "35%" }}
-        placeholder="Profile picture"
-        leftSection={<IconPhoto size={20} />}
-        clearable={true}
-        disabled={isLoading} // Use the isLoading state for the disabled prop
-        onChange={(files) => {
-          setIsLoading(true) // Enable loading state when a file is selected
-          if (files) {
-            startUpload([files]) // Adjust this as needed to match the expected format
-          }
-        }}
-      />
+
+      <Stack>
+        <Group mt={10}>
+          <Text size="sm" w={500}>
+            Profile picture
+          </Text>
+          {isLoading && <Loader size="xs" />}
+        </Group>
+
+        {existingFileKey && (
+          <Stack w={"90px"}>
+            <Indicator
+              color={"none"}
+              label={
+                <Tooltip label="Remove">
+                  <ActionIcon
+                    onClick={() => {
+                      form.setFieldValue("avatarImageKey", "")
+                    }}
+                    size="xs"
+                    variant="light"
+                    color="gray"
+                  >
+                    <IconX size={12} />
+                  </ActionIcon>
+                </Tooltip>
+              }
+            >
+              <Image w={"80px"} src={getUploadthingUrl(existingFileKey)} />
+            </Indicator>
+          </Stack>
+        )}
+        {!existingFileKey && (
+          <FileInput
+            style={{ width: "35%" }}
+            placeholder="Profile picture"
+            leftSection={<IconPhoto size={20} />}
+            clearable={true}
+            disabled={isLoading} // Use the isLoading state for the disabled prop
+            onChange={(files) => {
+              setIsLoading(true) // Enable loading state when a file is selected
+              if (files) {
+                startUpload([files]) // Adjust this as needed to match the expected format
+              }
+            }}
+          />
+        )}
+      </Stack>
       <Button mt={15} disabled={!form.isValid()} loading={isSubmitting} type="submit">
         Submit
       </Button>

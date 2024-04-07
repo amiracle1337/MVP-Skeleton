@@ -13,7 +13,7 @@ export default resolver.pipe(
   async ({ username }, { session: { userId } }) => {
     let user = await db.user.findUnique({
       where: { username },
-      select: { id: true, name: true, username: true, bio: true },
+      select: { id: true, name: true, username: true, bio: true, avatarImageKey: true },
     })
 
     if (!user) {

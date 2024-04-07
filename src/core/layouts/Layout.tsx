@@ -13,7 +13,6 @@ import { RootErrorFallback } from "src/core/components/RootErrorFallback"
 import { ErrorBoundary } from "@blitzjs/next"
 import { useRouter } from "next/router"
 import { FullPageLoader } from "../components/FullPageLoader"
-import { getAvatarFallbackName, getUploadthingUrl } from "src/utils/utils"
 import { UserAvatar } from "../components/UserAvatar"
 
 const Layout: React.FC<{
@@ -65,7 +64,7 @@ const Layout: React.FC<{
                   })}
                 >
                   <Group>
-                    <UserAvatar user={user} size="md" />
+                    <UserAvatar user={user} size="35px" />
                     <Text c="gray.7">{user.username}</Text>
                   </Group>
                 </Link>
