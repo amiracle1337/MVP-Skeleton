@@ -2,7 +2,7 @@ import Head from "next/head"
 import React from "react"
 import { Routes } from "@blitzjs/next"
 import { Suspense } from "react"
-import { Group, Flex, Text, Tooltip, Anchor, Button, Loader, Avatar } from "@mantine/core"
+import { Group, Flex, Text, Tooltip, Anchor, Button, RingProgress, Indicator } from "@mantine/core"
 import { AppShell } from "@mantine/core"
 import Link from "next/link"
 import logout from "src/features/auth/mutations/logout"
@@ -14,6 +14,7 @@ import { ErrorBoundary } from "@blitzjs/next"
 import { useRouter } from "next/router"
 import { FullPageLoader } from "../components/FullPageLoader"
 import { UserAvatar } from "../components/UserAvatar"
+import { UserProfileProgress } from "../components/Header/UserProfileProgress"
 
 const Layout: React.FC<{
   title?: string
@@ -64,19 +65,32 @@ const Layout: React.FC<{
                   })}
                 >
                   <Group>
-                    <UserAvatar user={user} size="35px" />
+                    {user.isAdmin ? (
+                      <Indicator
+                        color="none"
+                        label={
+                          <>
+                            <Tooltip label="admin">
+                              <IconUserShield color="black" size={12} />
+                            </Tooltip>
+                          </>
+                        }
+                        size={16}
+                        position="bottom-end"
+                      >
+                        <UserAvatar user={user} size="33px" />
+                      </Indicator>
+                    ) : (
+                      <UserAvatar user={user} size="35px" />
+                    )}
                     <Text c="gray.7">{user.username}</Text>
+                    <UserProfileProgress />
                   </Group>
                 </Link>
               )}
 
               {!user.username && <Text c="gray.7">{user.name}</Text>}
 
-              {user.isAdmin && (
-                <Tooltip label="Admin">
-                  <IconUserShield size={14} />
-                </Tooltip>
-              )}
               <Button
                 size="xs"
                 variant="light"
