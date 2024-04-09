@@ -5,6 +5,8 @@ import { useCurrentUser } from "src/features/users/hooks/useCurrentUser"
 import { Button, Flex, Stack } from "@mantine/core"
 import adminOnlyMutation from "src/features/auth/mutations/adminOnlyMutation"
 import { useMutation } from "@blitzjs/rpc"
+import { openContextModal } from "@mantine/modals"
+import { GlobalModals } from "src/modals"
 
 const Home: BlitzPage = () => {
   const currentUser = useCurrentUser()
@@ -20,6 +22,30 @@ const Home: BlitzPage = () => {
           Admin
         </Button>
       )}
+
+      <Button
+        onClick={() => {
+          openContextModal({
+            title: "Modal title",
+            modal: GlobalModals.becomePro,
+            innerProps: { price: 999997 },
+          })
+        }}
+      >
+        Become pro modal
+      </Button>
+
+      <Button
+        onClick={() => {
+          openContextModal({
+            title: "Modal title",
+            modal: GlobalModals.reportBug,
+            innerProps: { price: 999997 },
+          })
+        }}
+      >
+        report bug bro
+      </Button>
 
       {!currentUser && <AuthenticationForm />}
     </Layout>

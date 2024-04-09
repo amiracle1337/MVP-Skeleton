@@ -10,16 +10,20 @@ import { Notifications } from "@mantine/notifications"
 import "@mantine/notifications/styles.css"
 import { FullPageLoader } from "src/core/components/FullPageLoader"
 import "@uploadthing/react/styles.css"
+import { ModalsProvider } from "@mantine/modals"
+import { globalModals } from "src/modals"
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <MantineProvider defaultColorScheme={"light"} withCssVariables={true}>
-      <ErrorBoundary FallbackComponent={RootErrorFallback}>
-        <Notifications />
-        <Suspense fallback={<FullPageLoader />}>
-          <Component {...pageProps} />
-        </Suspense>
-      </ErrorBoundary>
+      <ModalsProvider modals={globalModals}>
+        <ErrorBoundary FallbackComponent={RootErrorFallback}>
+          <Notifications />
+          <Suspense fallback={<FullPageLoader />}>
+            <Component {...pageProps} />
+          </Suspense>
+        </ErrorBoundary>
+      </ModalsProvider>
     </MantineProvider>
   )
 }

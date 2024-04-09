@@ -12,6 +12,7 @@ import {
   RingProgress,
   Indicator,
   Modal,
+  Badge,
 } from "@mantine/core"
 import { AppShell } from "@mantine/core"
 import Link from "next/link"
@@ -26,6 +27,8 @@ import { FullPageLoader } from "../components/FullPageLoader"
 import { UserAvatar } from "../components/UserAvatar"
 import { UserProfileProgress } from "../components/Header/UserProfileProgress"
 import { OnboardingWizard } from "../components/OnboardingWizard"
+import { openContextModal } from "@mantine/modals"
+import { GlobalModals } from "src/modals"
 
 const Layout: React.FC<{
   title?: string
@@ -94,6 +97,7 @@ const Layout: React.FC<{
                     ) : (
                       <UserAvatar user={user} size="35px" />
                     )}
+
                     <Text c="gray.7">{user.username}</Text>
                     <UserProfileProgress />
                   </Group>
@@ -101,7 +105,18 @@ const Layout: React.FC<{
               )}
 
               {!user.username && <Text c="gray.7">{user.name}</Text>}
-
+              <Badge
+                color="red"
+                onClick={() => {
+                  openContextModal({
+                    title: "Modal title",
+                    modal: GlobalModals.becomePro,
+                    innerProps: { price: 9 },
+                  })
+                }}
+              >
+                Pro
+              </Badge>
               <Button
                 size="xs"
                 variant="light"
