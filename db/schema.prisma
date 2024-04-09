@@ -19,6 +19,8 @@ model User {
   role            String    @default("USER")
   emailVerifiedAt DateTime?
 
+  onboarded Boolean @default(true)
+
   avatarImageKey String?
 
   username String? @unique

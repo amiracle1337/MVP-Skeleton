@@ -1,8 +1,18 @@
 import Head from "next/head"
-import React from "react"
+import React, { useState } from "react"
 import { Routes } from "@blitzjs/next"
 import { Suspense } from "react"
-import { Group, Flex, Text, Tooltip, Anchor, Button, RingProgress, Indicator } from "@mantine/core"
+import {
+  Group,
+  Flex,
+  Text,
+  Tooltip,
+  Anchor,
+  Button,
+  RingProgress,
+  Indicator,
+  Modal,
+} from "@mantine/core"
 import { AppShell } from "@mantine/core"
 import Link from "next/link"
 import logout from "src/features/auth/mutations/logout"
@@ -15,6 +25,7 @@ import { useRouter } from "next/router"
 import { FullPageLoader } from "../components/FullPageLoader"
 import { UserAvatar } from "../components/UserAvatar"
 import { UserProfileProgress } from "../components/Header/UserProfileProgress"
+import { OnboardingWizard } from "../components/OnboardingWizard"
 
 const Layout: React.FC<{
   title?: string
@@ -108,7 +119,20 @@ const Layout: React.FC<{
         <AppShell.Main>
           <ErrorBoundary resetKeys={[user]} FallbackComponent={RootErrorFallback}>
             <Suspense fallback={<FullPageLoader />}>
-              <Group> {children}</Group>
+              <Group>
+                {children}
+                <Modal
+                  size="xl"
+                  closeOnClickOutside={false}
+                  closeOnEscape={false}
+                  withCloseButton={false}
+                  title="Onboarding modal"
+                  opened={!user?.onboarded}
+                  onClose={() => {}}
+                >
+                  <OnboardingWizard />
+                </Modal>
+              </Group>
             </Suspense>
           </ErrorBoundary>
         </AppShell.Main>
