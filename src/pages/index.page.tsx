@@ -2,49 +2,24 @@ import Layout from "src/core/layouts/Layout"
 import { BlitzPage } from "@blitzjs/next"
 import { AuthenticationForm } from "src/core/components/MainAuthenticationForm"
 import { useCurrentUser } from "src/features/users/hooks/useCurrentUser"
-import { Button, Flex, Stack } from "@mantine/core"
-import adminOnlyMutation from "src/features/auth/mutations/adminOnlyMutation"
-import { useMutation } from "@blitzjs/rpc"
-import { openContextModal } from "@mantine/modals"
-import { GlobalModals } from "src/modals"
+import { Button } from "@mantine/core"
+
+import { confirmDelete } from "src/utils/mantine-utils"
 
 const Home: BlitzPage = () => {
   const currentUser = useCurrentUser()
-  const [$adminOnly] = useMutation(adminOnlyMutation)
+
   return (
     <Layout title="Home">
-      {currentUser && currentUser.isAdmin && (
-        <Button
-          onClick={async () => {
-            await $adminOnly({})
-          }}
-        >
-          Admin
-        </Button>
-      )}
-
       <Button
+        color="red"
         onClick={() => {
-          openContextModal({
-            title: "Modal title",
-            modal: GlobalModals.becomePro,
-            innerProps: { price: 999997 },
+          confirmDelete(() => {
+            console.log("delete account")
           })
         }}
       >
-        Become pro modal
-      </Button>
-
-      <Button
-        onClick={() => {
-          openContextModal({
-            title: "Modal title",
-            modal: GlobalModals.reportBug,
-            innerProps: { price: 999997 },
-          })
-        }}
-      >
-        report bug bro
+        Delete account
       </Button>
 
       {!currentUser && <AuthenticationForm />}
