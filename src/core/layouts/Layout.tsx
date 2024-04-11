@@ -136,17 +136,19 @@ const Layout: React.FC<{
             <Suspense fallback={<FullPageLoader />}>
               <Group>
                 {children}
-                <Modal
-                  size="xl"
-                  closeOnClickOutside={false}
-                  closeOnEscape={false}
-                  withCloseButton={false}
-                  title="Onboarding modal"
-                  opened={!user?.onboarded}
-                  onClose={() => {}}
-                >
-                  <OnboardingWizard />
-                </Modal>
+                {user?.username && (
+                  <Modal
+                    size="xl"
+                    closeOnClickOutside={false}
+                    closeOnEscape={false}
+                    withCloseButton={false}
+                    title="Onboarding modal"
+                    opened={!user?.onboarded}
+                    onClose={() => {}}
+                  >
+                    <OnboardingWizard />
+                  </Modal>
+                )}
               </Group>
             </Suspense>
           </ErrorBoundary>

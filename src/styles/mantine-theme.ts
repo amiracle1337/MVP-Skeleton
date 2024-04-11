@@ -1,0 +1,24 @@
+import { createTheme } from "@mantine/core"
+import { Loader } from "@mantine/core"
+import { ButtonProps } from "@mantine/core"
+
+const ButtonDefaultProps: Partial<ButtonProps> = {
+  size: "md",
+  variant: "light",
+}
+export const themeMantine = createTheme({
+  cursorType: "pointer",
+  primaryColor: "dark",
+  primaryShade: 6,
+
+  components: {
+    Loader: Loader.extend({
+      defaultProps: {
+        type: "bars",
+      },
+    }),
+    Button: {
+      defaultProps: ButtonDefaultProps,
+    },
+  },
+})
