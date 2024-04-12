@@ -6,6 +6,7 @@ const ButtonDefaultProps: Partial<ButtonProps> = {
   size: "md",
   variant: "light",
 }
+
 export const themeMantine = createTheme({
   cursorType: "pointer",
   primaryColor: "dark",
@@ -20,5 +21,16 @@ export const themeMantine = createTheme({
     Button: {
       defaultProps: ButtonDefaultProps,
     },
+    /*  Slider: {
+      styles: () => {
+        return {
+          thumb: {
+            backgroundColor: "red",
+            opacity: 0.5,
+          },
+        }
+      }, 
+    }, 
+    */
   },
 })
