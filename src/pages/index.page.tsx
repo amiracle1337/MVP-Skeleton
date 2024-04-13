@@ -2,7 +2,7 @@ import Layout from "src/core/layouts/Layout"
 import { BlitzPage } from "@blitzjs/next"
 import { AuthenticationForm } from "src/core/components/MainAuthenticationForm"
 import { useCurrentUser } from "src/features/users/hooks/useCurrentUser"
-import { Button, Group } from "@mantine/core"
+import { Button, Group, PinInput } from "@mantine/core"
 import { Slider } from "@mantine/core"
 
 import { confirmDelete } from "src/utils/mantine-utils"
@@ -21,6 +21,7 @@ const Home: BlitzPage = () => {
           { value: 80, label: "80%" },
         ]}
       />
+      <PinInput />
       <Button
         color="red"
         onClick={() => {
