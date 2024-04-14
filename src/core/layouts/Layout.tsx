@@ -29,6 +29,7 @@ import { UserProfileProgress } from "../components/Header/UserProfileProgress"
 import { OnboardingWizard } from "../components/OnboardingWizard"
 import { openContextModal } from "@mantine/modals"
 import { GlobalModals } from "src/modals"
+import { UserHeaderMenu } from "../components/Header/UserHeaderMenu"
 
 const Layout: React.FC<{
   title?: string
@@ -72,38 +73,11 @@ const Layout: React.FC<{
           </Anchor>
           {user && (
             <Group>
-              {user.username && (
-                <Link
-                  href={Routes.ProfilePage({
-                    username: user.username,
-                  })}
-                >
-                  <Group>
-                    {user.isAdmin ? (
-                      <Indicator
-                        color="none"
-                        label={
-                          <>
-                            <Tooltip label="admin">
-                              <IconUserShield color="black" size={12} />
-                            </Tooltip>
-                          </>
-                        }
-                        size={16}
-                        position="bottom-end"
-                      >
-                        <UserAvatar user={user} size="33px" />
-                      </Indicator>
-                    ) : (
-                      <UserAvatar user={user} size="35px" />
-                    )}
-
-                    <Text c="gray.7">{user.username}</Text>
-                    <UserProfileProgress />
-                  </Group>
-                </Link>
-              )}
-
+              <UserHeaderMenu />
+              <Group>
+                <Text c="gray.7">{user.username}</Text>
+                <UserProfileProgress />
+              </Group>
               {!user.username && <Text c="gray.7">{user.name}</Text>}
               <Badge
                 color="red"
@@ -117,7 +91,7 @@ const Layout: React.FC<{
               >
                 Pro
               </Badge>
-              <Button
+              {/* <Button
                 size="xs"
                 variant="light"
                 onClick={async () => {
@@ -126,7 +100,7 @@ const Layout: React.FC<{
                 }}
               >
                 Logout
-              </Button>
+              </Button> */}
             </Group>
           )}
         </AppShell.Header>

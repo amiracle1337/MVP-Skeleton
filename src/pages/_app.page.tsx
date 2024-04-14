@@ -16,7 +16,7 @@ import { themeMantine } from "src/styles/mantine-theme"
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <MantineProvider theme={themeMantine} defaultColorScheme={"dark"} withCssVariables={true}>
+    <MantineProvider theme={themeMantine} defaultColorScheme={"light"} withCssVariables={true}>
       <ModalsProvider modals={globalModals}>
         <ErrorBoundary FallbackComponent={RootErrorFallback}>
           <Notifications />
