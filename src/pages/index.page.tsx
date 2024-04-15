@@ -12,15 +12,6 @@ const Home: BlitzPage = () => {
 
   return (
     <Layout title="Home">
-      <Slider
-        style={{ width: "20%" }}
-        color="blue"
-        marks={[
-          { value: 20, label: "20%" },
-          { value: 50, label: "50%" },
-          { value: 80, label: "80%" },
-        ]}
-      />
       <PinInput />
       <Button
         color="red"
