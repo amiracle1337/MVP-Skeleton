@@ -14,7 +14,7 @@ export const EditProfileForm: React.FC<{
     <Form form={form} onSubmit={onSubmit}>
       <Flex direction="column" gap={15}>
         <TextInput
-          w="100%"
+          w="65%"
           required
           label="Name"
           placeholder="Name"
@@ -22,14 +22,14 @@ export const EditProfileForm: React.FC<{
           radius="md"
         />
         <TextInput
-          w="100%"
+          w="65%"
           label="Username"
           placeholder="Username"
           {...form.getInputProps("username")}
           radius="md"
         />
         <Textarea
-          w="100%"
+          w="65%"
           label="Bio"
           placeholder="Bio"
           {...form.getInputProps("bio")}
