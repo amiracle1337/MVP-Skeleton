@@ -44,25 +44,17 @@ export const UserHeaderMenu = () => {
         </Box>
       </Menu.Target>
       <Menu.Dropdown>
-        <Menu.Label>Application</Menu.Label>
-        <MenuItemIcon Icon={IconSettings}>Settings</MenuItemIcon>
+        <Menu.Label>Account</Menu.Label>
+        <MenuItemLink Icon={IconSettings} href={Routes.settingsPage()}>
+          Settings
+        </MenuItemLink>
         <MenuItemLink Icon={IconPencil} href={Routes.editProfilePage()}>
           Edit profile
         </MenuItemLink>
         <MenuItemLink Icon={IconUser} href={Routes.ProfilePage({ username: user.username })}>
           Go to profile
         </MenuItemLink>
-
-        <Menu.Item leftSection={<IconSettings style={{ width: rem(14), height: rem(14) }} />}>
-          Settings
-        </Menu.Item>
-        <Menu.Item leftSection={<IconSettings style={{ width: rem(14), height: rem(14) }} />}>
-          Edit profile
-        </Menu.Item>
-        <Menu.Item leftSection={<IconUser style={{ width: rem(14), height: rem(14) }} />}>
-          Go to profile
-        </Menu.Item>
-
+        {/* 
         <Menu.Item
           leftSection={<IconSearch style={{ width: rem(14), height: rem(14) }} />}
           rightSection={
@@ -72,7 +64,7 @@ export const UserHeaderMenu = () => {
           }
         >
           Search
-        </Menu.Item>
+        </Menu.Item> */}
 
         <Menu.Divider />
 
