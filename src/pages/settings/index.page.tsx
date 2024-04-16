@@ -1,20 +1,15 @@
 import { BlitzPage } from "@blitzjs/auth"
-import { Text, Stack } from "@mantine/core"
+import { Stack } from "@mantine/core"
 import Layout from "src/core/layouts/Layout"
 import { Tabs, rem } from "@mantine/core"
-import {
-  IconPhoto,
-  IconMessageCircle,
-  IconSettings,
-  IconUserCog,
-  IconMail,
-} from "@tabler/icons-react"
+import { IconSettings, IconUserCog, IconMail } from "@tabler/icons-react"
+import { ChangePassword } from "./components/ChangePassword"
 
-export const settingsPage: BlitzPage = () => {
+export const SettingsPage: BlitzPage = () => {
   const iconStyle = { width: rem(12), height: rem(12) }
   return (
     <Layout>
-      <Stack>
+      <Stack w={"100%"}>
         <Tabs
           color="rgba(0, 0, 0, 1)"
           variant="pills"
@@ -35,14 +30,14 @@ export const settingsPage: BlitzPage = () => {
             </Tabs.Tab>
           </Tabs.List>
 
-          <Tabs.Panel style={{ marginLeft: "10px" }} value="account">
-            Account{" "}
+          <Tabs.Panel style={{ marginLeft: "20px" }} value="account">
+            <ChangePassword />
           </Tabs.Panel>
-          <Tabs.Panel style={{ marginLeft: "10px" }} value="email">
+          <Tabs.Panel style={{ marginLeft: "20px" }} value="email">
             Email
           </Tabs.Panel>
 
-          <Tabs.Panel style={{ marginLeft: "10px" }} value="settings">
+          <Tabs.Panel style={{ marginLeft: "20px" }} value="settings">
             Settings tab content
           </Tabs.Panel>
         </Tabs>
@@ -51,4 +46,4 @@ export const settingsPage: BlitzPage = () => {
   )
 }
 
-export default settingsPage
+export default SettingsPage

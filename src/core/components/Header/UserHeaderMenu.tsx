@@ -1,22 +1,21 @@
-import { IconPencil, IconUser, IconUserShield } from "@tabler/icons-react"
-import { Box, Menu, Text, rem } from "@mantine/core"
-import {
-  IconSettings,
-  IconSearch,
-  IconPhoto,
-  IconMessageCircle,
-  IconTrash,
-  IconArrowsLeftRight,
-} from "@tabler/icons-react"
+import { IconLogout, IconPencil, IconUser, IconUserShield } from "@tabler/icons-react"
+import { Box, Menu } from "@mantine/core"
+import { IconSettings } from "@tabler/icons-react"
 import { Indicator } from "@mantine/core"
 import { Tooltip } from "@mantine/core"
 import { UserAvatar } from "../UserAvatar"
 import { useCurrentUser } from "src/features/users/hooks/useCurrentUser"
 import { MenuItemIcon, MenuItemLink } from "../MenuItems"
 import { Routes } from "@blitzjs/next"
+import logout from "src/features/auth/mutations/logout"
+import { useMutation } from "@blitzjs/rpc"
+import { useRouter } from "next/router"
 
 export const UserHeaderMenu = () => {
   const user = useCurrentUser()
+  const router = useRouter()
+
+  const [logoutMutation] = useMutation(logout)
 
   if (!user || !user.username) return null
   return (
@@ -45,7 +44,7 @@ export const UserHeaderMenu = () => {
       </Menu.Target>
       <Menu.Dropdown>
         <Menu.Label>Account</Menu.Label>
-        <MenuItemLink Icon={IconSettings} href={Routes.settingsPage()}>
+        <MenuItemLink Icon={IconSettings} href={Routes.SettingsPage()}>
           Settings
         </MenuItemLink>
         <MenuItemLink Icon={IconPencil} href={Routes.editProfilePage()}>
@@ -67,19 +66,16 @@ export const UserHeaderMenu = () => {
         </Menu.Item> */}
 
         <Menu.Divider />
-
-        <Menu.Label>Danger zone</Menu.Label>
-        <Menu.Item
-          leftSection={<IconArrowsLeftRight style={{ width: rem(14), height: rem(14) }} />}
+        <MenuItemIcon
+          color="red.5"
+          Icon={IconLogout}
+          onClick={async () => {
+            await logoutMutation()
+            router.push("/")
+          }}
         >
-          Transfer my data
-        </Menu.Item>
-        <Menu.Item
-          color="red"
-          leftSection={<IconTrash style={{ width: rem(14), height: rem(14) }} />}
-        >
-          Delete my account
-        </Menu.Item>
+          Logout
+        </MenuItemIcon>
       </Menu.Dropdown>
     </Menu>
   )

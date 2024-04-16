@@ -2,29 +2,13 @@ import Head from "next/head"
 import React, { useState } from "react"
 import { Routes } from "@blitzjs/next"
 import { Suspense } from "react"
-import {
-  Group,
-  Flex,
-  Text,
-  Tooltip,
-  Anchor,
-  Button,
-  RingProgress,
-  Indicator,
-  Modal,
-  Badge,
-} from "@mantine/core"
+import { Group, Flex, Text, Anchor, Modal, Badge } from "@mantine/core"
 import { AppShell } from "@mantine/core"
 import Link from "next/link"
-import logout from "src/features/auth/mutations/logout"
-import { useMutation } from "@blitzjs/rpc"
 import { useCurrentUser } from "src/features/users/hooks/useCurrentUser"
-import { IconUserShield } from "@tabler/icons-react"
 import { RootErrorFallback } from "src/core/components/RootErrorFallback"
 import { ErrorBoundary } from "@blitzjs/next"
-import { useRouter } from "next/router"
 import { FullPageLoader } from "../components/FullPageLoader"
-import { UserAvatar } from "../components/UserAvatar"
 import { UserProfileProgress } from "../components/Header/UserProfileProgress"
 import { OnboardingWizard } from "../components/OnboardingWizard"
 import { openContextModal } from "@mantine/modals"
@@ -36,9 +20,7 @@ const Layout: React.FC<{
   children?: React.ReactNode
 }> = ({ title, children }) => {
   const thisYear = new Date().getFullYear()
-  const [logoutMutation] = useMutation(logout)
   const user = useCurrentUser()
-  const router = useRouter()
 
   return (
     <>
@@ -91,16 +73,6 @@ const Layout: React.FC<{
               >
                 Pro
               </Badge>
-              {/* <Button
-                size="xs"
-                variant="light"
-                onClick={async () => {
-                  await logoutMutation()
-                  router.push("/")
-                }}
-              >
-                Logout
-              </Button> */}
             </Group>
           )}
         </AppShell.Header>
