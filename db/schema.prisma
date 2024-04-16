@@ -29,6 +29,10 @@ model User {
   todos    Todo[]
   tokens   Token[]
   sessions Session[]
+
+  // settings
+  settingsEmailMarketing        Boolean @default(true)
+  settingsEmailMarketingProduct Boolean @default(true)
 }
 
 model Todo {

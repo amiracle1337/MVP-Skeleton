@@ -4,6 +4,7 @@ import Layout from "src/core/layouts/Layout"
 import { Tabs, rem } from "@mantine/core"
 import { IconSettings, IconUserCog, IconMail } from "@tabler/icons-react"
 import { ChangePassword } from "./components/ChangePassword"
+import { UserEmailSettings } from "./components/UserEmailSettings"
 
 export const SettingsPage: BlitzPage = () => {
   const iconStyle = { width: rem(12), height: rem(12) }
@@ -34,7 +35,7 @@ export const SettingsPage: BlitzPage = () => {
             <ChangePassword />
           </Tabs.Panel>
           <Tabs.Panel style={{ marginLeft: "20px" }} value="email">
-            Email
+            <UserEmailSettings />
           </Tabs.Panel>
 
           <Tabs.Panel style={{ marginLeft: "20px" }} value="settings">
