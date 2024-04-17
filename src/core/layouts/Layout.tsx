@@ -47,11 +47,12 @@ const Layout: React.FC<{
         >
           <Anchor
             style={{ textDecoration: "none" }}
-            c="gray.7"
+            c="black"
             component={Link}
             href={Routes.Home()}
+            fw={700}
           >
-            Nova
+            future project
           </Anchor>
           {user && (
             <Group>
