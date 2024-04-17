@@ -34,7 +34,7 @@ export const LoginForm: React.FC<{
     <Flex style={{ height: "100vh", width: "100%" }} align="center" justify="center">
       <Paper radius="md" p="xl" withBorder>
         <Text size="lg" fw={500}>
-          Welcome to Nova, login with
+          Welcome to "future project", login with
         </Text>
 
         <SocialButtonsAuth />
