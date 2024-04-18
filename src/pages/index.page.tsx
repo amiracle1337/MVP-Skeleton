@@ -3,25 +3,22 @@ import { BlitzPage } from "@blitzjs/next"
 import { AuthenticationForm } from "src/core/components/MainAuthenticationForm"
 import { useCurrentUser } from "src/features/users/hooks/useCurrentUser"
 import { Button, PinInput } from "@mantine/core"
-import { Slider } from "@mantine/core"
 
-import { confirmDelete } from "src/utils/mantine-utils"
+import sendDummy from "src/features/users/mutations/sendDummy"
+import { useMutation } from "@blitzjs/rpc"
 
 const Home: BlitzPage = () => {
   const currentUser = useCurrentUser()
+  const [$sendEmailDummy] = useMutation(sendDummy)
 
   return (
     <Layout title="Home">
-      <PinInput />
       <Button
-        color="red"
         onClick={() => {
-          confirmDelete(() => {
-            console.log("delete account")
-          })
+          $sendEmailDummy({})
         }}
       >
-        Delete account
+        Send dummy email
       </Button>
 
       {!currentUser && <AuthenticationForm />}
