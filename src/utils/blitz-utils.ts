@@ -62,12 +62,10 @@ export const formatZodError = (err: any) => {
   })
 }
 
-const EMAIL_VERIFY_LINK_IN_HOURS = 4
-
-const createToken = async ({ userId, userEmail, tokenType }) => {
+const createToken = async ({ userId, userEmail, tokenType, expireHours = 4 }) => {
   const token = generateToken()
   const hashedToken = hash256(token)
-  const expiresAt = addHours(new Date(), EMAIL_VERIFY_LINK_IN_HOURS)
+  const expiresAt = addHours(new Date(), expireHours)
 
   await db.token.create({
     data: {
@@ -85,19 +83,26 @@ export const regenerateToken = async ({
   userId,
   userEmail,
   tokenType,
+  expireHours = 4,
+  deleteExisting = true,
 }: {
   userId: string
   userEmail: string
   tokenType: TokenType
+  expireHours?: number
+  deleteExisting?: boolean
 }): Promise<string> => {
-  await db.token.deleteMany({
-    where: { type: tokenType, userId },
-  })
+  if (deleteExisting) {
+    await db.token.deleteMany({
+      where: { type: tokenType, userId },
+    })
+  }
 
   const token = await createToken({
     userId,
     userEmail,
     tokenType,
+    expireHours,
   })
 
   return token

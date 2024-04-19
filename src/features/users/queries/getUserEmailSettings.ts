@@ -1,5 +1,4 @@
 import { resolver } from "@blitzjs/rpc"
-import { NotFoundError } from "@prisma/client/runtime"
 import db from "db"
 import { z } from "zod"
 
@@ -9,9 +8,12 @@ export default resolver.pipe(
   resolver.zod(Input),
   resolver.authorize(),
   async ({}, { session: { userId } }) => {
-    return db.user.findUnique({
+    return await db.user.findUnique({
       where: { id: userId },
-      select: { settingsEmailMarketing: true, settingsEmailMarketingProduct: true },
+      select: {
+        settingsEmailMarketing: true,
+        settingsEmailMarketingProduct: true,
+      },
     })
   }
 )

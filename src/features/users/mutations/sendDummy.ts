@@ -6,6 +6,7 @@ import db, { TokenType } from "db"
 import EmailTemplateDummy from "mailers/react-email-starter/emails/dummy"
 import { regenerateToken } from "src/utils/blitz-utils"
 import { URL_ORIGIN } from "src/config"
+import { generateUnsubscribeLink } from "src/utils/email-utils"
 
 const Input = z.object({})
 
@@ -18,13 +19,7 @@ export default resolver.pipe(
     })
     if (!user) throw new Error("User not found")
 
-    const token = await regenerateToken({
-      userId: user.id,
-      userEmail: user.email,
-      tokenType: TokenType.UNSUBSCRIBE_EMAIL,
-    })
-
-    let unsubscribeLink = `${URL_ORIGIN}/unsubscribe?token=${token}`
+    let unsubscribeLink = await generateUnsubscribeLink(user.id, user.email)
 
     await sendEmail({
       to: user.email,
@@ -33,7 +28,7 @@ export default resolver.pipe(
         props: {
           name: user.name,
           emailVerifyURL: "",
-          unsubscribeLink: unsubscribeLink,
+          unsubscribeLink,
         },
       }),
     })

@@ -3,8 +3,9 @@ import getUserEmailSettings from "src/features/users/queries/getUserEmailSetting
 import { useMutation, useQuery } from "@blitzjs/rpc"
 import setEmailSettings from "src/features/users/mutations/setEmailSettings"
 import { ToggleUserEmailSetting } from "src/core/components/ToggleUserEmailSetting"
+import React from "react"
 
-export const UserEmailSettings = () => {
+export const UserEmailSettings: React.FC<{}> = ({}) => {
   const [settings] = useQuery(getUserEmailSettings, {})
   return (
     <Stack>
