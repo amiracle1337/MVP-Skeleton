@@ -1,4 +1,4 @@
-import { IconLogout, IconPencil, IconUser, IconUserShield } from "@tabler/icons-react"
+import { IconLogout, IconPencil, IconTool, IconUser, IconUserShield } from "@tabler/icons-react"
 import { Box, Menu } from "@mantine/core"
 import { IconSettings } from "@tabler/icons-react"
 import { Indicator } from "@mantine/core"
@@ -44,6 +44,11 @@ export const UserHeaderMenu = () => {
       </Menu.Target>
       <Menu.Dropdown>
         <Menu.Label>Account</Menu.Label>
+        {user.isAdmin && (
+          <MenuItemLink Icon={IconUserShield} href={Routes.AdminSettingsPage()}>
+            Admin
+          </MenuItemLink>
+        )}
         <MenuItemLink Icon={IconSettings} href={Routes.SettingsPage()}>
           Settings
         </MenuItemLink>
