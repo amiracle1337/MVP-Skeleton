@@ -22,7 +22,7 @@ export default resolver.pipe(
     })
     if (!user) throw new Error("User not found")
 
-    console.log("list is", list)
+    console.log("list iss", list)
     // let unsubscribeLink = await generateUnsubscribeLink(user.id, user.email)
 
     // await sendEmail({
