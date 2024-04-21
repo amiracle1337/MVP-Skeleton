@@ -3,12 +3,13 @@ import { Stack } from "@mantine/core"
 import Layout from "src/core/layouts/Layout"
 import { Tabs, rem } from "@mantine/core"
 import { IconSettings, IconUserCog, IconMail } from "@tabler/icons-react"
+import { AdminPageEmailTab } from "./components/AdminPageEmailTab"
 
 export const AdminSettingsPage: BlitzPage = () => {
   const iconStyle = { width: rem(12), height: rem(12) }
   return (
     <Layout>
-      <Stack w={"100%"}>
+      <Stack w={"15%"}>
         <Tabs
           color="rgba(0, 0, 0, 1)"
           variant="pills"
@@ -23,7 +24,7 @@ export const AdminSettingsPage: BlitzPage = () => {
           </Tabs.List>
 
           <Tabs.Panel style={{ marginLeft: "20px" }} value="email">
-            Sending bulk email
+            <AdminPageEmailTab />
           </Tabs.Panel>
         </Tabs>
       </Stack>
