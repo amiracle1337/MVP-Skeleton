@@ -4,10 +4,11 @@ import { isDev } from "src/config"
 import { nodemailerAppTransport } from "./transports/nodemailer-app-transports"
 import { render } from "@react-email/render"
 import { env } from "src/env.mjs"
+import { Email } from "./react-email-starter/types"
 
 const resend = new Resend(env.RESEND_API_KEY)
 
-export const sendEmail = async ({ subject, to, react }) => {
+export const sendEmail = async ({ subject, to, react }: Email) => {
   let message: CreateEmailOptions = {
     from: "onboarding@resend.dev",
     subject,
