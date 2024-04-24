@@ -1,4 +1,3 @@
-import { CreateEmailOptions } from "resend/dist/types"
 import { Resend } from "resend"
 import { isDev } from "src/config"
 import { nodemailerAppTransport } from "./transports/nodemailer-app-transports"
@@ -9,6 +8,7 @@ import { Email } from "./react-email-starter/types"
 const resend = new Resend(env.RESEND_API_KEY)
 
 export const sendEmail = async ({ subject, to, react }: Email) => {
+  // @ts-ignore
   let message: CreateEmailOptions = {
     from: "onboarding@resend.dev",
     subject,
