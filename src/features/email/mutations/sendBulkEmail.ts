@@ -67,7 +67,8 @@ export default resolver.pipe(
       )
 
       console.log("email sent to", emails)
-      sendBulkEmail({ emails })
+
+      await sendBulkEmail({ emails })
     }
   }
 )
