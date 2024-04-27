@@ -19,7 +19,7 @@ const templateOptions = [
 export const AdminPageEmailTab = () => {
   const [test] = useMutation(sendBulkEmail)
   const [list, setList] = useState<EmailList>(EmailList.Marketing)
-  const [templateList, setTemplateList] = useState<EmailTemplate>(EmailTemplate.Promotion)
+  const [template, settemplate] = useState<EmailTemplate>(EmailTemplate.Promotion)
   return (
     <Stack>
       <Select
@@ -35,14 +35,14 @@ export const AdminPageEmailTab = () => {
         label="Choose email template"
         placeholder="Pick one"
         data={templateOptions}
-        value={templateList}
+        value={template}
         onChange={(value) => {
-          setTemplateList(value as EmailTemplate)
+          settemplate(value as EmailTemplate)
         }}
       />
       <Button
         onClick={async () => {
-          await test({ template: templateList, list })
+          await test({ template, list })
         }}
       >
         Send bulk email
