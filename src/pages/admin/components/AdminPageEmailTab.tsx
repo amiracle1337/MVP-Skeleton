@@ -1,10 +1,12 @@
 import { useMutation } from "@blitzjs/rpc"
-import { Stack, Select, Group } from "@mantine/core"
+import { Stack, Select, Button } from "@mantine/core"
 import sendBulkEmail from "src/features/email/mutations/sendBulkEmail"
 import { EmailList, EmailTemplate } from "src/features/email/types"
-import { Button } from "@mantine/core"
 import { useState } from "react"
 import { EmailTemplates } from "src/features/email/templates"
+import { convertArrayToObject } from "src/utils/utils"
+
+type Variable = { key: string; value: string }
 
 const listOptions = [
   { value: EmailList.Marketing, label: "Marketing" },
@@ -17,12 +19,42 @@ const templateOptions = [
   { value: EmailTemplate.Promotion, label: "Promotion" },
 ]
 
+const Variables: React.FC<{ variables: Variable[]; addVariable: (variable: Variable) => void }> = ({
+  variables,
+  addVariable,
+}) => {
+  return (
+    <Stack>
+      <Button
+        onClick={() => {
+          addVariable({ key: "mainButtonText", value: "SHOP NOfffF" })
+        }}
+      >
+        Add variable
+      </Button>
+      <Stack>
+        {variables.map((variable, index) => (
+          <div key={index}>
+            {variable.key} : {variable.value}
+          </div>
+        ))}
+      </Stack>
+    </Stack>
+  )
+}
+
 export const AdminPageEmailTab = () => {
   const [list, setList] = useState<EmailList>(EmailList.Marketing)
-  const [template, settemplate] = useState<EmailTemplate>(EmailTemplate.Promotion)
+  const [template, setTemplate] = useState<EmailTemplate>(EmailTemplate.Promotion)
+  const [variables, setVariables] = useState<Variable[]>([])
   const [test] = useMutation(sendBulkEmail)
 
+  const addVariable = (newVariable: Variable) => {
+    setVariables((prevVariables) => [...prevVariables, newVariable])
+  }
+
   const foundTemplate = EmailTemplates.find((t) => t.value === template)
+  const componentProps = convertArrayToObject(variables)
 
   return (
     <div style={{ display: "flex", flexDirection: "row", width: "100vw", gap: "20px" }}>
@@ -42,7 +74,7 @@ export const AdminPageEmailTab = () => {
           data={templateOptions}
           value={template}
           onChange={(value) => {
-            settemplate(value as EmailTemplate)
+            setTemplate(value as EmailTemplate)
           }}
         />
         <Button
@@ -52,9 +84,10 @@ export const AdminPageEmailTab = () => {
         >
           Send bulk email
         </Button>
+        <Variables variables={variables} addVariable={addVariable} />
       </Stack>
       {/* @ts-ignore */}
-      {foundTemplate && <foundTemplate.component />}
+      {foundTemplate && <foundTemplate.component props={componentProps} />}
     </div>
   )
 }

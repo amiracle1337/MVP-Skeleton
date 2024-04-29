@@ -20,3 +20,15 @@ export const getAvatarFallbackName = (name?: string | null) => {
   const [first, second] = name.split(" ")
   return `${first ? first[0] : ""}${second ? second[0] : ""}`
 }
+
+type arrayItem = {
+  key: string
+  value: string
+}
+
+export const convertArrayToObject = (array: arrayItem[]) => {
+  return array.reduce((obj, item) => {
+    obj[item.key] = item.value
+    return obj
+  }, {})
+}

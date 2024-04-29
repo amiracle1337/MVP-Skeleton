@@ -5,11 +5,14 @@ import { Header } from "../components/Header"
 import { Footer } from "../components/Footer"
 import { emailStyles } from "../styles"
 import { MainButton } from "../components/MainButton"
+import { title } from "process"
 
 const defaultProps = {
   name: "test",
   emailVerifyURL: "https://example.com",
   unsubscribeLink: "",
+  title: "Black Friday Savings",
+  mainButtonText: "Shop Now",
 }
 
 export const EmailTemplatePromotion: React.FC<{
@@ -17,9 +20,11 @@ export const EmailTemplatePromotion: React.FC<{
     name?: string | null
     emailVerifyURL: string | null
     unsubscribeLink: string
+    title?: string
+    mainButtonText: string
   }
 }> = ({ props = defaultProps }) => {
-  const { name, unsubscribeLink } = props
+  const { name, unsubscribeLink, title, mainButtonText } = props
 
   return (
     <Html>
@@ -29,8 +34,8 @@ export const EmailTemplatePromotion: React.FC<{
         <Container style={emailStyles.container}>
           <Section style={emailStyles.box}>
             <Header />
-            <Text style={emailStyles.paragraph}>Promotion template</Text>
-            <MainButton href="https://dashboard.stripe.com/login">Buy today</MainButton>
+            <Text style={emailStyles.paragraph}>{title}</Text>
+            <MainButton href="https://dashboard.stripe.com/login">{mainButtonText}</MainButton>
             <Footer unsubscribeLink={unsubscribeLink} />
           </Section>
         </Container>
