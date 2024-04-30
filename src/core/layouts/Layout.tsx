@@ -31,7 +31,7 @@ const Layout: React.FC<{
       <AppShell
         header={{ height: 60 }}
         navbar={{
-          width: 11,
+          width: 10,
           breakpoint: "sm",
         }}
         padding="md"
