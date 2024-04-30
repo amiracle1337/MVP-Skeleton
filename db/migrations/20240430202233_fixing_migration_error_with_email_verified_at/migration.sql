@@ -1,2 +1,2 @@
 -- AlterTable
-ALTER TABLE "User" ADD COLUMN     "emailVerifiedAt" TIMESTAMP(3);
+-- ALTER TABLE "User" ADD COLUMN     "emailVerifiedAt" TIMESTAMP(3);
