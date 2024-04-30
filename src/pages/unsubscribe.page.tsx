@@ -27,7 +27,7 @@ export const ToggleUserEmailSetting = ({ settings, label, setting, token }) => {
   )
 }
 
-export const unsubscribePage: BlitzPage = () => {
+export const UnsubscribePage: BlitzPage = () => {
   const token = useStringQueryParam("token")
   const [settings] = useQuery(getUserEmailSettingsForUnsubscribe, {
     token: token as string,
@@ -57,4 +57,4 @@ export const unsubscribePage: BlitzPage = () => {
   )
 }
 
-export default unsubscribePage
+export default UnsubscribePage
