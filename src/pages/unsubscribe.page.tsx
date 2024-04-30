@@ -5,7 +5,6 @@ import React from "react"
 import getUserEmailSettingsForUnsubscribe from "src/features/users/queries/getUserEmailSettingsForUnsubscribe"
 import { Checkbox, Text, Stack } from "@mantine/core"
 import { useMutation, useQuery } from "@blitzjs/rpc"
-import setEmailSettings from "src/features/users/mutations/setEmailSettings"
 import setUserEmailSetting from "src/features/users/mutations/setUserEmailSetting"
 
 export const ToggleUserEmailSetting = ({ settings, label, setting, token }) => {
@@ -19,6 +18,8 @@ export const ToggleUserEmailSetting = ({ settings, label, setting, token }) => {
           key: setting,
           value: !settings?.[setting],
           token,
+        }).catch((error) => {
+          console.error("An error occurred:", error)
         })
       }}
       checked={settings?.[setting]}
