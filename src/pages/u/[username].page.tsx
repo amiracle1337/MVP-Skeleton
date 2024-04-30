@@ -29,9 +29,6 @@ export const ProfilePage: BlitzPage = () => {
   const router = useRouter()
   const icon = <IconInfoCircle />
 
-  if (!user) return <Text>User not found :(</Text>
-
-  const isOwner = currentUser?.id === user.id
   const [opened, { open, close }] = useDisclosure(false)
 
   const form = useForm<UpdateProfileInputType>({
@@ -44,6 +41,8 @@ export const ProfilePage: BlitzPage = () => {
     validate: zodResolver(UpdateProfileInput),
     validateInputOnBlur: true,
   })
+  if (!user) return <Text>User not found :(</Text>
+  const isOwner = currentUser?.id === user.id
 
   return (
     <>
@@ -61,7 +60,7 @@ export const ProfilePage: BlitzPage = () => {
             const { username } = values
             if (username !== user.username) {
               if (username) {
-                router.push(Routes.ProfilePage({ username }))
+                await router.push(Routes.ProfilePage({ username }))
               }
             }
             notifications.show({

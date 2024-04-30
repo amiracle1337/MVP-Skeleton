@@ -19,8 +19,6 @@ export const ToggleUserEmailSetting = ({ settings, label, setting, token }) => {
           key: setting,
           value: !settings?.[setting],
           token,
-        }).catch((error) => {
-          console.error("An error occurred:", error)
         })
       }}
       checked={settings?.[setting]}
