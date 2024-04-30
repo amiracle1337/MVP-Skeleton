@@ -1,10 +1,9 @@
 import React from "react"
-import { BlitzPage } from "@blitzjs/next"
 import { Group } from "@mantine/core"
 import { GoogleButton } from "./Icons/GoogleIcon"
 import { FacebookButton } from "./Icons/FacebookIcon"
 
-export const SocialButtonsAuth: BlitzPage = () => {
+export const SocialButtonsAuth = () => {
   return (
     <Group grow mb="md" mt="md">
       <GoogleButton radius="xl">Google</GoogleButton>
@@ -12,5 +11,3 @@ export const SocialButtonsAuth: BlitzPage = () => {
     </Group>
   )
 }
-
-export default SocialButtonsAuth
