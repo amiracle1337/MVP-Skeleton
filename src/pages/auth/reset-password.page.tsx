@@ -6,10 +6,10 @@ import Link from "next/link"
 import { useForm, zodResolver } from "@mantine/form"
 import { Stack, Button, PasswordInput, Title } from "@mantine/core"
 import { resetPasswordInput, resetPasswordInputType } from "src/features/auth/schemas"
-import { useStringQueryParan } from "src/utils/utils"
+import { useStringQueryParam } from "src/utils/utils"
 
 const ResetPasswordPage: BlitzPage = () => {
-  const token = useStringQueryParan("token")
+  const token = useStringQueryParam("token")
   const [$resetPassword, { isSuccess, isLoading }] = useMutation(resetPassword)
 
   const form = useForm<resetPasswordInputType>({
