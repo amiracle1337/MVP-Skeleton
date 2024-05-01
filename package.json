@@ -6,7 +6,7 @@
     "build": "yarn blitz prisma migrate deploy && yarn blitz prisma generate && yarn email-install-dependencies && yarn blitz build",
     "email-install-dependencies": "cd mailers/react-email-starter && yarn install",
     "email": "cd mailers/react-email-starter && yarn dev --port 3009",
-    "start": "blitz start",
+    "start": "blitz start --port $PORT",
     "db:studio": "BROWSER=none yarn blitz prisma studio",
     "db:migrate": "yarn blitz prisma migrate dev",
     "lint": "eslint --ignore-path .gitignore --ext .js,.ts,.tsx .",
