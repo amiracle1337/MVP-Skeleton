@@ -50,7 +50,7 @@ export const MenuItemDelete: React.FC<{
   let del = async () => {
     await onClick()
     if (redirect) {
-      push?.(redirect)
+      await push?.(redirect)
     }
   }
 

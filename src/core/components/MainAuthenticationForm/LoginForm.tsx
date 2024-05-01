@@ -25,7 +25,6 @@ export const LoginForm: React.FC<{
   const [$login, { isLoading }] = useMutation(login)
 
   const form = useForm<LoginInputType>({
-    // validate: is client side validation checking form data, then we have server side validation with mutations
     validate: zodResolver(LoginInput),
     validateInputOnBlur: true,
   })
@@ -34,7 +33,7 @@ export const LoginForm: React.FC<{
     <Flex style={{ height: "100vh", width: "100%" }} align="center" justify="center">
       <Paper radius="md" p="xl" withBorder>
         <Text size="lg" fw={500}>
-          Welcome to "future project", login with
+          Welcome to {'"future project"'}, login with
         </Text>
 
         <SocialButtonsAuth />

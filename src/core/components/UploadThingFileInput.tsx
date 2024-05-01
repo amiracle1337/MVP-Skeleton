@@ -26,7 +26,7 @@ export const UploadThingFileInput: React.FC<{
   name: string
   label: string
 }> = ({ form, name, label }) => {
-  const [isLoading, setIsLoading] = useState(false) // Manage loading state with useState
+  const [isLoading, setIsLoading] = useState(false)
 
   const { startUpload, permittedFileInfo } = useUploadThing("imageUploader", {
     onClientUploadComplete: (files) => {
@@ -73,7 +73,11 @@ export const UploadThingFileInput: React.FC<{
               </Tooltip>
             }
           >
-            <Image w={"80px"} src={getUploadthingUrl(existingImageKey)} />
+            <Image
+              w={"80px"}
+              src={getUploadthingUrl(existingImageKey)}
+              alt="Uploaded image" // Ensure alt attribute is set
+            />
           </Indicator>
         </Stack>
       )}
@@ -87,7 +91,17 @@ export const UploadThingFileInput: React.FC<{
           onChange={async (files) => {
             setIsLoading(true)
             if (files) {
-              await startUpload([files])
+              try {
+                await startUpload([files])
+              } catch (error) {
+                console.error("Upload failed:", error)
+                notifications.show({
+                  title: "Upload Error",
+                  message: "There was an error while uploading the file.",
+                  color: "red",
+                })
+                setIsLoading(false)
+              }
             }
           }}
         />
