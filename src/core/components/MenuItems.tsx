@@ -57,10 +57,22 @@ export const MenuItemDelete: React.FC<{
   return (
     <MenuItemIcon
       Icon={IconTrash}
-      onClick={(e) => {
+      onClick={async (e) => {
         e.preventDefault()
         e.stopPropagation()
-        confirm ? confirmDelete(del) : del()
+        if (confirm) {
+          try {
+            await confirmDelete(del)
+          } catch (error) {
+            console.error("An error occurred:", error)
+          }
+        } else {
+          try {
+            await del()
+          } catch (error) {
+            console.error("An error occurred:", error)
+          }
+        }
       }}
       style={(t) => ({
         color: t.colors.red[3],

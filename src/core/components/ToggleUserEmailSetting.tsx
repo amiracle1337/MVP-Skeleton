@@ -9,8 +9,8 @@ export const ToggleUserEmailSetting = ({ settings, label, setting }) => {
   return (
     <Checkbox
       disabled={isLoading}
-      onClick={() => {
-        $updateSettings({
+      onClick={async () => {
+        await $updateSettings({
           key: setting,
           value: !settings?.[setting],
         })

@@ -84,10 +84,10 @@ export const UploadThingFileInput: React.FC<{
           leftSection={<IconPhoto size={20} />}
           clearable={true}
           disabled={isLoading}
-          onChange={(files) => {
+          onChange={async (files) => {
             setIsLoading(true)
             if (files) {
-              startUpload([files])
+              await startUpload([files])
             }
           }}
         />

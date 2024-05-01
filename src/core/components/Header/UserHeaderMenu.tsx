@@ -24,7 +24,7 @@ export const UserHeaderMenu = () => {
   const handleLogout = async () => {
     try {
       await logoutMutation()
-      router.push("/")
+      await router.push("/")
     } catch (error) {
       console.error("Logout failed:", error)
       // Optionally handle the error, e.g., show a notification
@@ -65,7 +65,7 @@ export const UserHeaderMenu = () => {
         <MenuItemLink Icon={IconSettings} href={Routes.SettingsPage()}>
           Settings
         </MenuItemLink>
-        <MenuItemLink Icon={IconPencil} href={Routes.editProfilePage()}>
+        <MenuItemLink Icon={IconPencil} href={Routes.EditProfilePage()}>
           Edit profile
         </MenuItemLink>
         <MenuItemLink Icon={IconUser} href={Routes.ProfilePage({ username: user.username })}>

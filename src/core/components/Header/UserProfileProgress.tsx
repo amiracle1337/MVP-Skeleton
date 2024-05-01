@@ -37,7 +37,7 @@ export const UserProfileProgress = () => {
   if (completitionPercentage === 100) return null
 
   return (
-    <Link href={Routes.editProfilePage()}>
+    <Link href={Routes.EditProfilePage()}>
       <Tooltip label={`Profile progress (${completitionPercentage}%)`}>
         <RingProgress
           size={25}

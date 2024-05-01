@@ -42,8 +42,8 @@ export const SignupForm: React.FC<{
         <Divider label="Or continue with email" labelPosition="center" my="lg" />
 
         <form
-          onSubmit={form.onSubmit((values) => {
-            $signup(values)
+          onSubmit={form.onSubmit(async (values) => {
+            await $signup(values)
           })}
         >
           <Stack>

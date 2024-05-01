@@ -33,9 +33,9 @@ export function OnboardingWizard() {
         </Button>
         <Button
           loading={isLoading}
-          onClick={() => {
+          onClick={async () => {
             if (isOnFinalOnboardingStep) {
-              $userOnboaded({})
+              await $userOnboaded({})
             } else {
               nextStep()
             }

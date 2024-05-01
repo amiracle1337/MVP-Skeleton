@@ -12,7 +12,7 @@ import { Routes } from "@blitzjs/next"
 import { useRouter } from "next/router"
 import getUserForEditingProfile from "src/features/users/queries/getUserForEditingProfile"
 
-export const editProfilePage: BlitzPage = () => {
+export const EditProfilePage: BlitzPage = () => {
   const [$updateProfile, { isLoading }] = useMutation(updateProfile, {})
   const [profileData] = useQuery(getUserForEditingProfile, {})
   const router = useRouter()
@@ -36,7 +36,7 @@ export const editProfilePage: BlitzPage = () => {
           onSubmit={async (values) => {
             await $updateProfile(values)
             if (username) {
-              router.push(Routes.ProfilePage({ username }))
+              await router.push(Routes.ProfilePage({ username }))
             }
             notifications.show({
               color: "green",
@@ -52,4 +52,4 @@ export const editProfilePage: BlitzPage = () => {
   )
 }
 
-export default editProfilePage
+export default EditProfilePage

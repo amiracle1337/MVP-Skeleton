@@ -1,13 +1,13 @@
 import { Text } from "@mantine/core"
 import { BlitzPage } from "@blitzjs/auth"
 import { Stack } from "@mantine/core"
-import { useStringQueryParan } from "src/utils/utils"
+import { useStringQueryParam } from "src/utils/utils"
 import { useQuery } from "@blitzjs/rpc"
 import verifyUserToken from "src/features/auth/queries/verifyUserToken"
 import Layout from "src/core/layouts/Layout"
 
-export const verifyEmailPage: BlitzPage = () => {
-  const token = useStringQueryParan("token")
+export const VerifyEmailPage: BlitzPage = () => {
+  const token = useStringQueryParam("token")
   const [result, { isSuccess, error }] = useQuery(
     verifyUserToken,
     { token: token as any },
@@ -23,4 +23,4 @@ export const verifyEmailPage: BlitzPage = () => {
   )
 }
 
-export default verifyEmailPage
+export default VerifyEmailPage
