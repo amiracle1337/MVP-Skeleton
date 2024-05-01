@@ -70,7 +70,7 @@ export const LoginForm: React.FC<{
 
           <Group justify="space-between" mt="xl">
             <Anchor onClick={toggle} component="button" type="button" c="dimmed" size="xs">
-              Don't have an account? Register
+              {"Don't have an account? Register"}
             </Anchor>
             <Button disabled={!form.isValid()} loading={isLoading} type="submit" radius="xl">
               Login
