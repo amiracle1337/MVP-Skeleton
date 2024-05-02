@@ -1,12 +1,11 @@
 import { useMutation } from "@blitzjs/rpc"
-import { Stack, Select, Button } from "@mantine/core"
+import { Stack, Select, Button, Group, Input, ActionIcon } from "@mantine/core"
 import sendBulkEmail from "src/features/email/mutations/sendBulkEmail"
 import { EmailList, EmailTemplate } from "src/features/email/types"
 import { useState } from "react"
 import { EmailTemplates } from "src/features/email/templates"
 import { convertArrayToObject } from "src/utils/utils"
-
-type Variable = { key: string; value: string }
+import { IconTrash } from "@tabler/icons-react"
 
 const listOptions = [
   { value: EmailList.Marketing, label: "Marketing" },
@@ -19,41 +18,88 @@ const templateOptions = [
   { value: EmailTemplate.Promotion, label: "Promotion" },
 ]
 
-const Variables: React.FC<{ variables: Variable[]; addVariable: (variable: Variable) => void }> = ({
-  variables,
-  addVariable,
-}) => {
+type VariableType = {
+  key: string
+  value: string
+  id: string
+}
+type updateVariableType = (id: string, key: string, value: string) => void
+type removeVariableType = (id: string) => void
+type addVariableType = (variable: VariableType) => void
+
+const VariableInput: React.FC<{
+  variable: VariableType
+  updateVariable: updateVariableType
+  removeVariable: removeVariableType
+}> = ({ variable, updateVariable, removeVariable }) => {
+  return (
+    <Group>
+      <ActionIcon color="red" variant="light" onClick={() => removeVariable(variable.id)}>
+        <IconTrash size={13} />
+      </ActionIcon>
+      <Input
+        placeholder="key"
+        value={variable.key}
+        onChange={(event) => updateVariable(variable.id, event.currentTarget.value, variable.value)}
+      />
+      <Input
+        placeholder="Value"
+        value={variable.value}
+        onChange={(event) => updateVariable(variable.id, variable.key, event.currentTarget.value)}
+      />
+    </Group>
+  )
+}
+
+const VariablesManager: React.FC<{
+  variables: VariableType[]
+  addVariable: addVariableType
+  updateVariable: updateVariableType
+  removeVariable: removeVariableType
+}> = ({ variables, addVariable, updateVariable, removeVariable }) => {
   return (
     <Stack>
       <Button
         onClick={() => {
-          addVariable({ key: "mainButtonText", value: "SHOP NOfffF" })
+          addVariable({ id: Math.random().toString(), key: "", value: "" })
         }}
       >
         Add variable
       </Button>
-      <Stack>
-        {variables.map((variable, index) => (
-          <div key={index}>
-            {variable.key} : {variable.value}
-          </div>
-        ))}
-      </Stack>
+
+      {variables.map((variable) => (
+        <VariableInput
+          key={variable.id}
+          variable={variable}
+          updateVariable={updateVariable}
+          removeVariable={removeVariable}
+        />
+      ))}
     </Stack>
   )
 }
 
 export const AdminPageEmailTab = () => {
-  const [list, setList] = useState<EmailList>(EmailList.Marketing)
-  const [template, setTemplate] = useState<EmailTemplate>(EmailTemplate.Promotion)
-  const [variables, setVariables] = useState<Variable[]>([])
-  const [test] = useMutation(sendBulkEmail)
+  const [selectedList, setSelectedList] = useState<EmailList>(EmailList.Marketing)
+  const [selectedTemplate, setSelectedTemplate] = useState<EmailTemplate>(EmailTemplate.Promotion)
+  const [variables, setVariables] = useState<VariableType[]>([])
+  const [sendEmailMutation] = useMutation(sendBulkEmail)
 
-  const addVariable = (newVariable: Variable) => {
+  const addVariable = (newVariable: VariableType) => {
     setVariables((prevVariables) => [...prevVariables, newVariable])
   }
 
-  const foundTemplate = EmailTemplates.find((t) => t.value === template)
+  const updateVariable: updateVariableType = (id, key, value) => {
+    setVariables((prevVariables) =>
+      prevVariables.map((variable) => (variable.id === id ? { ...variable, key, value } : variable))
+    )
+  }
+
+  const removeVariable: removeVariableType = (id) => {
+    setVariables((prevVariables) => prevVariables.filter((variable) => variable.id !== id))
+  }
+
+  const foundTemplate = EmailTemplates.find((t) => t.value === selectedTemplate)
   const componentProps = convertArrayToObject(variables)
 
   return (
@@ -63,28 +109,33 @@ export const AdminPageEmailTab = () => {
           label="Choose email list"
           placeholder="Pick value"
           data={listOptions}
-          value={list}
+          value={selectedList}
           onChange={(value) => {
-            setList(value as EmailList)
+            setSelectedList(value as EmailList)
           }}
         />
         <Select
           label="Choose email template"
           placeholder="Pick one"
           data={templateOptions}
-          value={template}
+          value={selectedTemplate}
           onChange={(value) => {
-            setTemplate(value as EmailTemplate)
+            setSelectedTemplate(value as EmailTemplate)
           }}
+        />
+        <VariablesManager
+          variables={variables}
+          addVariable={addVariable}
+          updateVariable={updateVariable}
+          removeVariable={removeVariable}
         />
         <Button
           onClick={async () => {
-            await test({ template, list })
+            await sendEmailMutation({ template: selectedTemplate, list: selectedList })
           }}
         >
           Send bulk email
         </Button>
-        <Variables variables={variables} addVariable={addVariable} />
       </Stack>
       {/* @ts-ignore */}
       {foundTemplate && <foundTemplate.component props={componentProps} />}
