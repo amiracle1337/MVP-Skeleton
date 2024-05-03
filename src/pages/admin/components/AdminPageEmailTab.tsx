@@ -1,7 +1,7 @@
 import { useMutation } from "@blitzjs/rpc"
 import { Stack, Select, Button, Group, Input, ActionIcon, Textarea, Tooltip } from "@mantine/core"
 import sendBulkEmail from "src/features/email/mutations/sendBulkEmail"
-import { EmailList, EmailTemplate } from "src/features/email/types"
+import { EmailList, EmailTemplate, VariableType } from "src/features/email/types"
 import { useState } from "react"
 import { EmailTemplates } from "src/features/email/templates"
 import { convertArrayToObject } from "src/utils/utils"
@@ -18,12 +18,6 @@ const templateOptions = [
   { value: EmailTemplate.Promotion, label: "Promotion" },
 ]
 
-type VariableType = {
-  key: string
-  value: string
-  id: string
-  isTextArea?: boolean
-}
 type updateVariableType = (id: string, key: string, value: string) => void
 type removeVariableType = (id: string) => void
 type addVariableType = (variable: VariableType) => void
@@ -33,8 +27,6 @@ const VariableInput: React.FC<{
   updateVariable: updateVariableType
   removeVariable: removeVariableType
 }> = ({ variable, updateVariable, removeVariable }) => {
-  const WritingElement = variable.isTextArea ? Textarea : Input
-
   const toggleTextArea = () => {
     updateVariable(variable.id, "isTextArea", String(!variable.isTextArea))
   }
@@ -159,7 +151,11 @@ export const AdminPageEmailTab = () => {
         />
         <Button
           onClick={async () => {
-            await sendEmailMutation({ template: selectedTemplate, list: selectedList })
+            await sendEmailMutation({
+              template: selectedTemplate,
+              list: selectedList,
+              variables: variables.map((v) => ({ key: v.key, value: v.value })),
+            })
           }}
         >
           Send bulk email

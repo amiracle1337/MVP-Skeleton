@@ -1,3 +1,4 @@
+import { convertArrayToObject } from "./../../../utils/utils"
 import { resolver } from "@blitzjs/rpc"
 import { z } from "zod"
 import db from "db"
@@ -14,12 +15,18 @@ import { EmailTemplates } from "../templates"
 const Input = z.object({
   list: z.nativeEnum(EmailList),
   template: z.nativeEnum(EmailTemplate),
+  variables: z.array(
+    z.object({
+      key: z.string(),
+      value: z.string(),
+    })
+  ),
 })
 
 export default resolver.pipe(
   resolver.zod(Input),
   resolver.authorize(),
-  async ({ list, template }, { session: { userId } }) => {
+  async ({ list, template, variables }, { session: { userId } }) => {
     console.log("list is", list)
 
     const user = await db.user.findFirst({
@@ -65,6 +72,7 @@ export default resolver.pipe(
                 name: user.name,
                 emailVerifyURL: "",
                 unsubscribeLink,
+                ...convertArrayToObject(variables),
               },
             }),
           }
