@@ -1,11 +1,12 @@
 import { useMutation } from "@blitzjs/rpc"
 import { Stack, Select, Button, Group, Input, ActionIcon, Textarea, Tooltip } from "@mantine/core"
 import sendBulkEmail from "src/features/email/mutations/sendBulkEmail"
-import { EmailList, EmailTemplate, VariableType } from "src/features/email/types"
+import { EmailList, EmailTemplate, SpecialVariables, VariableType } from "src/features/email/types"
 import { useState } from "react"
 import { EmailTemplates } from "src/features/email/templates"
 import { convertArrayToObject } from "src/utils/utils"
 import { IconPencil, IconTextResize, IconTrash } from "@tabler/icons-react"
+import { remapVariables } from "src/features/email/utils"
 
 const listOptions = [
   { value: EmailList.Marketing, label: "Marketing" },
@@ -90,11 +91,21 @@ const VariablesManager: React.FC<{
   )
 }
 
+let specialVariables: SpecialVariables = {
+  userName: "Elon",
+  userEmail: "elon@tesla.com",
+  userId: "123",
+  userBio: "Chief techno king",
+  userUsername: "techno king",
+  userAvatarImageKey: "www.amiracle.xyz",
+}
+
 export const AdminPageEmailTab = () => {
   const [selectedList, setSelectedList] = useState<EmailList>(EmailList.Marketing)
   const [selectedTemplate, setSelectedTemplate] = useState<EmailTemplate>(EmailTemplate.Promotion)
   const [variables, setVariables] = useState<VariableType[]>([])
   const [sendEmailMutation] = useMutation(sendBulkEmail)
+  const [subject, setSubject] = useState("")
 
   const addVariable = (newVariable: VariableType) => {
     setVariables((prevVariables) => [...prevVariables, newVariable])
@@ -119,8 +130,13 @@ export const AdminPageEmailTab = () => {
     setVariables((prevVariables) => prevVariables.filter((variable) => variable.id !== id))
   }
 
+  const remappedVariables = remapVariables({
+    variables: variables,
+    specialVariables: specialVariables,
+  })
+
   const foundTemplate = EmailTemplates.find((t) => t.value === selectedTemplate)
-  const componentProps = convertArrayToObject(variables)
+  const componentProps = convertArrayToObject(remappedVariables)
 
   return (
     <div style={{ display: "flex", flexDirection: "row", width: "100vw", gap: "20px" }}>
@@ -143,6 +159,11 @@ export const AdminPageEmailTab = () => {
             setSelectedTemplate(value as EmailTemplate)
           }}
         />
+        <Input
+          placeholder="Subject"
+          value={subject}
+          onChange={(e) => setSubject(e.currentTarget.value)}
+        />
         <VariablesManager
           variables={variables}
           addVariable={addVariable}
@@ -153,6 +174,7 @@ export const AdminPageEmailTab = () => {
           onClick={async () => {
             await sendEmailMutation({
               template: selectedTemplate,
+              subject: subject,
               list: selectedList,
               variables: variables.map((v) => ({ key: v.key, value: v.value })),
             })
