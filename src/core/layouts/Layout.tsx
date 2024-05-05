@@ -61,7 +61,12 @@ const Layout: React.FC<{
                 <Text c="gray.7">{user.username}</Text>
                 <UserProfileProgress />
               </Group>
-              {!user.username && <Text c="gray.7">{user.name}</Text>}
+              {!user.username && (
+                <Link href={Routes.EditProfilePage()}>
+                  <Text c="gray.7">{user.name}</Text>{" "}
+                </Link>
+              )}
+
               <Badge
                 color="red"
                 onClick={() => {
