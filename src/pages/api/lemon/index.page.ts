@@ -1,9 +1,9 @@
 // import { NextApiRequest, NextApiResponse } from "next"
-// import { validateLemonSqueezyHook } from "@/pages/api/lemon/validateLemonSqueezyHook"
-// import getRawBody from "raw-body"
-// import { LemonEventType, ResBody } from "@/pages/api/lemon/types"
-// import { onOrderCreated } from "@/pages/api/lemon/hooks/onOrderCreated"
-// import { returnError, returnOkay } from "@/pages/api/lemon/utils"
+// // import { validateLemonSqueezyHook } from "@/pages/api/lemon/validateLemonSqueezyHook"
+// // import getRawBody from "raw-body"
+// // import { LemonEventType, ResBody } from "src/pages/api/lemon/types"
+// // import { onOrderCreated } from "@/pages/api/lemon/hooks/onOrderCreated"
+// // import { returnError, returnOkay } from "@/pages/api/lemon/utils"
 
 // export const config = {
 //   api: {
@@ -23,7 +23,9 @@
 //     })
 //   }
 
-//   console.log("req.method is allowed")
+//   console.log("req", req)
+
+//   export default handler
 
 //   try {
 //     const rawBody = await getRawBody(req)
