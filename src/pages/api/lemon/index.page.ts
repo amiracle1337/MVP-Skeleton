@@ -1,43 +1,47 @@
-// import { NextApiRequest, NextApiResponse } from "next"
-// // import { validateLemonSqueezyHook } from "@/pages/api/lemon/validateLemonSqueezyHook"
-// // import getRawBody from "raw-body"
-// // import { LemonEventType, ResBody } from "src/pages/api/lemon/types"
-// // import { onOrderCreated } from "@/pages/api/lemon/hooks/onOrderCreated"
-// // import { returnError, returnOkay } from "@/pages/api/lemon/utils"
+import { NextApiRequest, NextApiResponse } from "next"
+import getRawBody from "raw-body"
+import { validateLemonSqueezyHook } from "./validateLemonSqueezyHook"
+// import { LemonEventType, ResBody } from "src/pages/api/lemon/types"
+// import { onOrderCreated } from "@/pages/api/lemon/hooks/onOrderCreated"
+// import { returnError, returnOkay } from "@/pages/api/lemon/utils"
 
-// export const config = {
-//   api: {
-//     bodyParser: false,
-//   },
-// }
+export const config = {
+  api: {
+    bodyParser: false,
+  },
+}
 
-// const handler = async (req: NextApiRequest, res: NextApiResponse) => {
-//   console.log("🍋: hello")
+const handler = async (req: NextApiRequest, res: NextApiResponse) => {
+  if (req.method !== "POST") {
+    console.log("🍋: method not allowed")
+    return res.status(405).json({
+      message: "Method not allowed",
+    })
+  }
 
-//   console.log("req.method", req.method)
+  console.log("req.method", req.method)
+  console.log("req.headers", req.headers)
 
-//   if (req.method !== "POST") {
-//     console.log("🍋: method not allowed")
-//     return res.status(405).json({
-//       message: "Method not allowed",
-//     })
-//   }
+  try {
+    const rawBody = await getRawBody(req)
+    const isValidHook = await validateLemonSqueezyHook({ req, rawBody })
 
-//   console.log("req", req)
+    console.log("🍋: isValidHook", isValidHook)
 
-//   export default handler
+    if (!isValidHook) {
+      return res.status(400).json({
+        message: "Invalid signature.",
+      })
+    }
+  } catch (error) {
+    console.error("Error processing request:", error)
+    return res.status(500).json({
+      message: "Internal server error",
+    })
+  }
+}
 
-//   try {
-//     const rawBody = await getRawBody(req)
-//     const isValidHook = await validateLemonSqueezyHook({ req, rawBody })
-
-//     console.log("🍋: isValidHook", isValidHook)
-
-//     if (!isValidHook) {
-//       return res.status(400).json({
-//         message: "Invalid signature.",
-//       })
-//     }
+export default handler
 
 //     //@ts-ignore
 //     const event: ResBody["body"] = JSON.parse(rawBody)
