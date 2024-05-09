@@ -1361,6 +1361,11 @@
     "@jridgewell/resolve-uri" "^3.1.0"
     "@jridgewell/sourcemap-codec" "^1.4.14"
 
+"@lemonsqueezy/lemonsqueezy.js@2.2.0":
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/@lemonsqueezy/lemonsqueezy.js/-/lemonsqueezy.js-2.2.0.tgz#1bd7a50092426223024fe9cd54cd97eb1e08b286"
+  integrity sha512-DsZTeowehSLTESUZ6xxoYPDhoE8BYepWsj3TCqibG7FvB8X1HERPXQlc6E/IeGj22SOfIM997b7GfFkeLWY8pA==
+
 "@mantine/core@7.5.3":
   version "7.5.3"
   resolved "https://registry.yarnpkg.com/@mantine/core/-/core-7.5.3.tgz#ac83faf5d8f1b02bb09fde79d07365f6c3e76e1a"

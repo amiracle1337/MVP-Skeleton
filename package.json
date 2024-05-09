@@ -34,6 +34,7 @@
     "@emotion/server": "11.11.0",
     "@hookform/error-message": "2.0.1",
     "@hookform/resolvers": "2.9.11",
+    "@lemonsqueezy/lemonsqueezy.js": "2.2.0",
     "@mantine/core": "7.5.3",
     "@mantine/ds": "7.2.2",
     "@mantine/form": "7.6.1",
