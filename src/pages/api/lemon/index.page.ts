@@ -1,9 +1,9 @@
 import { NextApiRequest, NextApiResponse } from "next"
 import getRawBody from "raw-body"
 import { validateLemonSqueezyHook } from "./validateLemonSqueezyHook"
-// import { LemonEventType, ResBody } from "src/pages/api/lemon/types"
-// import { onOrderCreated } from "@/pages/api/lemon/hooks/onOrderCreated"
-// import { returnError, returnOkay } from "@/pages/api/lemon/utils"
+import { LemonEventType } from "./types"
+import { onOrderCreated } from "./hooks/onOrderCreated"
+import { returnError, returnOkay } from "./utils"
 
 export const config = {
   api: {
@@ -12,6 +12,10 @@ export const config = {
 }
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
+  console.log("🍋: hello")
+
+  console.log("req.method", req.method)
+
   if (req.method !== "POST") {
     console.log("🍋: method not allowed")
     return res.status(405).json({
@@ -19,8 +23,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     })
   }
 
-  console.log("req.method", req.method)
-  console.log("req.headers", req.headers)
+  console.log("req.method is allowed")
 
   try {
     const rawBody = await getRawBody(req)
@@ -33,53 +36,44 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         message: "Invalid signature.",
       })
     }
-  } catch (error) {
-    console.error("Error processing request:", error)
-    return res.status(500).json({
-      message: "Internal server error",
-    })
+
+    //@ts-ignore
+    const event: ResBody["body"] = JSON.parse(rawBody)
+    const eventType = event.meta.event_name
+    console.log("🍋: event type", eventType)
+
+    const handlers = {
+      [LemonEventType.OrderCreated]: onOrderCreated,
+    }
+
+    const foundHandler = handlers[eventType]
+
+    if (foundHandler) {
+      try {
+        await foundHandler({ event })
+        returnOkay(res)
+      } catch (err) {
+        console.log(`🍋: error in handling ${eventType} event`, err)
+        returnError(res)
+      }
+    } else {
+      console.log(`🍋: no handler found for ${eventType} event`)
+    }
+
+    console.log("eventType", eventType)
+  } catch (e: unknown) {
+    if (typeof e === "string") {
+      return res.status(400).json({
+        message: `Webhook error: ${e}`,
+      })
+    }
+    if (e instanceof Error) {
+      return res.status(400).json({
+        message: `Webhook error: ${e.message}`,
+      })
+    }
+    throw e
   }
 }
 
 export default handler
-
-//     //@ts-ignore
-//     const event: ResBody["body"] = JSON.parse(rawBody)
-//     const eventType = event.meta.event_name
-//     console.log("🍋: event type", eventType)
-
-//     const handlers = {
-//       [LemonEventType.OrderCreated]: onOrderCreated,
-//     }
-
-//     const foundHandler = handlers[eventType]
-
-//     if (foundHandler) {
-//       try {
-//         await foundHandler({ event })
-//         returnOkay(res)
-//       } catch (err) {
-//         console.log(`🍋: error in handling ${eventType} event`, err)
-//         returnError(res)
-//       }
-//     } else {
-//       console.log(`🍋: no handler found for ${eventType} event`)
-//     }
-
-//     console.log("eventType", eventType)
-//   } catch (e: unknown) {
-//     if (typeof e === "string") {
-//       return res.status(400).json({
-//         message: `Webhook error: ${e}`,
-//       })
-//     }
-//     if (e instanceof Error) {
-//       return res.status(400).json({
-//         message: `Webhook error: ${e.message}`,
-//       })
-//     }
-//     throw e
-//   }
-// }
-
-// export default handler
