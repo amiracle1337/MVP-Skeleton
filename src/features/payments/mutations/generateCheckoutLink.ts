@@ -21,7 +21,7 @@ export default resolver.pipe(
 
     if (!user) throw new Error("User not found")
 
-    console.log("generating checkout link...")
+    console.log("generating checkout link......")
 
     const checkoutLink = await lemonClient.createCheckout({
       storeId: env.LEMONSQUEEZY_STORE_ID,
