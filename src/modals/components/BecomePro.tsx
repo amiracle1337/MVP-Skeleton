@@ -2,6 +2,8 @@ import { ContextModalProps } from "@mantine/modals"
 import { Button, Group } from "@mantine/core"
 import { useMutation } from "@blitzjs/rpc"
 import generateCheckoutLink from "src/features/payments/mutations/generateCheckoutLink"
+import { checkPrimeSync } from "crypto"
+import { env } from "src/env.mjs"
 
 type InnerProps = {
   price: number
@@ -19,7 +21,7 @@ export const BecomeProModalComponent: React.FC<ContextModalProps<InnerProps>> = 
   const [$generateCheckoutLink] = useMutation(generateCheckoutLink, {})
 
   const onPurchaseClick = async () => {
-    const checkoutUrl = await $generateCheckoutLink()
+    const checkoutUrl = await $generateCheckoutLink({})
   }
 
   return (
@@ -30,7 +32,9 @@ export const BecomeProModalComponent: React.FC<ContextModalProps<InnerProps>> = 
           Cancel
         </Button>
 
-        <Button onClick={onPurchaseClick}>Purchase</Button>
+        <Button c="green" onClick={onPurchaseClick}>
+          Purchase
+        </Button>
       </Group>
     </Group>
   )
