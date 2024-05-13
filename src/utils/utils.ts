@@ -32,3 +32,24 @@ export const convertArrayToObject = (array: arrayItem[]) => {
     return obj
   }, {})
 }
+
+export const isIOS =
+  typeof window !== "undefined" &&
+  window.navigator &&
+  (/iPad|iPhone|iPod/.test(window.navigator.userAgent) ||
+    (window.navigator.platform === "MacIntel" && window.navigator.maxTouchPoints > 1))
+
+export const isSafari =
+  typeof window !== "undefined" &&
+  window.navigator &&
+  /Version\/[\d\.]+.*Safari/.test(window.navigator.userAgent)
+
+export let openUrlInNewTab = async (url: string) => {
+  if (url) {
+    if (isIOS || isSafari) {
+      window.location.assign(url)
+    } else {
+      window.open(url, "_blank")
+    }
+  }
+}

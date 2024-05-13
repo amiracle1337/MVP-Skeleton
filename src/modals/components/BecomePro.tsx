@@ -4,6 +4,7 @@ import { useMutation } from "@blitzjs/rpc"
 import generateCheckoutLink from "src/features/payments/mutations/generateCheckoutLink"
 import { checkPrimeSync } from "crypto"
 import { env } from "src/env.mjs"
+import { openUrlInNewTab } from "src/utils/utils"
 
 type InnerProps = {
   price: number
@@ -18,10 +19,19 @@ export const BecomeProModalComponent: React.FC<ContextModalProps<InnerProps>> = 
 
   const handleCloseModal = () => context.closeModal(id)
 
-  const [$generateCheckoutLink] = useMutation(generateCheckoutLink, {})
+  const [$generateCheckoutLink, { isLoading }] = useMutation(generateCheckoutLink, {})
 
   const onPurchaseClick = async () => {
-    const checkoutUrl = await $generateCheckoutLink({})
+    try {
+      const checkoutUrl = await $generateCheckoutLink({})
+      if (checkoutUrl) {
+        await openUrlInNewTab(checkoutUrl)
+      } else {
+        console.error("Checkout URL is null or undefined")
+      }
+    } catch (error) {
+      console.error("Error generating checkout link:", error)
+    }
   }
 
   return (
@@ -32,7 +42,7 @@ export const BecomeProModalComponent: React.FC<ContextModalProps<InnerProps>> = 
           Cancel
         </Button>
 
-        <Button c="green" onClick={onPurchaseClick}>
+        <Button loading={isLoading} c="green" onClick={onPurchaseClick}>
           Purchase
         </Button>
       </Group>
