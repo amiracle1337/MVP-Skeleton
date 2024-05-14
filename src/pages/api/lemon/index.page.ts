@@ -13,6 +13,8 @@ export const config = {
 
 // main function trying to handle the webhook request
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
+  console.log("🍋: handler function called")
+
   console.log("🍋: hello")
 
   console.log("req.method", req.method)

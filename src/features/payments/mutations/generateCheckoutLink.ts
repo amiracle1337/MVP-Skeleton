@@ -57,7 +57,7 @@ export default resolver.pipe(
       return null // return null or appropriate value in case of error
     } else {
       console.log({ data, error, statusCode })
-      console.log("123123123", data?.data.attributes.url)
+      console.log("123123123", data?.data.attributes)
       return data?.data.attributes.url // return the URL
     }
   }

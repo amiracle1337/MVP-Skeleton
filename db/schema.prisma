@@ -30,9 +30,23 @@ model User {
   tokens   Token[]
   sessions Session[]
 
+  // payments
+  hasLifetimeAccess Boolean             @default(false)
+  order             LemonSquuezyOrder[]
+
   // settings
   settingsEmailMarketing        Boolean @default(true)
   settingsEmailMarketingProduct Boolean @default(true)
+}
+
+model LemonSquuezyOrder {
+  id         String   @id @default(uuid())
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  orderId    String   @unique
+  user       User     @relation(fields: [userId], references: [id])
+  userId     String
+  attributes Json
 }
 
 model Todo {
