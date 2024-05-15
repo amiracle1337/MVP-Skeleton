@@ -9,7 +9,7 @@ export const onOrderCreated = async (event) => {
   return db.$transaction([
     db.lemonSquuezyOrder.create({
       data: {
-        orderId: event?.event?.data?.id,
+        orderId: event.event.data.attributes.order_number.toString(),
         user: {
           connect: {
             id: userId,

@@ -4,6 +4,7 @@ import { validateLemonSqueezyHook } from "./validateLemonSqueezyHook"
 import { LemonEventType } from "./types"
 import { onOrderCreated } from "./hooks/onOrderCreated"
 import { returnError, returnOkay } from "./utils"
+import { onOrderRefunded } from "./hooks/onOrderRefunded"
 
 // flow of purchase
 // User Initiates Purchase:
@@ -75,6 +76,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     // associate the event type "OrderCreated" with onOrderCreated function.
     const handlers = {
       [LemonEventType.OrderCreated]: onOrderCreated,
+      [LemonEventType.OrderRefunded]: onOrderRefunded,
     }
 
     // set a variable to equal the handler for the event type name

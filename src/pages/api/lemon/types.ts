@@ -6,6 +6,7 @@ export enum LemonEventType {
   SubUpdated = "subscription_updated",
   SubPaymentSuccess = "subscription_payment_success",
   OrderCreated = "order_created",
+  OrderRefunded = "order_refunded",
 }
 
 export type CustomLemonSqueezyCheckoutData = {
