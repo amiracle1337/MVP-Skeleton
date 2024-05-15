@@ -1,3 +1,4 @@
+import { storePrismaJson } from "src/utils/utils"
 import db from "db"
 
 export const onOrderCreated = async (event) => {
@@ -5,13 +6,25 @@ export const onOrderCreated = async (event) => {
 
   console.log("", event?.event?.data?.id)
 
-  // await db.lemonSquuezyOrder.create({
-  //   data: {
-  //     orderId: event?.event?.data?.id,
-  //     user: {
-  //       id: userId,
-  //     }
-
-  //   }
-  // })
+  return db.$transaction([
+    db.lemonSquuezyOrder.create({
+      data: {
+        orderId: event?.event?.data?.id,
+        user: {
+          connect: {
+            id: userId,
+          },
+        },
+        attributes: storePrismaJson(event.event.data.attributes),
+      },
+    }),
+    db.user.update({
+      where: {
+        id: userId,
+      },
+      data: {
+        hasLifetimeAccess: true,
+      },
+    }),
+  ])
 }

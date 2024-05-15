@@ -1,4 +1,5 @@
 import { useParam } from "@blitzjs/next"
+import { Prisma } from "@prisma/client"
 import { useRouter } from "next/router"
 
 export const useStringParam = (name) => {
@@ -52,4 +53,8 @@ export let openUrlInNewTab = async (url: string) => {
       window.open(url, "_blank")
     }
   }
+}
+
+export const storePrismaJson = (json) => {
+  return JSON.parse(JSON.stringify(json)) as Prisma.JsonObject
 }

@@ -16,6 +16,7 @@ export default async function getCurrentUser(_ = null, { session }: Ctx) {
       avatarImageKey: true,
       bio: true,
       onboarded: true,
+      hasLifetimeAccess: true,
     },
   })
 

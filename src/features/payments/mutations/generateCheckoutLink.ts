@@ -24,8 +24,6 @@ export default resolver.pipe(
 
     if (!user) throw new Error("User not found")
 
-    console.log("Generating checkout link......")
-
     const storeId = env.LEMONSQUEEZY_STORE_ID
     const variantId = env.LEMONSQUEEZY_LIFETIME_PLAN_VARIANT_ID
 

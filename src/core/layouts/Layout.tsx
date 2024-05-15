@@ -71,7 +71,7 @@ const Layout: React.FC<{
                 color="red"
                 onClick={() => {
                   openContextModal({
-                    title: "Modal title",
+                    title: "Become pro",
                     modal: GlobalModals.becomePro,
                     innerProps: { price: 9 },
                   })

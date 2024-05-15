@@ -5,6 +5,27 @@ import { LemonEventType } from "./types"
 import { onOrderCreated } from "./hooks/onOrderCreated"
 import { returnError, returnOkay } from "./utils"
 
+// flow of purchase
+// User Initiates Purchase:
+
+// User opens the modal and clicks "Purchase."
+// onPurchaseClick is called, triggering the generateCheckoutLink mutation.
+// Backend Creates Checkout Session:
+
+// The mutation uses Lemon Squeezy's API to create a new checkout session.
+// The checkout URL is returned and opened in a new tab.
+// User Completes Purchase on Lemon Squeezy:
+
+// The user completes the purchase on the Lemon Squeezy checkout page.
+// Lemon Squeezy Sends Webhook:
+
+// Once the payment is processed and the order is created, Lemon Squeezy sends a webhook to your server indicating the order was created.
+// Webhook Handler Processes Event:
+
+// The handler verifies the request and extracts the event type.
+// It calls onOrderCreated since the event type is OrderCreated.
+// onOrderCreated creates a new order record in the database and updates the user's subscription status to hasLifetimeAccess.
+
 export const config = {
   api: {
     bodyParser: false,
