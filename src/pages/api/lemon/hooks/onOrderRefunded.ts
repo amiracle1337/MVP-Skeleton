@@ -5,10 +5,14 @@ export const onOrderRefunded = async (event) => {
   const userId = event?.event?.meta?.custom_data.user_id
 
   console.log("HALLLAWWW ENI", event.event.data.attributes.order_number)
+  console.log(
+    "this is the refund number we are trying to find in the db",
+    event.event.data.attributes.order_number
+  )
 
   const foundOrder = await db.lemonSquuezyOrder.findFirst({
     where: {
-      orderId: event?.event.event.data.attributes.order_number.toString(),
+      orderId: event.event.data.attributes.order_number.toString(),
     },
   })
 

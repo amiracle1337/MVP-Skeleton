@@ -5,6 +5,7 @@ export const onOrderCreated = async (event) => {
   const userId = event?.event?.meta?.custom_data.user_id
 
   console.log("", event?.event?.data?.id)
+  console.log("this is the orderID being saved in db:", event.event.data.attributes.order_number)
 
   return db.$transaction([
     db.lemonSquuezyOrder.create({
