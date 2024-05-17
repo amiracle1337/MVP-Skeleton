@@ -4,7 +4,7 @@ import db from "db"
 export const onOrderRefunded = async (event) => {
   const userId = event?.event?.meta?.custom_data.user_id
 
-  console.log("HALLLAWWW ENI", event.event.data.attributes.order_number)
+  console.log("HALLLAWWWW ENI", event.event.data.attributes.order_number)
   console.log(
     "this is the refund number we are trying to find in the db",
     event.event.data.attributes.order_number
