@@ -2,10 +2,24 @@ import { storePrismaJson } from "src/utils/utils"
 import db from "db"
 
 export const onOrderCreated = async (event) => {
-  const userId = event?.event?.meta?.custom_data.user_id
+  const customData = event.event.meta.custom_data
+  const userEmail = event.event.data.attributes.user_email
 
-  console.log("", event?.event?.data?.id)
-  console.log("this is the orderID being saved in db:", event.event.data.attributes.order_number)
+  let userId = customData?.user_id
+
+  if (!userId) {
+    const foundUser = await db.user.findFirst({
+      where: {
+        email: userEmail,
+      },
+    })
+
+    if (!foundUser) {
+      throw new Error("User not found")
+    }
+
+    userId = foundUser.id
+  }
 
   return db.$transaction([
     db.lemonSquuezyOrder.create({
