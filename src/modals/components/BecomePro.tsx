@@ -23,9 +23,9 @@ export const BecomeProModalComponent: React.FC<ContextModalProps<InnerProps>> = 
 
   const user = useCurrentUser()
 
-  const choosePlan = async () => {
+  const choosePlan = async ({ variantId }) => {
     try {
-      const checkoutUrl = await $generateCheckoutLink({})
+      const checkoutUrl = await $generateCheckoutLink({ variantId })
       if (checkoutUrl) {
         await openUrlInNewTab(checkoutUrl)
       } else {
@@ -45,7 +45,7 @@ export const BecomeProModalComponent: React.FC<ContextModalProps<InnerProps>> = 
             {paymentPlans.map((plan) => (
               <Button
                 key={plan.variantId}
-                onClick={choosePlan}
+                onClick={() => choosePlan({ variantId: plan.variantId })}
                 disabled={isLoading}
                 style={{ width: "100%" }}
               >

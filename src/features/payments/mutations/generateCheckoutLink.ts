@@ -4,7 +4,9 @@ import { env } from "src/env.mjs"
 import db from "db"
 import { lemonSqueezySetup, createCheckout } from "@lemonsqueezy/lemonsqueezy.js"
 
-const Input = z.object({})
+const Input = z.object({
+  variantId: z.string(),
+})
 
 const apiKey = env.LEMONSQUEEZY_API_KEY
 lemonSqueezySetup({
@@ -15,7 +17,7 @@ lemonSqueezySetup({
 export default resolver.pipe(
   resolver.zod(Input),
   resolver.authorize(),
-  async ({}, { session: { userId } }) => {
+  async ({ variantId }, { session: { userId } }) => {
     const user = await db.user.findUnique({
       where: {
         id: userId,
@@ -25,7 +27,7 @@ export default resolver.pipe(
     if (!user) throw new Error("User not found")
 
     const storeId = env.LEMONSQUEEZY_STORE_ID
-    const variantId = env.LEMONSQUEEZY_LIFETIME_PLAN_VARIANT_ID
+    // const variantId = env.LEMONSQUEEZY_LIFETIME_PLAN_VARIANT_ID
 
     const newCheckout = {
       productOptions: {
