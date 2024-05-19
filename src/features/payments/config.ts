@@ -7,12 +7,12 @@ export const paymentPlans = [
   },
   {
     variantId: "383859",
-    name: "annual",
-    amount: 1198,
+    name: "annually",
+    amount: 999,
     description: "Billed annually",
   },
   {
-    variantId: "383859",
+    variantId: "383860",
     name: "lifetime",
     amount: 3999,
     description: "One-time payment",

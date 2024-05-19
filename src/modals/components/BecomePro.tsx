@@ -13,27 +13,36 @@ type InnerProps = {
 export const BecomeProModalComponent: React.FC<ContextModalProps<InnerProps>> = ({
   context,
   id,
-  innerProps,
 }) => {
-  const { price } = innerProps
-
   const handleCloseModal = () => context.closeModal(id)
-
-  const [$generateCheckoutLink, { isLoading }] = useMutation(generateCheckoutLink)
 
   const user = useCurrentUser()
 
-  const choosePlan = async ({ variantId }) => {
-    try {
-      const checkoutUrl = await $generateCheckoutLink({ variantId })
-      if (checkoutUrl) {
-        await openUrlInNewTab(checkoutUrl)
-      } else {
-        console.error("Checkout URL is null or undefined")
+  const PaymentPlan: React.FC<{ plan: (typeof paymentPlans)[0] }> = ({ plan }) => {
+    const [$generateCheckoutLink, { isLoading }] = useMutation(generateCheckoutLink)
+    const choosePlan = async ({ variantId }) => {
+      try {
+        const checkoutUrl = await $generateCheckoutLink({ variantId })
+        if (checkoutUrl) {
+          await openUrlInNewTab(checkoutUrl)
+        } else {
+          console.error("Checkout URL is null or undefined")
+        }
+      } catch (error) {
+        console.error("Error generating checkout link:", error)
       }
-    } catch (error) {
-      console.error("Error generating checkout link:", error)
     }
+    return (
+      <Button
+        key={plan.variantId}
+        onClick={() => choosePlan({ variantId: plan.variantId })}
+        disabled={isLoading}
+        style={{ width: "100%" }}
+        loading={isLoading}
+      >
+        {plan.name}, {plan.amount} SEK, {plan.description}
+      </Button>
+    )
   }
 
   return (
@@ -41,18 +50,10 @@ export const BecomeProModalComponent: React.FC<ContextModalProps<InnerProps>> = 
       {!user?.hasLifetimeAccess && (
         <>
           <div style={{ marginBottom: 15 }}>Choose your plan</div>
-          <Group justify="space-between">
-            {paymentPlans.map((plan) => (
-              <Button
-                key={plan.variantId}
-                onClick={() => choosePlan({ variantId: plan.variantId })}
-                disabled={isLoading}
-                style={{ width: "100%" }}
-              >
-                {plan.name}, ${plan.amount}, {plan.description}
-              </Button>
-            ))}
-          </Group>
+          {paymentPlans.map((plan) => (
+            <PaymentPlan key={plan.variantId} plan={plan} />
+          ))}
+          <Group justify="space-between"></Group>
         </>
       )}
       {user?.hasLifetimeAccess && (
