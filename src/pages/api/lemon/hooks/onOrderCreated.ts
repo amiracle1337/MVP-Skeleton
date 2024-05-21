@@ -33,13 +33,13 @@ export const onOrderCreated = async (event) => {
         attributes: storePrismaJson(event.event.data.attributes),
       },
     }),
-    db.user.update({
-      where: {
-        id: userId,
-      },
-      data: {
-        hasLifetimeAccess: true,
-      },
-    }),
+    // db.user.update({
+    //   where: {
+    //     id: userId,
+    //   },
+    //   data: {
+    //     hasLifetimeAccess: true,
+    //   },
+    // }),
   ])
 }
