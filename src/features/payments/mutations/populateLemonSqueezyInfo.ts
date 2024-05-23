@@ -1,68 +1,54 @@
 import { resolver } from "@blitzjs/rpc"
 import db from "../../../../db"
-import { Prisma } from "@prisma/client"
 import { env } from "src/env.mjs"
 import { storePrismaJson } from "src/utils/utils"
-import { lemonSqueezySetup } from "@lemonsqueezy/lemonsqueezy.js"
-import { type GetProductParams, type Product, getProduct } from "@lemonsqueezy/lemonsqueezy.js"
-import { type GetVariantParams, type Variant, getVariant } from "@lemonsqueezy/lemonsqueezy.js"
+import { lemonSqueezySetup, listProducts, listVariants } from "@lemonsqueezy/lemonsqueezy.js"
 
 export default resolver.pipe(resolver.authorize("ADMIN"), async () => {
-  // const products = await lemonClient.getProducts({
-  //   storeId: env.LEMONSQUEEZY_STORE_ID,
-  // });
-
-  // const variants = await lemonClient.getVariants({});
-
   const apiKey = env.LEMONSQUEEZY_API_KEY
   lemonSqueezySetup({
     apiKey,
     onError: (error) => console.error("Error!", error),
   })
 
-  const productId = 272512
   const storeId = env.LEMONSQUEEZY_STORE_ID
+  const productsResponse = await listProducts({ filter: { storeId: storeId } })
 
-  const { statusCode, error, data } = await getProduct(productId, { include: [storeId] })
-
-  if (error) {
-    console.log(error.cause)
+  if (productsResponse.error) {
+    console.log(productsResponse.error.cause)
     return null // return null or appropriate value in case of error
-  } else {
-    console.log({ data, error, statusCode })
-    console.log("123123123", data?.data.attributes)
   }
 
-  // const getVariants = async () => {
-  //   const variantId = env.LEMONSQUEEZY_LIFETIME_PLAN_VARIANT_ID
-  //   const { statusCode, error, data } = await getVariant(variantId, { include: ["product"] })
+  const variantsResponse = await listVariants()
 
-  //   return data
-  // }
+  if (variantsResponse.error) {
+    console.log(variantsResponse.error.cause)
+    return null // return null or appropriate value in case of error
+  }
 
   try {
-    for (const product of data?.data) {
-      let createAndUpdate = {
-        name: product.attributes.name,
-        attributes: storePrismaJson(product.attributes),
+    if (productsResponse.data?.data) {
+      for (const product of productsResponse.data.data) {
+        let createAndUpdate = {
+          name: product.attributes.name,
+          attributes: storePrismaJson(product.attributes),
+        }
+        // upsert does: if a product with this id exists, update it with the new data, otherwise create a new product
+        await db.lemonSqueezyProduct.upsert({
+          where: {
+            productId: product.id.toString(),
+          },
+          create: {
+            productId: product.id.toString(),
+            ...createAndUpdate,
+          },
+          update: createAndUpdate,
+        })
       }
-
-      await db.lemonSqueezyProduct.upsert({
-        where: {
-          productId: product.id.toString(),
-        },
-        create: {
-          productId: product.id.toString(),
-          ...createAndUpdate,
-        },
-        update: createAndUpdate,
-      })
     }
 
-    for (const variant of variants.data) {
-      try {
-        let variantId = variant.id
-
+    if (variantsResponse.data?.data) {
+      for (const variant of variantsResponse.data?.data) {
         const { attributes } = variant
         const { name, price, product_id } = attributes
 
@@ -76,10 +62,10 @@ export default resolver.pipe(resolver.authorize("ADMIN"), async () => {
 
         await db.lemonSqueezyVariant.upsert({
           where: {
-            variantId: variantId.toString(),
+            variantId: variant.id.toString(),
           },
           create: {
-            variantId: variantId.toString(),
+            variantId: variant.id.toString(),
             product: {
               connect: {
                 productId: productId.toString(),
@@ -89,8 +75,6 @@ export default resolver.pipe(resolver.authorize("ADMIN"), async () => {
           },
           update: createAndUpdate,
         })
-      } catch (err) {
-        console.log("err", err)
       }
     }
   } catch (err) {
