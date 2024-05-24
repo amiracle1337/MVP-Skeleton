@@ -7,7 +7,7 @@ import { returnError, returnOkay } from "./utils"
 import { onOrderRefunded } from "./hooks/onOrderRefunded"
 import { onSubscriptionCreated } from "./hooks/onSubscriptionCreated"
 import { onSubscriptionUpdated } from "./hooks/onSubUpdated"
-import { onPaymentSuccess } from "./hooks/onSubPaymentSuccess"
+import { onSubscriptionPaymentSuccess } from "./hooks/onSubPaymentSuccess"
 
 // flow of purchase
 // User Initiates Purchase:
@@ -82,7 +82,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       [LemonEventType.OrderRefunded]: onOrderRefunded,
       [LemonEventType.SubCreated]: onSubscriptionCreated,
       [LemonEventType.SubUpdated]: onSubscriptionUpdated,
-      [LemonEventType.SubPaymentSuccess]: onPaymentSuccess,
+      [LemonEventType.SubPaymentSuccess]: onSubscriptionPaymentSuccess,
     }
 
     // set a variable to equal the handler for the event type name

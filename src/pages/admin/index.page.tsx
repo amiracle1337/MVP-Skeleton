@@ -10,7 +10,7 @@ export const AdminSettingsPage: BlitzPage = () => {
   const iconStyle = { width: rem(12), height: rem(12) }
   return (
     <Layout>
-      <Stack w={"15%"}>
+      <Stack w={"100%"}>
         <Tabs
           color="rgba(0, 0, 0, 1)"
           variant="pills"

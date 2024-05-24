@@ -1,6 +1,5 @@
 import { useMutation, useQuery } from "@blitzjs/rpc"
-import { Stack, Button } from "@mantine/core"
-import { Table, Title } from "@mantine/core"
+import { Button, Text, Table } from "@mantine/core"
 import getLemonSqueezyProducts from "src/features/payments/lemon-squeezy-products/queries/getLemonSqueezyProducts"
 import getLemonSqueezyVariants from "src/features/payments/lemon-squeezy-variants/queries/getLemonSqueezyVariants"
 import populateLemonSqueezyInfo from "src/features/payments/mutations/populateLemonSqueezyInfo"
@@ -11,68 +10,68 @@ export const AdminPageBillingTab = () => {
   const [variants] = useQuery(getLemonSqueezyVariants, {})
 
   const rows = products.map((product) => (
-    <tr key={product.id}>
-      <td>{product.id}</td>
-      <td>{product.name}</td>
-      <td>{product._count?.subscriptions}</td>
-      <td>{product.productId}</td>
-      <td>{product._count?.variants}</td>
-      <td>{product.attributes ? "Yes" : "No"}</td>
-    </tr>
+    <Table.Tr key={product.id}>
+      <Table.Td>{product.id}</Table.Td>
+      <Table.Td>{product.name}</Table.Td>
+      <Table.Td>{product._count?.subscriptions}</Table.Td>
+      <Table.Td>{product.productId}</Table.Td>
+      <Table.Td>{product._count?.variants}</Table.Td>
+      <Table.Td>{product.attributes ? "Yes" : "No"}</Table.Td>
+    </Table.Tr>
   ))
 
   const variantRows = variants.map((variant) => (
-    <tr key={variant.id}>
-      <td>{variant.id}</td>
-      <td>{variant.name}</td>
-      <td>{variant._count?.subscriptions}</td>
-      <td>{variant.price}</td>
-      <td>{variant.variantId}</td>
-      <td>{variant.product?.name}</td>
-      <td>{variant.attributes ? "Yes" : "No"}</td>
-    </tr>
+    <Table.Tr key={variant.id}>
+      <Table.Td>{variant.id}</Table.Td>
+      <Table.Td>{variant.name}</Table.Td>
+      <Table.Td>{variant._count?.subscriptions}</Table.Td>
+      <Table.Td>{variant.price}</Table.Td>
+      <Table.Td>{variant.variantId}</Table.Td>
+      <Table.Td>{variant.product?.name}</Table.Td>
+      <Table.Td>{variant.attributes ? "Yes" : "No"}</Table.Td>
+    </Table.Tr>
   ))
 
   return (
-    <Stack>
-      <Button loading={isLoading} onClick={() => $populate({})}>
+    <div style={{ width: "100%" }}>
+      <Button style={{ marginTop: "20px" }} loading={isLoading} onClick={() => $populate({})}>
         Populate
       </Button>
 
-      <Stack>
-        <Title order={3}>Products</Title>
-        <Table>
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Name</th>
-              <th>Subscriptions</th>
-              <th>Product ID</th>
-              <th>Variants</th>
-              <th>Attributes</th>
-            </tr>
-          </thead>
-          <tbody>{rows}</tbody>
-        </Table>
-      </Stack>
+      <Text style={{ paddingTop: "10px", marginTop: "20px" }} w={500}>
+        Products
+      </Text>
+      <Table highlightOnHover>
+        <Table.Thead>
+          <Table.Tr>
+            <Table.Th>ID</Table.Th>
+            <Table.Th>Name</Table.Th>
+            <Table.Th>Subscriptions</Table.Th>
+            <Table.Th>Product ID</Table.Th>
+            <Table.Th>Variants</Table.Th>
+            <Table.Th>Attributes</Table.Th>
+          </Table.Tr>
+        </Table.Thead>
+        <Table.Tbody>{rows}</Table.Tbody>
+      </Table>
 
-      <Stack>
-        <Title order={3}>Variants</Title>
-        <Table>
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Name</th>
-              <th>Subscriptions</th>
-              <th>Price</th>
-              <th>Variant ID</th>
-              <th>Product</th>
-              <th>Attributes</th>
-            </tr>
-          </thead>
-          <tbody>{variantRows}</tbody>
-        </Table>
-      </Stack>
-    </Stack>
+      <Text style={{ paddingTop: "10px", marginTop: "20px" }} size="xl" w={500}>
+        Variants
+      </Text>
+      <Table highlightOnHover>
+        <Table.Thead>
+          <Table.Tr>
+            <Table.Th>ID</Table.Th>
+            <Table.Th>Name</Table.Th>
+            <Table.Th>Subscriptions</Table.Th>
+            <Table.Th>Price</Table.Th>
+            <Table.Th>Variant ID</Table.Th>
+            <Table.Th>Product</Table.Th>
+            <Table.Th>Attributes</Table.Th>
+          </Table.Tr>
+        </Table.Thead>
+        <Table.Tbody>{variantRows}</Table.Tbody>
+      </Table>
+    </div>
   )
 }
