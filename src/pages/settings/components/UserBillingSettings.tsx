@@ -40,7 +40,7 @@ const SubscriptionCard = ({ subscription }) => {
   }
 
   return (
-    <Card padding="lg" radius="md" withBorder>
+    <Card padding="lg" radius="md" withBorder style={{ maxWidth: "350px" }}>
       <Stack>
         <Badge color={status.color} variant="light">
           {status.label}
@@ -76,6 +76,9 @@ const SubscriptionList = ({ subscriptions }) => {
       <Title order={2} fw={700}>
         My Subscriptions
       </Title>
+      {subscriptions.length === 0 ? (
+        <Text>You have {subscriptions.length} active subscriptions</Text>
+      ) : null}
       {sortedSubscriptions.map((subscription) => (
         <SubscriptionCard key={subscription.id} subscription={subscription} />
       ))}
@@ -83,13 +86,11 @@ const SubscriptionList = ({ subscriptions }) => {
   )
 }
 
-export default SubscriptionList
-
 export const UserBillingSettings: React.FC<{}> = ({}) => {
   const [subscriptions] = useQuery(getSubscriptions, {})
 
   return (
-    <Stack style={{ width: "15%" }}>
+    <Stack>
       <SubscriptionList subscriptions={subscriptions} />
     </Stack>
   )

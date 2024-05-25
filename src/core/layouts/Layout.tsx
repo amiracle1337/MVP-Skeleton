@@ -106,15 +106,14 @@ const Layout: React.FC<{
           </ErrorBoundary>
         </AppShell.Main>
 
-        <AppShell.Footer p="md">
+        {/* <AppShell.Footer p="md">
           <Flex justify={"center"} align={"center"}>
             <Text c="dimmed" fz="xs">
               copywright {thisYear}
             </Text>
           </Flex>
-        </AppShell.Footer>
+        </AppShell.Footer> */}
       </AppShell>
-      );
     </>
   )
 }
