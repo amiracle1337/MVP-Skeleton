@@ -2,9 +2,10 @@ import { BlitzPage } from "@blitzjs/auth"
 import { Stack } from "@mantine/core"
 import Layout from "src/core/layouts/Layout"
 import { Tabs, rem } from "@mantine/core"
-import { IconSettings, IconUserCog, IconMail } from "@tabler/icons-react"
+import { IconSettings, IconUserCog, IconMail, IconCreditCard } from "@tabler/icons-react"
 import { ChangePassword } from "./components/ChangePassword"
 import { UserEmailSettings } from "./components/UserEmailSettings"
+import { UserBillingSettings } from "./components/UserBillingSettings"
 
 export const SettingsPage: BlitzPage = () => {
   const iconStyle = { width: rem(12), height: rem(12) }
@@ -29,6 +30,9 @@ export const SettingsPage: BlitzPage = () => {
             <Tabs.Tab value="settings" leftSection={<IconSettings style={iconStyle} />}>
               Settings
             </Tabs.Tab>
+            <Tabs.Tab value="billing" leftSection={<IconCreditCard style={iconStyle} />}>
+              Billing
+            </Tabs.Tab>
           </Tabs.List>
 
           <Tabs.Panel style={{ marginLeft: "20px" }} value="account">
@@ -36,6 +40,9 @@ export const SettingsPage: BlitzPage = () => {
           </Tabs.Panel>
           <Tabs.Panel style={{ marginLeft: "20px" }} value="email">
             <UserEmailSettings />
+          </Tabs.Panel>
+          <Tabs.Panel style={{ marginLeft: "20px" }} value="billing">
+            <UserBillingSettings />
           </Tabs.Panel>
 
           <Tabs.Panel style={{ marginLeft: "20px" }} value="settings">
