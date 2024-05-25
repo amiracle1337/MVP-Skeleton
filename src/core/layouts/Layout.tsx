@@ -52,7 +52,7 @@ const Layout: React.FC<{
             href={Routes.Home()}
             fw={700}
           >
-            future project
+            truffle
           </Anchor>
           {user && (
             <Group>

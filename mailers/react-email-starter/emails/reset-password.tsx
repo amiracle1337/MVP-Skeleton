@@ -18,7 +18,7 @@ export const EmailTemplateResetPassword: React.FC<{
   return (
     <Html>
       <Head />
-      <Preview>Reset your Nova password</Preview>
+      <Preview>Reset your truffle password</Preview>
       <Body style={emailStyles.main}>
         <Container style={emailStyles.container}>
           <Section style={emailStyles.box}>
