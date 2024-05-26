@@ -10,6 +10,13 @@ export default resolver.pipe(
   async ({}, { session: { userId } }) => {
     return db.lemonSqueezySubscription.findMany({
       where: { userId },
+      include: {
+        variant: {
+          select: {
+            price: true,
+          },
+        },
+      },
     })
   }
 )

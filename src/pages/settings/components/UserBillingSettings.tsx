@@ -32,8 +32,14 @@ const SubscriptionCard = ({ subscription }) => {
   const {
     product_name,
     variant_name,
+
     urls: { customer_portal },
   } = subscription.attributes
+  let price = subscription.variant?.price / 100
+  const formattedPrice = new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
+  }).format(price)
 
   if (!status) {
     throw new Error(`Unknown status: ${subscription.status}`)
@@ -46,8 +52,10 @@ const SubscriptionCard = ({ subscription }) => {
           {status.label}
         </Badge>
         <Text>
-          <span style={{ fontWeight: "500" }}>Your plan:</span> {product_name} - {variant_name}
+          <span style={{ fontWeight: "500" }}>Your plan:</span> {product_name} @ {formattedPrice} -{" "}
+          {variant_name}
         </Text>
+
         <Text>
           <span style={{ fontWeight: "500" }}>Purchased on:</span> {formattedDate}
         </Text>

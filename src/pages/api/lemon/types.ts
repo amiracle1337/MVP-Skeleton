@@ -4,6 +4,7 @@ import { NextApiRequest } from "next"
 export enum LemonEventType {
   SubCreated = "subscription_created",
   SubUpdated = "subscription_updated",
+  SubPlanChanged = "subscription_plan_changed",
   SubPaymentSuccess = "subscription_payment_success",
   OrderCreated = "order_created",
   OrderRefunded = "order_refunded",

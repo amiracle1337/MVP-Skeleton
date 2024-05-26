@@ -8,6 +8,7 @@ import { onOrderRefunded } from "./hooks/onOrderRefunded"
 import { onSubscriptionCreated } from "./hooks/onSubscriptionCreated"
 import { onSubscriptionUpdated } from "./hooks/onSubUpdated"
 import { onSubscriptionPaymentSuccess } from "./hooks/onSubPaymentSuccess"
+import { onPlanChanged, onSubChanged } from "./hooks/onPlanChanged"
 
 // flow of purchase
 // User Initiates Purchase:
@@ -81,7 +82,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       [LemonEventType.OrderCreated]: onOrderCreated,
       [LemonEventType.OrderRefunded]: onOrderRefunded,
       [LemonEventType.SubCreated]: onSubscriptionCreated,
-      [LemonEventType.SubUpdated]: onSubscriptionUpdated,
+      [LemonEventType.SubUpdated]: onPlanChanged,
+      [LemonEventType.SubPlanChanged]: onSubscriptionPaymentSuccess,
       [LemonEventType.SubPaymentSuccess]: onSubscriptionPaymentSuccess,
     }
 
