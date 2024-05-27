@@ -14,6 +14,7 @@ import { OnboardingWizard } from "../components/OnboardingWizard"
 import { openContextModal } from "@mantine/modals"
 import { GlobalModals } from "src/modals"
 import { UserHeaderMenu } from "../components/Header/UserHeaderMenu"
+import { ImpersonatingUserNotice } from "src/features/admin/components/ImpersonationHeader"
 
 const Layout: React.FC<{
   title?: string
@@ -28,6 +29,7 @@ const Layout: React.FC<{
         <title>{title || "evApp"}</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
+
       <AppShell
         header={{ height: 60 }}
         navbar={{
@@ -54,6 +56,7 @@ const Layout: React.FC<{
           >
             truffle
           </Anchor>
+          <ImpersonatingUserNotice />
           {user && (
             <Group>
               <UserHeaderMenu />
