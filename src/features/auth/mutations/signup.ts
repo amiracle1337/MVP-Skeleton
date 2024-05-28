@@ -10,6 +10,18 @@ import { PrismaError } from "src/utils/blitz-utils"
 
 export default resolver.pipe(resolver.zod(SignupInput), async ({ email, password, name }, ctx) => {
   const hashedPassword = await SecurePassword.hash(password.trim())
+
+  const existingInvite = await db.signupInvite.findFirst({
+    where: {
+      email: email.toLowerCase().trim(),
+      accepted: true,
+    },
+  })
+
+  if (!existingInvite) {
+    throw new Error("No invite found for this email address")
+  }
+
   try {
     const user = await db.user.create({
       data: {
