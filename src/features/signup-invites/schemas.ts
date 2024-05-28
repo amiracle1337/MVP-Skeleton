@@ -5,10 +5,11 @@ export const CreateSignupInviteSchema = z.object({
 })
 export const UpdateSignupInviteSchema = CreateSignupInviteSchema.merge(
   z.object({
-    id: z.number(),
+    id: z.string(),
+    accepted: z.boolean().optional(),
   })
 )
 
 export const DeleteSignupInviteSchema = z.object({
-  id: z.number(),
+  id: z.string(),
 })

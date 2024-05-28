@@ -4,6 +4,10 @@ import { CreateSignupInviteSchema } from "../schemas"
 
 export default resolver.pipe(
   resolver.zod(CreateSignupInviteSchema),
+  // the flow of Ipadresses: it comes from that we created a middleware,
+  // and the , { } is the context object that we can access in the middleware
+  // its the blitz context, and we can access the ipAddresses from there
+  // and we also have a type definition for it in types.ts
   async (input, { ipAddresses }) => {
     const foundInvite = await db.signupInvite.findFirst({
       where: {

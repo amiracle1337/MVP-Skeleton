@@ -3,20 +3,28 @@ import { resolver } from "@blitzjs/rpc"
 import db from "db"
 import { z } from "zod"
 
-const GetSignupInvite = z.object({
+const Input = z.object({
   // This accepts type of undefined, but is required at runtime
-  id: z.number().optional().refine(Boolean, "Required"),
+  usersPerPage: z.number(),
+  activePage: z.number(),
+  search: z.string().optional(),
 })
 
 export default resolver.pipe(
-  resolver.zod(GetSignupInvite),
+  resolver.zod(Input),
   resolver.authorize("ADMIN"),
-  async ({ id }) => {
-    // TODO: in multi-tenant app, you must add validation to ensure correct tenant
-    const signupInvite = await db.signupInvite.findFirst({ where: { id } })
+  async ({ usersPerPage, activePage, search }) => {
+    const signupInvites = await db.signupInvite.findMany({
+      where: {
+        email: {
+          contains: search,
+          mode: "insensitive",
+        },
+      },
+      take: usersPerPage,
+      skip: usersPerPage * (activePage - 1),
+    })
 
-    if (!signupInvite) throw new NotFoundError()
-
-    return signupInvite
+    return signupInvites
   }
 )

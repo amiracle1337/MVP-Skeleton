@@ -1,9 +1,8 @@
 import Layout from "src/core/layouts/Layout"
-import { BlitzPage } from "@blitzjs/next"
 import { useMutation } from "@blitzjs/rpc"
 import createSignupInvite from "src/features/signup-invites/mutations/createSignupInvite"
 import { useState } from "react"
-import { Stack, Paper, Button, Input, Flex, Text } from "@mantine/core"
+import { Paper, Button, Input, Flex, Text } from "@mantine/core"
 
 export const RequestInvite = () => {
   const [email, setEmail] = useState("")
