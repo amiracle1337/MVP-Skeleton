@@ -1,10 +1,12 @@
 import { useQuery, useMutation } from "@blitzjs/rpc"
-import { Text, Table, Button, Pagination } from "@mantine/core"
+import { Text, Table, Button, Pagination, Input } from "@mantine/core"
 import impersonateUser from "src/features/admin/mutations/impersonateUser"
 import getAllUsers from "src/features/admin/queries/getAllUsers"
 import { useRouter } from "next/router"
 import getUserCount from "src/features/admin/queries/getUserCount"
 import { usePagination } from "@mantine/hooks"
+import { useState, useCallback } from "react"
+import debounce from "lodash/debounce"
 
 const UserRow = ({ user }) => {
   const [$impersonateUser, { isLoading }] = useMutation(impersonateUser, {})
@@ -32,32 +34,73 @@ const UserRow = ({ user }) => {
   )
 }
 
-export const AdminPageUserTab = () => {
-  const usersPerPage = 10
-  const [userCount] = useQuery(getUserCount, {})
-  const totalPages = Math.ceil(userCount / usersPerPage)
-  const pagination = usePagination({ total: totalPages, initialPage: 1 })
-  const [users] = useQuery(getAllUsers, { usersPerPage, activePage: pagination.active })
+const UsersTable = ({ searchValue, usersPerPage, activePage }) => {
+  const [users] = useQuery(getAllUsers, {
+    usersPerPage,
+    activePage,
+    search: searchValue,
+  })
 
   const userRows = users.map((user) => <UserRow key={user.id} user={user} />)
 
   return (
+    <Table highlightOnHover>
+      <Table.Thead>
+        <Table.Tr>
+          <Table.Th>ID</Table.Th>
+          <Table.Th>Name</Table.Th>
+          <Table.Th>Username</Table.Th>
+          <Table.Th>Email</Table.Th>
+          <Table.Th>Subscriptions</Table.Th>
+        </Table.Tr>
+      </Table.Thead>
+      <Table.Tbody>{userRows}</Table.Tbody>
+    </Table>
+  )
+}
+
+export const AdminPageUserTab = () => {
+  const usersPerPage = 10
+  const [searchValue, setSearchValue] = useState("")
+  const [debouncedSearchValue, setDebouncedSearchValue] = useState(searchValue)
+
+  const [userCount] = useQuery(getUserCount, {
+    search: debouncedSearchValue,
+  })
+  const totalPages = Math.ceil(userCount / usersPerPage)
+  const pagination = usePagination({ total: totalPages, initialPage: 1 })
+
+  // Debounce the search value update
+  const debounceSearch = useCallback(
+    debounce((value) => {
+      setDebouncedSearchValue(value)
+    }, 300), // Adjust the debounce delay as needed
+    []
+  )
+
+  // Update search value and trigger debounce
+  const handleSearchChange = (event) => {
+    const { value } = event.currentTarget
+    setSearchValue(value)
+    debounceSearch(value)
+  }
+
+  return (
     <div style={{ width: "100%" }}>
-      <Text style={{ paddingTop: "10px", marginTop: "20 px" }} size="xl" w={500}>
+      <Text style={{ paddingTop: "10px", marginTop: "20px" }} size="xl" w={500}>
         Users
       </Text>
-      <Table highlightOnHover>
-        <Table.Thead>
-          <Table.Tr>
-            <Table.Th>ID</Table.Th>
-            <Table.Th>Name</Table.Th>
-            <Table.Th>Username</Table.Th>
-            <Table.Th>Email</Table.Th>
-            <Table.Th>Subscriptions</Table.Th>
-          </Table.Tr>
-        </Table.Thead>
-        <Table.Tbody>{userRows}</Table.Tbody>
-      </Table>
+      <Input
+        value={searchValue}
+        onChange={handleSearchChange}
+        style={{ maxWidth: "250px" }}
+        placeholder="Search users"
+      />
+      <UsersTable
+        searchValue={debouncedSearchValue}
+        usersPerPage={usersPerPage}
+        activePage={pagination.active}
+      />
       <Pagination
         onChange={(page) => pagination.setPage(page)}
         value={pagination.active}
