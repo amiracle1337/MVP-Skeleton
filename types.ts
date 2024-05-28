@@ -13,3 +13,9 @@ declare module "@blitzjs/auth" {
     }
   }
 }
+
+declare module "blitz" {
+  export interface Ctx {
+    ipAddresses: string
+  }
+}

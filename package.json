@@ -58,6 +58,7 @@
     "react-dom": "18.2.0",
     "react-hanger": "2.4.5",
     "react-hook-form": "7.50.1",
+    "request-ip": "3.3.0",
     "resend": "3.2.0",
     "secure-password": "4.0.0",
     "uploadthing": "6.7.0",
