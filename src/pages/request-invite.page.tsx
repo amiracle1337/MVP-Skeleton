@@ -12,11 +12,9 @@ export const RequestInvitePage: BlitzPage = () => {
   const handleRequestInvite = async () => {
     try {
       await $requestInvite({ email })
-      alert("Invite requested successfully!")
       setEmail("") // Clear the input field after successful request
     } catch (error) {
       console.error(error)
-      alert("Failed to request invite")
     }
   }
 

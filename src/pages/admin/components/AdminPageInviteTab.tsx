@@ -28,26 +28,28 @@ const InviteRows = ({ invite }) => {
       <Table.Td>{invite.email}</Table.Td>
       <Table.Td>{invite.ipAddresses}</Table.Td>
       <Table.Td>
-        <Group>
-          <Button
-            color="green"
-            variant="light"
-            loading={isLoading}
-            onClick={() => updateInvite(true)}
-            size="xs"
-          >
-            Accept
-          </Button>
-          <Button
-            color="red"
-            variant="light"
-            loading={isLoading}
-            onClick={() => updateInvite(false)}
-            size="xs"
-          >
-            Reject
-          </Button>
-        </Group>
+        {!invite.accepted && (
+          <Group>
+            <Button
+              color="green"
+              variant="light"
+              loading={isLoading}
+              onClick={() => updateInvite(true)}
+              size="xs"
+            >
+              Accept
+            </Button>
+            <Button
+              color="red"
+              variant="light"
+              loading={isLoading}
+              onClick={() => updateInvite(false)}
+              size="xs"
+            >
+              Reject
+            </Button>
+          </Group>
+        )}
       </Table.Td>
     </Table.Tr>
   )
