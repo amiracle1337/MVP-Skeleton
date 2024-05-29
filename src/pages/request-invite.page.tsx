@@ -3,8 +3,9 @@ import { useMutation } from "@blitzjs/rpc"
 import createSignupInvite from "src/features/signup-invites/mutations/createSignupInvite"
 import { useState } from "react"
 import { Paper, Button, Input, Flex, Text } from "@mantine/core"
+import { BlitzPage } from "@blitzjs/auth"
 
-export const RequestInvite = () => {
+export const RequestInvitePage: BlitzPage = () => {
   const [email, setEmail] = useState("")
   const [$requestInvite, { isLoading, isSuccess }] = useMutation(createSignupInvite, {})
 
@@ -55,4 +56,4 @@ export const RequestInvite = () => {
   )
 }
 
-export default RequestInvite
+export default RequestInvitePage

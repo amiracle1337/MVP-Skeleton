@@ -40,6 +40,14 @@ export const SignupForm: React.FC<{
         </Text>
 
         <Divider label="Or continue with email" labelPosition="center" my="lg" />
+        <Text color="yellow" size="sm" fw={500}>
+          You need an invite to sign up.{" "}
+          <Link href={Routes.RequestInvitePage()}>
+            <Text span style={{ textDecoration: "underline" }}>
+              Request one here.
+            </Text>
+          </Link>
+        </Text>
 
         <form
           onSubmit={form.onSubmit(async (values) => {
