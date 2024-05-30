@@ -7,6 +7,7 @@ import getSignupInvite from "src/features/signup-invites/queries/getSignupInvite
 import { format } from "date-fns"
 import getInviteCount from "src/features/signup-invites/queries/getInviteCount"
 import updateSignupInvite from "src/features/signup-invites/mutations/updateSignupInvite"
+import refillInvites from "src/features/invite-gift-codes/mutations/refill-Invites"
 
 const InviteRows = ({ invite }) => {
   const [$updateSignupInvite, { isLoading }] = useMutation(updateSignupInvite, {})
@@ -86,7 +87,7 @@ export const AdminPageInviteTab = () => {
   const usersPerPage = 10
   const [searchValue, setSearchValue] = useState("")
   const [debouncedSearchValue, setDebouncedSearchValue] = useState(searchValue)
-  // const [$refillInvites] = useMutation(refillInvites, {})
+  const [$refillInvites] = useMutation(refillInvites, {})
 
   const [inviteCount] = useQuery(getInviteCount, {
     search: debouncedSearchValue,
@@ -111,18 +112,20 @@ export const AdminPageInviteTab = () => {
 
   return (
     <div style={{ width: "100%" }}>
+      <Text style={{ paddingTop: "10px", marginTop: "20px" }} size="xl" w={500}>
+        Invites
+      </Text>
       <Group>
-        <Text style={{ paddingTop: "10px", marginTop: "20px" }} size="xl" w={500}>
-          Invites
-        </Text>
-        {/* <Button onClick={() => $refillInvites()}>Refill invites</Button> */}
+        <Input
+          value={searchValue}
+          onChange={handleSearchChange}
+          style={{ maxWidth: "250px" }}
+          placeholder="Search invites"
+        />
+        <Button color="green" onClick={() => $refillInvites({})}>
+          Refill invites
+        </Button>
       </Group>
-      <Input
-        value={searchValue}
-        onChange={handleSearchChange}
-        style={{ maxWidth: "250px" }}
-        placeholder="Search invites"
-      />
       <UsersTable
         searchValue={debouncedSearchValue}
         usersPerPage={usersPerPage}

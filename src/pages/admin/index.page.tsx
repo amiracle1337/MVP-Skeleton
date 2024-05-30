@@ -21,6 +21,8 @@ export const AdminSettingsPage: BlitzPage = () => {
     <Layout>
       <Stack w={"100%"}>
         <Tabs
+          // make sure to set keepMounted to false to avoid rendering all tabs at once
+          keepMounted={false}
           color="rgba(0, 0, 0, 1)"
           variant="pills"
           radius="sm"
@@ -47,6 +49,9 @@ export const AdminSettingsPage: BlitzPage = () => {
           </Tabs.Panel>
           <Tabs.Panel style={{ marginLeft: "20px" }} value="billing">
             <AdminPageBillingTab />
+          </Tabs.Panel>
+          <Tabs.Panel style={{ marginLeft: "20px" }} value="users">
+            <AdminPageUserTab />
           </Tabs.Panel>
           <Tabs.Panel style={{ marginLeft: "20px" }} value="invite">
             <AdminPageInviteTab />
