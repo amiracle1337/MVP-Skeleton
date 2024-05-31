@@ -1,16 +1,16 @@
 import React from "react"
 import { useQuery } from "@blitzjs/rpc"
-import { Text, Table, Button, CopyButton, Indicator, Title, Badge } from "@mantine/core"
+import { Text, Table, Button, CopyButton, Badge, Title } from "@mantine/core"
 import getInviteGiftCodes from "src/features/invite-gift-codes/queries/getInviteGiftCodes"
 import { URL_ORIGIN } from "src/config"
-import { IconCopy, IconStar, IconStarFilled } from "@tabler/icons-react"
+import { IconCopy, IconStarFilled } from "@tabler/icons-react"
 
-const GiftCodeRow = ({ giftCode }) => {
+const InviteGiftCodeRow = ({ giftCode }) => {
   const maxRedeems = 5
-  const redeemed = giftCode.sentInvites.length
-  const url = `${URL_ORIGIN}/gift/${giftCode.id}`
+  const redeemedCount = giftCode.sentInvites.length
+  const giftCodeUrl = `${URL_ORIGIN}/gift/${giftCode.id}`
 
-  const isRedeemed = redeemed >= maxRedeems
+  const isRedeemed = redeemedCount >= maxRedeems
   const dotColor = isRedeemed ? "rgba(161, 161, 161, 1)" : "green"
   const title = isRedeemed ? "Already used" : "New invites"
 
@@ -19,7 +19,7 @@ const GiftCodeRow = ({ giftCode }) => {
       <Table.Td>
         <div style={{ display: "flex", alignItems: "center" }}>
           <Badge
-            leftSection={isRedeemed ? null : <IconStarFilled size={"10px"} />}
+            leftSection={!isRedeemed && <IconStarFilled size={"10px"} />}
             variant="light"
             color={dotColor}
           >
@@ -29,10 +29,10 @@ const GiftCodeRow = ({ giftCode }) => {
         </div>
       </Table.Td>
       <Table.Td>
-        {redeemed}/{maxRedeems}
+        {redeemedCount}/{maxRedeems}
       </Table.Td>
       <Table.Td>
-        <CopyButton value={url}>
+        <CopyButton value={giftCodeUrl}>
           {({ copied, copy }) => (
             <Button
               leftSection={<IconCopy size={15} />}
@@ -40,7 +40,7 @@ const GiftCodeRow = ({ giftCode }) => {
               disabled={isRedeemed || copied}
               onClick={copy}
             >
-              {copied ? "Copied url" : "Copy url"}
+              {copied ? "Copied URL" : "Copy URL"}
             </Button>
           )}
         </CopyButton>
@@ -49,12 +49,12 @@ const GiftCodeRow = ({ giftCode }) => {
   )
 }
 
-const UsersTable = ({ giftCodes }) => {
-  const sortedInvites = giftCodes.sort(
+const InviteGiftCodesTable = ({ giftCodes }) => {
+  const sortedGiftCodes = giftCodes.sort(
     (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
   )
-  const userRows = sortedInvites.map((giftCode) => (
-    <GiftCodeRow key={giftCode.id} giftCode={giftCode} />
+  const giftCodeRows = sortedGiftCodes.map((giftCode) => (
+    <InviteGiftCodeRow key={giftCode.id} giftCode={giftCode} />
   ))
 
   return (
@@ -66,22 +66,21 @@ const UsersTable = ({ giftCodes }) => {
           <Table.Th>Copy URL</Table.Th>
         </Table.Tr>
       </Table.Thead>
-      <Table.Tbody>{userRows}</Table.Tbody>
+      <Table.Tbody>{giftCodeRows}</Table.Tbody>
     </Table>
   )
 }
 
 export const UserInvitesSettings = () => {
   const [giftCodes] = useQuery(getInviteGiftCodes, {})
-  const allRedeemed = giftCodes.every((giftCode) => giftCode.sentInvites.length >= 5)
 
   return (
     <div style={{ width: "100%" }}>
-      <Title order={3} style={{ paddingTop: "10px", paddingBottom: "15px" }} w={500}>
-        Giftcode invites
+      <Title order={3} style={{ paddingTop: "10px", paddingBottom: "15px" }}>
+        Gift Code Invites
       </Title>
 
-      <UsersTable giftCodes={giftCodes} />
+      <InviteGiftCodesTable giftCodes={giftCodes} />
     </div>
   )
 }
