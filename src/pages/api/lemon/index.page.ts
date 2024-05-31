@@ -8,7 +8,7 @@ import { onOrderRefunded } from "./hooks/onOrderRefunded"
 import { onSubscriptionCreated } from "./hooks/onSubscriptionCreated"
 import { onSubscriptionUpdated } from "./hooks/onSubUpdated"
 import { onSubscriptionPaymentSuccess } from "./hooks/onSubPaymentSuccess"
-import { onPlanChanged, onSubChanged } from "./hooks/onPlanChanged"
+import { onPlanChanged } from "./hooks/onPlanChanged"
 
 // flow of purchase
 // User Initiates Purchase:

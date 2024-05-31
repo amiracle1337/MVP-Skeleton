@@ -18,12 +18,12 @@ const InviteRows = ({ invite }) => {
   const updateInvite = async (accepted) => {
     await $updateSignupInvite({ id: invite.id, email: invite.email, accepted: accepted })
   }
+
   let backgroundColor = ""
-  if (invite.accepted === true) {
-    backgroundColor = "#d4edda" // light green for accepted
-  } else if (invite.accepted === false) {
-    backgroundColor = "#f8d7da" // light red for declined
+  if (invite.accepted === false) {
+    backgroundColor = "#F5F5F5" //
   }
+
   return (
     <Table.Tr key={invite.id} style={{ backgroundColor }}>
       <Table.Td>{invite.id}</Table.Td>
