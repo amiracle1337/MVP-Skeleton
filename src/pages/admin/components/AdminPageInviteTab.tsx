@@ -1,6 +1,6 @@
 import { useQuery, useMutation } from "@blitzjs/rpc"
-import { Text, Table, Button, Pagination, Input, Group } from "@mantine/core"
-import { usePagination } from "@mantine/hooks"
+import { Text, Table, Button, Pagination, Input, Group, Modal, Stack } from "@mantine/core"
+import { useDisclosure, usePagination } from "@mantine/hooks"
 import { useState, useCallback } from "react"
 import debounce from "lodash/debounce"
 import getSignupInvite from "src/features/signup-invites/queries/getSignupInvite"
@@ -8,6 +8,8 @@ import { format } from "date-fns"
 import getInviteCount from "src/features/signup-invites/queries/getInviteCount"
 import updateSignupInvite from "src/features/signup-invites/mutations/updateSignupInvite"
 import refillInvites from "src/features/invite-gift-codes/mutations/refill-Invites"
+import { useBoolean } from "react-hanger"
+import sendInvite from "src/features/signup-invites/mutations/sendInvite"
 
 const InviteRows = ({ invite }) => {
   const [$updateSignupInvite, { isLoading }] = useMutation(updateSignupInvite, {})
@@ -110,8 +112,37 @@ export const AdminPageInviteTab = () => {
     debounceSearch(value)
   }
 
+  const [opened, { open, close }] = useDisclosure(false)
+  const [value, setValue] = useState("")
+  console.log(value)
+
+  const [$createSignupInvite, { isLoading, isSuccess }] = useMutation(sendInvite, {})
+
+  const sendInviteToUser = async () => {
+    await $createSignupInvite({ email: value })
+  }
+
   return (
     <div style={{ width: "100%" }}>
+      <Modal opened={opened} onClose={close}>
+        <Stack>
+          <Text size="xl" w={500}>
+            Invite a user
+          </Text>
+          <Input
+            style={{ maxWidth: "100%" }}
+            placeholder="Email address"
+            onChange={(event) => setValue(event.currentTarget.value)}
+          />
+          <Button
+            loading={isLoading}
+            color={isSuccess ? "green" : "blue"}
+            onClick={sendInviteToUser}
+          >
+            {isSuccess ? "Invite sent" : "Send invite"}
+          </Button>
+        </Stack>
+      </Modal>
       <Text style={{ paddingTop: "10px", marginTop: "20px" }} size="xl" w={500}>
         Invites
       </Text>
@@ -122,7 +153,10 @@ export const AdminPageInviteTab = () => {
           style={{ maxWidth: "250px" }}
           placeholder="Search invites"
         />
-        <Button color="green" onClick={() => $refillInvites({})}>
+        <Button color="green" onClick={open}>
+          Invite a user
+        </Button>
+        <Button color="blue" onClick={() => $refillInvites({})}>
           Refill invites
         </Button>
       </Group>

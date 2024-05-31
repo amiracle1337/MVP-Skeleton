@@ -1,6 +1,7 @@
 import { useParam } from "@blitzjs/next"
 import { Prisma } from "@prisma/client"
 import { useRouter } from "next/router"
+import { v4 as uuidv4 } from "uuid"
 
 export const useStringParam = (name) => {
   let param = useParam(name, "string")
@@ -57,4 +58,9 @@ export let openUrlInNewTab = async (url: string) => {
 
 export const storePrismaJson = (json) => {
   return JSON.parse(JSON.stringify(json)) as Prisma.JsonObject
+}
+
+export const uuidGenerator = () => {
+  const uuid = uuidv4()
+  return uuid
 }

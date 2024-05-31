@@ -3,6 +3,7 @@ import { useQuery } from "@blitzjs/rpc"
 import { Text, Table, Button, CopyButton, Indicator, Title, Badge } from "@mantine/core"
 import getInviteGiftCodes from "src/features/invite-gift-codes/queries/getInviteGiftCodes"
 import { URL_ORIGIN } from "src/config"
+import { IconCopy, IconStar, IconStarFilled } from "@tabler/icons-react"
 
 const GiftCodeRow = ({ giftCode }) => {
   const maxRedeems = 5
@@ -10,14 +11,18 @@ const GiftCodeRow = ({ giftCode }) => {
   const url = `${URL_ORIGIN}/gift/${giftCode.id}`
 
   const isRedeemed = redeemed >= maxRedeems
-  const dotColor = isRedeemed ? "red" : "lime"
+  const dotColor = isRedeemed ? "rgba(161, 161, 161, 1)" : "green"
   const title = isRedeemed ? "Already used" : "New invites"
 
   return (
     <Table.Tr key={giftCode.id}>
       <Table.Td>
         <div style={{ display: "flex", alignItems: "center" }}>
-          <Badge variant="light" color={dotColor}>
+          <Badge
+            leftSection={isRedeemed ? null : <IconStarFilled size={"10px"} />}
+            variant="light"
+            color={dotColor}
+          >
             <span style={{ display: "inline-block", height: "20px" }}>{title}</span>
           </Badge>
           <span style={{ marginLeft: "8px" }}>{giftCode.id}</span>
@@ -29,7 +34,12 @@ const GiftCodeRow = ({ giftCode }) => {
       <Table.Td>
         <CopyButton value={url}>
           {({ copied, copy }) => (
-            <Button size="xs" disabled={isRedeemed || copied} onClick={copy}>
+            <Button
+              leftSection={<IconCopy size={15} />}
+              size="xs"
+              disabled={isRedeemed || copied}
+              onClick={copy}
+            >
               {copied ? "Copied url" : "Copy url"}
             </Button>
           )}
