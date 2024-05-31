@@ -21,6 +21,9 @@ export default resolver.pipe(
           mode: "insensitive",
         },
       },
+      orderBy: {
+        createdAt: "desc",
+      },
       take: usersPerPage,
       skip: usersPerPage * (activePage - 1),
     })
