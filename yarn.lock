@@ -1427,6 +1427,13 @@
     "@mantine/utils" "6.0.21"
     prism-react-renderer "^1.2.1"
 
+"@mantine/spotlight@7.10.1":
+  version "7.10.1"
+  resolved "https://registry.yarnpkg.com/@mantine/spotlight/-/spotlight-7.10.1.tgz#469ce55bd9b5501083d0901d93aaec95fa4004b6"
+  integrity sha512-0G9HLaSbgJvSZRFIsEPyLUPM9heLBsYsKNYAeh6gTE6Q0/rdc5WrXxPUyOzdUaZVu4JVPvdzx/Ov5fa+kGgU4g==
+  dependencies:
+    "@mantine/store" "7.10.1"
+
 "@mantine/ssr@6.0.21":
   version "6.0.21"
   resolved "https://registry.npmjs.org/@mantine/ssr/-/ssr-6.0.21.tgz"
@@ -1434,6 +1441,11 @@
   dependencies:
     "@mantine/styles" "6.0.21"
     html-react-parser "1.4.12"
+
+"@mantine/store@7.10.1":
+  version "7.10.1"
+  resolved "https://registry.yarnpkg.com/@mantine/store/-/store-7.10.1.tgz#b8201cb0b76bd3feaeecc3818155f06d967e46f4"
+  integrity sha512-KrGBsSoMsfrYeLxPwf5rFv0s2Nl/4wf+AaF/U1SpQrMgPI8vYokPXx52Wp3jCmlo12NCZnCIG+/6YHAdTWH1qQ==
 
 "@mantine/store@7.6.1":
   version "7.6.1"

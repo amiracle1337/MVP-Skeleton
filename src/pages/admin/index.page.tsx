@@ -27,20 +27,20 @@ export const AdminSettingsPage: BlitzPage = () => {
           variant="pills"
           radius="sm"
           orientation="vertical"
-          defaultValue="account"
+          defaultValue="users"
         >
           <Tabs.List>
-            <Tabs.Tab value="email" leftSection={<IconUserCog style={iconStyle} />}>
-              Email
+            <Tabs.Tab value="users" leftSection={<IconUser style={iconStyle} />}>
+              Users
             </Tabs.Tab>
             <Tabs.Tab value="billing" leftSection={<IconMoneybag style={iconStyle} />}>
               Billing
             </Tabs.Tab>
-            <Tabs.Tab value="users" leftSection={<IconUser style={iconStyle} />}>
-              Users
-            </Tabs.Tab>
             <Tabs.Tab value="invite" leftSection={<IconMoodPlus style={iconStyle} />}>
               Invite
+            </Tabs.Tab>
+            <Tabs.Tab value="email" leftSection={<IconUserCog style={iconStyle} />}>
+              Email
             </Tabs.Tab>
           </Tabs.List>
 

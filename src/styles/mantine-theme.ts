@@ -1,6 +1,7 @@
 import { createTheme } from "@mantine/core"
 import { Loader } from "@mantine/core"
 import { ButtonProps } from "@mantine/core"
+import "@mantine/spotlight/styles.css"
 
 const ButtonDefaultProps: Partial<ButtonProps> = {
   size: "md",
@@ -29,8 +30,8 @@ export const themeMantine = createTheme({
             opacity: 0.5,
           },
         }
-      }, 
-    }, 
+      },
+    },
     */
   },
 })

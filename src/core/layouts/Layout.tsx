@@ -1,5 +1,5 @@
 import Head from "next/head"
-import React, { useState } from "react"
+import React from "react"
 import { Routes } from "@blitzjs/next"
 import { Suspense } from "react"
 import { Group, Flex, Text, Anchor, Modal, Badge } from "@mantine/core"
@@ -15,11 +15,11 @@ import { openContextModal } from "@mantine/modals"
 import { GlobalModals } from "src/modals"
 import { UserHeaderMenu } from "../components/Header/UserHeaderMenu"
 import { ImpersonatingUserNotice } from "src/features/admin/components/ImpersonationHeader"
+import { IconSearch } from "@tabler/icons-react"
+import { spotlight } from "@mantine/spotlight" // Import spotlight actions
+import { SpotlightWrapper } from "src/core/spotlight"
 
-const Layout: React.FC<{
-  title?: string
-  children?: React.ReactNode
-}> = ({ title, children }) => {
+const Layout: React.FC<{ title?: string; children?: React.ReactNode }> = ({ title, children }) => {
   const thisYear = new Date().getFullYear()
   const user = useCurrentUser()
 
@@ -59,6 +59,12 @@ const Layout: React.FC<{
           <ImpersonatingUserNotice />
           {user && (
             <Group>
+              <IconSearch
+                color="grey"
+                size={15}
+                onClick={spotlight.open}
+                style={{ cursor: "pointer" }}
+              />
               <UserHeaderMenu />
               <Group>
                 <Text c="gray.7">{user.username}</Text>
@@ -117,6 +123,8 @@ const Layout: React.FC<{
           </Flex>
         </AppShell.Footer> */}
       </AppShell>
+
+      <SpotlightWrapper />
     </>
   )
 }
