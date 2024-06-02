@@ -11,6 +11,7 @@ export const SettingsPage: BlitzPage = () => {
     <Layout>
       <Stack w={"100%"}>
         <Tabs
+          keepMounted={false}
           color="rgba(0, 0, 0, 1)"
           variant="pills"
           radius="sm"

@@ -17,7 +17,6 @@ import { UserHeaderMenu } from "../components/Header/UserHeaderMenu"
 import { ImpersonatingUserNotice } from "src/features/admin/components/ImpersonationHeader"
 import { IconSearch } from "@tabler/icons-react"
 import { spotlight } from "@mantine/spotlight" // Import spotlight actions
-import { SpotlightWrapper } from "src/core/spotlight"
 
 const Layout: React.FC<{ title?: string; children?: React.ReactNode }> = ({ title, children }) => {
   const thisYear = new Date().getFullYear()
@@ -123,8 +122,6 @@ const Layout: React.FC<{ title?: string; children?: React.ReactNode }> = ({ titl
           </Flex>
         </AppShell.Footer> */}
       </AppShell>
-
-      <SpotlightWrapper />
     </>
   )
 }

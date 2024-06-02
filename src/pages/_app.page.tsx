@@ -13,6 +13,7 @@ import "@uploadthing/react/styles.css"
 import { ModalsProvider } from "@mantine/modals"
 import { globalModals } from "src/modals"
 import { themeMantine } from "src/styles/mantine-theme"
+import { SpotlightWrapper } from "src/core/spotlight"
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
@@ -21,6 +22,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         <ErrorBoundary FallbackComponent={RootErrorFallback}>
           <Notifications />
           <Suspense fallback={<FullPageLoader />}>
+            <SpotlightWrapper />
             <Component {...pageProps} />
           </Suspense>
         </ErrorBoundary>
