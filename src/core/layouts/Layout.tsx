@@ -19,7 +19,7 @@ import { IconSearch } from "@tabler/icons-react"
 import { spotlight } from "@mantine/spotlight" // Import spotlight actions
 
 const Layout: React.FC<{ title?: string; children?: React.ReactNode }> = ({ title, children }) => {
-  const thisYear = new Date().getFullYear()
+  // const thisYear = new Date().getFullYear()
   const user = useCurrentUser()
 
   return (
