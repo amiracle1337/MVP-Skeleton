@@ -6,7 +6,7 @@ BEGIN
     END IF;
 END $$;
 
--- AlterTable with conditional check for 'emailVerifiedAt' column
+-- AlterTable with conditional check if 'emailVerifiedAt' column exists
 DO $$
 BEGIN
     -- Check if the column 'emailVerifiedAt' does not exist in the 'User' table
