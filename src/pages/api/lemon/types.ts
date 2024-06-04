@@ -1,4 +1,4 @@
-import { LemonsqueezySubscriptionPause } from "./client/methods/updateSubscription/types"
+// import { LemonsqueezySubscriptionPause } from "./client/methods/updateSubscription/types"
 import { NextApiRequest } from "next"
 
 export enum LemonEventType {
@@ -38,7 +38,7 @@ export type SubscriptionCreatedUpdatedCommon = {
     status_formatted: string
     card_brand: string
     card_last_four: string
-    pause: null | LemonsqueezySubscriptionPause
+    // pause: null | LemonsqueezySubscriptionPause
     cancelled: boolean
     trial_ends_at: null | Date
     billing_anchor: number
