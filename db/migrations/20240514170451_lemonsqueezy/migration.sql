@@ -1,4 +1,4 @@
--- AlterEnum
+-- AlterEnum with conditional check
 DO $$
 BEGIN
     IF NOT EXISTS (SELECT 1 FROM pg_enum WHERE enumlabel = 'VERIFY_EMAIL' AND enumtypid = (SELECT oid FROM pg_type WHERE typname = 'TokenType')) THEN
@@ -6,9 +6,21 @@ BEGIN
     END IF;
 END $$;
 
--- AlterTable
-ALTER TABLE "User" ADD COLUMN     "emailVerifiedAt" TIMESTAMP(3),
-ADD COLUMN     "hasLifetimeAccess" BOOLEAN NOT NULL DEFAULT false;
+-- AlterTable with conditional check for 'emailVerifiedAt' column
+DO $$
+BEGIN
+    -- Check if the column 'emailVerifiedAt' does not exist in the 'User' table
+    IF NOT EXISTS (
+        SELECT FROM information_schema.columns
+        WHERE table_name='User' AND column_name='emailVerifiedAt'
+    ) THEN
+        -- Add the 'emailVerifiedAt' column to the 'User' table
+        ALTER TABLE "User" ADD COLUMN "emailVerifiedAt" TIMESTAMP(3);
+    END IF;
+END $$;
+
+-- Directly add 'hasLifetimeAccess' column without conditional check
+ALTER TABLE "User" ADD COLUMN "hasLifetimeAccess" BOOLEAN NOT NULL DEFAULT false;
 
 -- CreateTable
 CREATE TABLE "LemonSquuezyOrder" (
