@@ -1,12 +1,10 @@
--- DO $$
--- BEGIN
---     IF NOT EXISTS (SELECT 1 FROM pg_enum WHERE enumlabel = 'VERIFY_EMAIL' AND enumtypid = (SELECT oid FROM pg_type WHERE typname = 'TokenType')) THEN
---         ALTER TYPE "TokenType" ADD VALUE 'VERIFY_EMAIL';
---     END IF;
--- END $$;
-
 -- AlterEnum
-ALTER TYPE "TokenType" ADD VALUE 'VERIFY_EMAIL';
+DO $$
+BEGIN
+    IF NOT EXISTS (SELECT 1 FROM pg_enum WHERE enumlabel = 'VERIFY_EMAIL' AND enumtypid = (SELECT oid FROM pg_type WHERE typname = 'TokenType')) THEN
+        ALTER TYPE "TokenType" ADD VALUE 'VERIFY_EMAIL';
+    END IF;
+END $$;
 
 -- AlterTable
 ALTER TABLE "User" ADD COLUMN     "emailVerifiedAt" TIMESTAMP(3),
