@@ -1,4 +1,4 @@
-// import { LemonsqueezySubscriptionPause } from "./client/methods/updateSubscription/types"
+/// import { LemonsqueezySubscriptionPause } from "./client/methods/updateSubscription/types"
 import { NextApiRequest } from "next"
 
 export enum LemonEventType {
