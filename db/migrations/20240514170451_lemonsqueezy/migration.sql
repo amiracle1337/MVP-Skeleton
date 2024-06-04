@@ -1,3 +1,5 @@
+-- fixing failed migration
+
 -- AlterEnum
 DO $$
 BEGIN
