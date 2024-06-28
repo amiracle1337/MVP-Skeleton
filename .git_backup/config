@@ -1,0 +1,16 @@
+[core]
+	repositoryformatversion = 0
+	filemode = true
+	bare = false
+	logallrefupdates = true
+	ignorecase = true
+	precomposeunicode = true
+	hooksPath = .husky
+[remote "origin"]
+	url = https://github.com/amiracle1337/educationgeeks
+	fetch = +refs/heads/*:refs/remotes/origin/*
+[branch "fixed-version-latest"]
+	remote = origin
+	merge = refs/heads/fixed-version-latest
+[lfs]
+	repositoryformatversion = 0
