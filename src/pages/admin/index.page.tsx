@@ -28,7 +28,7 @@ export const AdminSettingsPage: BlitzPage = () => {
           variant="pills"
           radius="sm"
           orientation="vertical"
-          value={tabsFromUrl || ("users" as any)}
+          // value={tabsFromUrl || ("users" as any)}
         >
           <Tabs.List>
             {adminSettingsTab.map((tab) => (

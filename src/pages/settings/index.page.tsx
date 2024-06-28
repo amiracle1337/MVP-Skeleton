@@ -16,7 +16,7 @@ export const SettingsPage: BlitzPage = () => {
           variant="pills"
           radius="sm"
           orientation="vertical"
-          value={tabsFromUrl || ("account" as any)}
+          // value={tabsFromUrl || ("account" as any)}
         >
           <Tabs.List>
             {settingsTab.map((tab) => (
