@@ -10,39 +10,35 @@ const Input = z.object({
   email: z.string(),
 })
 
-export default resolver.pipe(
-  resolver.zod(Input),
-  resolver.authorize("ADMIN"),
-  async ({ email }) => {
-    const invite = await db.signupInvite.findFirst({
+export default resolver.pipe(resolver.zod(Input), resolver.authorize(), async ({ email }) => {
+  const invite = await db.signupInvite.findFirst({
+    where: {
+      email,
+    },
+  })
+  if (invite) {
+    await db.signupInvite.update({
       where: {
+        id: invite.id,
+      },
+      data: {
+        accepted: true,
+        ipAddresses: "123",
         email,
       },
     })
-    if (invite) {
-      await db.signupInvite.update({
-        where: {
-          id: invite.id,
-        },
-        data: {
-          accepted: true,
-          ipAddresses: "123",
-          email,
-        },
-      })
-    } else {
-      await db.signupInvite.create({
-        data: {
-          email,
-          ipAddresses: `Invited by admin ${uuidGenerator()}`,
-          accepted: true,
-        },
-      })
-    }
-    await sendEmail({
-      to: email,
-      subject: "Your invite has been accepted!",
-      react: React.createElement(EmailTemplateInviteAccepted),
+  } else {
+    await db.signupInvite.create({
+      data: {
+        email,
+        ipAddresses: `Invited by admin ${uuidGenerator()}`,
+        accepted: true,
+      },
     })
   }
-)
+  await sendEmail({
+    to: email,
+    subject: "Your invite has been accepted!",
+    react: React.createElement(EmailTemplateInviteAccepted),
+  })
+})

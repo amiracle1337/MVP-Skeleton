@@ -10,7 +10,7 @@ const Input = z.object({
 
 export default resolver.pipe(
   resolver.zod(Input),
-  resolver.authorize("ADMIN"),
+  resolver.authorize(),
   async ({ usersPerPage, activePage, search }) => {
     return db.user.findMany({
       where: {

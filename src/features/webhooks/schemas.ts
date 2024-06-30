@@ -6,12 +6,12 @@ export const CreateWebhookSchema = z.object({
   userId: z.string(),
   type: z.nativeEnum(WebhookType),
 })
-export type Webhook = z.infer<typeof CreateWebhookSchema>
-export const UpdateWebhookSchema = CreateWebhookSchema.merge(
-  z.object({
-    id: z.string(),
-  })
-)
+
+// Partial means that all fields are optional
+export const UpdateWebhookSchema = z.object({
+  id: z.string(),
+  data: CreateWebhookSchema.partial(),
+})
 
 export const DeleteWebhookSchema = z.object({
   id: z.string(),
