@@ -2,7 +2,7 @@ import { resolver } from "@blitzjs/rpc"
 import db from "db"
 import { Role } from "types"
 
-export default resolver.pipe(resolver.authorize(), async (_, ctx) => {
+export default resolver.pipe(resolver.authorize("ADMIN"), async (_, ctx) => {
   const userId = ctx.session.$publicData.impersonatingFromUserId
   if (!userId) {
     console.log("Not impersonating anyone")

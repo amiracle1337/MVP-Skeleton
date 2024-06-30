@@ -10,7 +10,7 @@ export const ImpersonateUserInput = z.object({
 
 export default resolver.pipe(
   resolver.zod(ImpersonateUserInput),
-  resolver.authorize(),
+  resolver.authorize("ADMIN"),
   async ({ userId }, ctx) => {
     const user = await db.user.findFirst({ where: { id: userId } })
     if (!user) throw new Error("Could not find user id " + userId)

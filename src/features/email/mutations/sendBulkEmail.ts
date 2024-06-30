@@ -28,7 +28,7 @@ const Input = z.object({
 
 export default resolver.pipe(
   resolver.zod(Input),
-  resolver.authorize(),
+  resolver.authorize("ADMIN"),
   async ({ list, subject, template, variables }, { session: { userId } }) => {
     console.log("list is", list)
 

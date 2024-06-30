@@ -7,7 +7,7 @@ import React from "react"
 
 export default resolver.pipe(
   resolver.zod(UpdateSignupInviteSchema),
-  resolver.authorize(),
+  resolver.authorize("ADMIN"),
   // This means that the function expects an object with at least
   // an id property and any number of additional properties (collected in data).
   // e.g. id = "invite123";
