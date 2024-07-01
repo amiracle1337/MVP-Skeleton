@@ -1,7 +1,8 @@
 import { resolver } from "@blitzjs/rpc"
 import { z } from "zod"
-import db from "db"
+import db, { WebhookType } from "db"
 import { TodoInput } from "src/features/todos /schemas"
+import { processWebhooks } from "src/features/webhooks/utils"
 
 export default resolver.pipe(
   resolver.zod(TodoInput),
@@ -19,6 +20,16 @@ export default resolver.pipe(
         },
       },
     })
+
+    try {
+      await processWebhooks({
+        webhook: WebhookType.ActionCreated,
+        data: todo,
+      })
+    } catch (error) {
+      console.error("Error processing webhooks:", error)
+    }
+
     return todo
   }
 )

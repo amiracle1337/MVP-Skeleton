@@ -1,5 +1,5 @@
 import React from "react"
-import { Stack, List, Button, Input, Checkbox, Text, Group } from "@mantine/core"
+import { Stack, List, Button, Input, Checkbox, Text, Group, ActionIcon } from "@mantine/core"
 import { BlitzPage } from "@blitzjs/auth"
 import Layout from "src/core/layouts/Layout"
 import { useMutation, useQuery } from "@blitzjs/rpc"
@@ -11,6 +11,8 @@ import { PromiseReturnType } from "blitz"
 import { z } from "zod"
 import { TodoInput } from "src/features/todos /schemas"
 import { useForm, zodResolver } from "@mantine/form"
+import { IconTrash } from "@tabler/icons-react"
+import deleteTodo from "src/features/todos /mutations/deleteTodo"
 
 type todoAsReturnedFromTheServer = PromiseReturnType<typeof getTodos>
 type TodoType = todoAsReturnedFromTheServer[0]
@@ -22,6 +24,7 @@ const Todos: React.FC<{
   const [todos] = useQuery(getTodos, {})
   const [$addTodo, { isLoading }] = useMutation(addTodo, {})
   const [$cleanCompleted] = useMutation(cleanCompleted, {})
+  const [$deleteTodo] = useMutation(deleteTodo, {})
 
   const form = useForm<TodoFormType>({
     validate: zodResolver(TodoInput),
@@ -39,7 +42,12 @@ const Todos: React.FC<{
           }}
           style={{ padding: "5px" }}
         />
-        <Text>{todo.title}</Text>
+        <Group>
+          <Text>{todo.title}</Text>
+          <ActionIcon variant="subtle" onClick={async () => await $deleteTodo({ id: todo.id })}>
+            <IconTrash size={13} />
+          </ActionIcon>
+        </Group>
       </Group>
     )
   }
