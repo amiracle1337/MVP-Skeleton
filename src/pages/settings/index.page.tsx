@@ -1,11 +1,14 @@
 import { BlitzPage } from "@blitzjs/auth"
 import { Stack, Tabs, rem } from "@mantine/core"
+import { useRouter } from "next/router"
 import Layout from "src/core/layouts/Layout"
 import { settingsTab } from "src/core/spotlight/actions"
 import { useStringQueryParam } from "src/utils/utils"
 
 export const SettingsPage: BlitzPage = () => {
   const tabsFromUrl = useStringQueryParam("tab")
+  // router adds a query object to the URL when the tab is changed so tabsfromUrl can be used to set the active tab
+  const router = useRouter()
 
   return (
     <Layout>
@@ -16,7 +19,10 @@ export const SettingsPage: BlitzPage = () => {
           variant="pills"
           radius="sm"
           orientation="vertical"
-          // value={tabsFromUrl || ("account" as any)}
+          onChange={async (value) => {
+            await router.push({ query: { tab: value } })
+          }}
+          value={tabsFromUrl || ("account" as any)}
         >
           <Tabs.List>
             {settingsTab.map((tab) => (

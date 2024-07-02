@@ -13,10 +13,14 @@ import {
 
 import { useStringQueryParam } from "src/utils/utils"
 import { adminSettingsTab } from "src/core/spotlight/actions"
+import { useRouter } from "next/router"
 
 export const AdminSettingsPage: BlitzPage = () => {
   const iconStyle = { width: rem(14), height: rem(14) }
   const tabsFromUrl = useStringQueryParam("tab")
+  // router adds a query object to the URL when the tab is changed so tabsfromUrl can be used to set the active tab
+
+  const router = useRouter()
 
   return (
     <Layout>
@@ -28,7 +32,10 @@ export const AdminSettingsPage: BlitzPage = () => {
           variant="pills"
           radius="sm"
           orientation="vertical"
-          // value={tabsFromUrl || ("users" as any)}
+          value={tabsFromUrl || ("users" as any)}
+          onChange={async (value) => {
+            await router.push({ query: { tab: value } })
+          }}
         >
           <Tabs.List>
             {adminSettingsTab.map((tab) => (
