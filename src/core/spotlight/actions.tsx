@@ -8,6 +8,7 @@ import {
   IconUser,
   IconMoodPlus,
   IconFishHook,
+  IconApi,
 } from "@tabler/icons-react"
 import { ChangePassword } from "src/pages/settings/components/ChangePassword"
 import { UserEmailSettings } from "src/pages/settings/components/UserEmailSettings"
@@ -17,7 +18,8 @@ import { AdminPageBillingTab } from "src/pages/admin/components/AdminPageBilling
 import { AdminPageUserTab } from "src/pages/admin/components/AdminPageUserTab"
 import { AdminPageInviteTab } from "src/pages/admin/components/AdminPageInviteTab"
 import { AdminPageEmailTab } from "src/pages/admin/components/AdminPageEmailTab"
-import { UserWebhookSettings } from "src/pages/settings/components/UserWebhookSettings"
+import { UserWebhookSettings } from "src/pages/settings/components/UserWebhookSettings copy"
+import { UserTokenSettings } from "src/pages/settings/components/UserTokenSettings"
 
 export const settingsTab = [
   {
@@ -50,6 +52,12 @@ export const settingsTab = [
     label: "Webhooks",
     icon: IconFishHook,
     content: UserWebhookSettings,
+  },
+  {
+    value: "tokens",
+    label: "API tokens",
+    icon: IconApi,
+    content: UserTokenSettings,
   },
 ]
 
