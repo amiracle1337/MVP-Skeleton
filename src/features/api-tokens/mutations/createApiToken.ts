@@ -5,9 +5,13 @@ import { CreateApiTokenSchema } from "../schemas"
 export default resolver.pipe(
   resolver.zod(CreateApiTokenSchema),
   resolver.authorize(),
-  async (input) => {
-    // TODO: in multi-tenant app, you must add validation to ensure correct tenant
-    const apiToken = await db.apiToken.create({ data: input })
+  async (input, { session: { userId } }) => {
+    const apiToken = await db.apiToken.create({
+      data: {
+        ...input,
+        userId,
+      },
+    })
 
     return apiToken
   }

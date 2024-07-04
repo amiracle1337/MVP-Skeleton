@@ -18,7 +18,7 @@ import { AdminPageBillingTab } from "src/pages/admin/components/AdminPageBilling
 import { AdminPageUserTab } from "src/pages/admin/components/AdminPageUserTab"
 import { AdminPageInviteTab } from "src/pages/admin/components/AdminPageInviteTab"
 import { AdminPageEmailTab } from "src/pages/admin/components/AdminPageEmailTab"
-import { UserWebhookSettings } from "src/pages/settings/components/UserWebhookSettings copy"
+import { UserWebhookSettings } from "src/pages/settings/components/UserWebhookSettings"
 import { UserTokenSettings } from "src/pages/settings/components/UserTokenSettings"
 
 export const settingsTab = [

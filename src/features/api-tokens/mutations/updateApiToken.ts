@@ -5,9 +5,8 @@ import { UpdateApiTokenSchema } from "../schemas"
 export default resolver.pipe(
   resolver.zod(UpdateApiTokenSchema),
   resolver.authorize(),
-  async ({ id, ...data }) => {
-    // TODO: in multi-tenant app, you must add validation to ensure correct tenant
-    const apiToken = await db.apiToken.update({ where: { id }, data })
+  async ({ id, data }, { session: { userId } }) => {
+    const apiToken = await db.apiToken.updateMany({ where: { id, userId }, data })
 
     return apiToken
   }

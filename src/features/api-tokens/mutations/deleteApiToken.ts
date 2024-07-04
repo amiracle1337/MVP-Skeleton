@@ -5,9 +5,8 @@ import { DeleteApiTokenSchema } from "../schemas"
 export default resolver.pipe(
   resolver.zod(DeleteApiTokenSchema),
   resolver.authorize(),
-  async ({ id }) => {
-    // TODO: in multi-tenant app, you must add validation to ensure correct tenant
-    const apiToken = await db.apiToken.deleteMany({ where: { id } })
+  async ({ id }, { session: { userId } }) => {
+    const apiToken = await db.apiToken.deleteMany({ where: { id, userId } })
 
     return apiToken
   }

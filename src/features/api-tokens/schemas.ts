@@ -6,7 +6,7 @@ export const CreateApiTokenSchema = z.object({
   name: z.string(),
   permissions: z.array(z.nativeEnum(ApiTokenPermission)),
   // the field can be either a string, null, or undefined.
-  token: z.string().optional().nullish(),
+  token: z.string(),
 })
 export const UpdateApiTokenSchema = CreateApiTokenSchema.merge(
   z.object({
