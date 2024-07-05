@@ -1,6 +1,6 @@
 import { z } from "zod"
 
 export const TodoInput = z.object({
-  todoTitle: z.string(),
+  title: z.string(),
 })
 type todoFormType = z.infer<typeof TodoInput>

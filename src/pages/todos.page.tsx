@@ -56,10 +56,11 @@ const Todos: React.FC<{
     <Stack>
       <form
         onSubmit={form.onSubmit(async (values) => {
+          console.log(values)
           await $addTodo(values)
         })}
       >
-        <Input mb={25} placeholder="Add todo" {...form.getInputProps("todoTitle")} />
+        <Input mb={25} placeholder="Add todo" {...form.getInputProps("title")} />
 
         <Button loading={isLoading} type="submit">
           Create todo
