@@ -1,7 +1,7 @@
 POST http://localhost:3000/api/todos/post/create HTTP/1.1
 content-type: application/json
-Authorization: 123123123
+// Authorization: 123123123
 
 {
-    "title": "api's  rocks ass"
+    "title": "amir is the king of the tech world"
 }
