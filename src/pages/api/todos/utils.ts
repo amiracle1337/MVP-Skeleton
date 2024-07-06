@@ -1,5 +1,4 @@
 import { NextApiRequest, NextApiResponse } from "next"
-import { z, ZodType } from "zod"
 import { buffer } from "micro"
 import { random } from "lodash"
 import db from "db"

@@ -1,8 +1,8 @@
 import { z } from "zod"
 import db from "db"
 import { NextApiRequest, NextApiResponse } from "next"
-import { ApiError, ApiResult } from "src/pages/api/todos/utils"
-import { getUserFromToken } from "src/pages/api/todos/utils"
+import { getUserFromToken } from "../utils"
+import { withCORS } from "../withCors"
 
 const createTodoSchema = z.object({
   title: z.string(),
@@ -10,28 +10,44 @@ const createTodoSchema = z.object({
 
 const createTodo = async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method !== "POST") {
-    return res.status(405).json(ApiError("Method Not Allowed", 405))
+    return res.status(405).json({
+      status: 405,
+      body: {
+        error: {
+          message: "Method Not Allowed",
+        },
+      },
+    })
   }
 
   const token = req.headers.authorization
   const user = token ? await getUserFromToken(token) : null
 
   if (!user) {
-    return res.status(401).json(ApiError("Unauthorized", 401))
+    return res.status(401).json({
+      status: 401,
+      body: {
+        error: {
+          message: "Unauthorized",
+        },
+      },
+    })
   }
 
-  // Checks if the request body matches the schema. If not, returns an error.
   const result = createTodoSchema.safeParse(req.body)
 
   if (!result.success) {
-    return res.status(400).json(ApiError("Invalid input", 400))
+    return res.status(400).json({
+      status: 400,
+      body: {
+        error: {
+          message: "Invalid input",
+        },
+      },
+    })
   }
 
-  // Extracts data as todo from the validated result.
   const { data: todo } = result
-
-  // When you use await, the function pauses execution until the awaited promise resolves.
-  // In this case, it waits until the db.todo.create operation completes before proceeding.
 
   try {
     const createdTodo = await db.todo.create({
@@ -45,10 +61,20 @@ const createTodo = async (req: NextApiRequest, res: NextApiResponse) => {
       },
     })
 
-    return res.status(200).json(ApiResult(createdTodo))
+    return res.status(200).json({
+      status: 200,
+      body: createdTodo,
+    })
   } catch (error) {
-    return res.status(500).json(ApiError("Internal Server Error", 500))
+    return res.status(500).json({
+      status: 500,
+      body: {
+        error: {
+          message: "Internal Server Error",
+        },
+      },
+    })
   }
 }
 
-export default createTodo
+export default withCORS(createTodo)
