@@ -70,10 +70,12 @@ enum ApiTokenPermission {
 }
 
 model ApiToken {
-  id         String               @id @default(uuid())
-  createdAt  DateTime             @default(now())
-  updatedAt  DateTime             @updatedAt
-  token      String               @unique
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  token     String   @unique @default(uuid())
+  name      String   @default("default_name")
+
   user       User                 @relation(fields: [userId], references: [id])
   userId     String
   permission ApiTokenPermission[]

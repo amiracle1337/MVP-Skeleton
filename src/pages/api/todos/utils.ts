@@ -1,4 +1,3 @@
-import { buffer } from "micro"
 import { random } from "lodash"
 import db, { ApiTokenPermission } from "db"
 import { ZodType } from "zod"
@@ -59,10 +58,14 @@ export const createGetRequest = <T>(
   )
 }
 
+// next-better-api helps us set up api routes with common functionalities like cors, authentication and schema val
+
 // Function to create a POST request handler
 export const createPostRequest = <T>(
   bodySchema: ZodType<T, any, any> | null,
   permission: ApiTokenPermission,
+  // The callback is a function that takes a single argument (which includes both
+  // authentication context and a body), and it can return anything."
   callback: (a: { body: T } & AuthContextType) => any
 ) => {
   return asHandler(
