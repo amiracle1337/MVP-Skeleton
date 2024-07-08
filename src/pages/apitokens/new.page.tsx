@@ -31,18 +31,20 @@ export const NewApiTokenPage: BlitzPage = () => {
   const [$createApiToken, { isLoading }] = useMutation(createApiToken)
   const router = useRouter()
   const [selectedPermissions, setSelectedPermissions] = useState([] as ApiTokenPermission[])
-  const [tokenName, setTokenName] = useState("new API token")
+  const [tokenName, setTokenName] = useState("")
 
   const onSubmit = async () => {
-    await $createApiToken({
-      name: tokenName,
-      permission: selectedPermissions,
-    })
-    await router.push(
-      Routes.SettingsPage({
-        tab: "tokens",
+    if (tokenName) {
+      await $createApiToken({
+        name: tokenName,
+        permission: selectedPermissions,
       })
-    ) // Redirect to UserTokenSettings page
+      await router.push(
+        Routes.SettingsPage({
+          tab: "tokens",
+        })
+      ) // Redirect to UserTokenSettings page
+    }
   }
 
   const onPermissionChange = (permission: ApiTokenPermission) => {

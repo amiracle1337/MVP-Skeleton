@@ -5,8 +5,11 @@ import { UpdateApiTokenSchema } from "../schemas"
 export default resolver.pipe(
   resolver.zod(UpdateApiTokenSchema),
   resolver.authorize(),
-  async ({ id, data }, { session: { userId } }) => {
-    const apiToken = await db.apiToken.updateMany({ where: { id, userId }, data })
+  async ({ id, data: { name, permission } }, { session: { userId } }) => {
+    const apiToken = await db.apiToken.updateMany({
+      where: { id, userId },
+      data: { name, permission },
+    })
 
     return apiToken
   }

@@ -12,7 +12,14 @@ import {
   Card,
   Divider,
 } from "@mantine/core"
-import { IconTrash, IconPlus, IconCopy } from "@tabler/icons-react"
+import {
+  IconTrash,
+  IconPlus,
+  IconCopy,
+  IconEdit,
+  IconEditCircle,
+  IconPencil,
+} from "@tabler/icons-react"
 import getApiTokens from "src/features/api-tokens/queries/getApiTokens"
 import deleteApiToken from "src/features/api-tokens/mutations/deleteApiToken"
 import updateApiToken from "src/features/api-tokens/mutations/updateApiToken"
@@ -22,6 +29,7 @@ import { Router, useRouter } from "next/router"
 const TokenComponent = ({ token }) => {
   const [$updateApiToken] = useMutation(updateApiToken, {})
   const [$deleteApiToken] = useMutation(deleteApiToken, {})
+  const router = useRouter()
 
   return (
     <Card padding="md" radius="md" withBorder>
@@ -39,6 +47,16 @@ const TokenComponent = ({ token }) => {
           }}
         >
           <IconTrash size={18} />
+        </ActionIcon>
+        <ActionIcon
+          variant="light"
+          mb="sm"
+          size={16}
+          onClick={async () => {
+            await router.push(`/apitokens/${token.token}/edit`)
+          }}
+        >
+          <IconPencil size={18} />
         </ActionIcon>
       </Group>
       <PasswordInput
@@ -70,7 +88,6 @@ export const UserTokenSettings = () => {
   const router = useRouter()
 
   const [tokens] = useQuery(getApiTokens, {})
-  console.log(tokens)
   const sortedTokens = [...tokens].sort(
     (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
   )
