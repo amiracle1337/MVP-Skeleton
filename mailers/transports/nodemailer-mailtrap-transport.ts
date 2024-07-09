@@ -1,8 +1,7 @@
 import nodemailer from "nodemailer"
-import { env } from "src/env.mjs"
 
-let user = env.MAILTRAP_USERNAME
-let pass = env.MAILTRAP_PASSWORD // add this to .env.local from the NodemailerApp
+let user = process.env.MAILTRAP_USERNAME
+let pass = process.env.MAILTRAP_PASSWORD
 
 export const nodemailerMailtrapTransport = nodemailer.createTransport({
   host: "sandbox.smtp.mailtrap.io ",

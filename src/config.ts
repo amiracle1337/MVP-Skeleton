@@ -1,3 +1,6 @@
+// When you deploy your application to Railway, the environment variables you set
+// in the Railway project settings are made available to your application through process.env
+
 export const PROD_URL = "https://artifo.co"
 export const STAGING_URL = "https://staging.artifo.co"
 export const DEV_URL = "http://localhost:3000"
