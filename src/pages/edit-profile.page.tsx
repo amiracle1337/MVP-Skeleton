@@ -1,6 +1,6 @@
 import { useMutation, useQuery } from "@blitzjs/rpc"
 import { BlitzPage } from "@blitzjs/auth"
-import { Text, Stack } from "@mantine/core"
+import { Stack } from "@mantine/core"
 import Layout from "src/core/layouts/Layout"
 import { useStringParam } from "src/utils/utils"
 import { useForm, zodResolver } from "@mantine/form"
