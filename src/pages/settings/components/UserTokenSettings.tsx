@@ -10,34 +10,54 @@ import {
   ActionIcon,
   PasswordInput,
   Card,
-  Divider,
 } from "@mantine/core"
-import {
-  IconTrash,
-  IconPlus,
-  IconCopy,
-  IconEdit,
-  IconEditCircle,
-  IconPencil,
-} from "@tabler/icons-react"
+import { IconTrash, IconPlus, IconPencil } from "@tabler/icons-react"
 import getApiTokens from "src/features/api-tokens/queries/getApiTokens"
 import deleteApiToken from "src/features/api-tokens/mutations/deleteApiToken"
-import updateApiToken from "src/features/api-tokens/mutations/updateApiToken"
 import { Routes } from "@blitzjs/next"
-import { Router, useRouter } from "next/router"
+import { useRouter } from "next/router"
 
 const TokenComponent = ({ token }) => {
-  const [$updateApiToken] = useMutation(updateApiToken, {})
   const [$deleteApiToken] = useMutation(deleteApiToken, {})
   const router = useRouter()
 
   return (
-    <Card padding="md" radius="md" withBorder>
+    <Card
+      padding="md"
+      radius="md"
+      withBorder
+      style={{
+        position: "relative",
+        transition: "all 100ms linear",
+      }}
+      onMouseEnter={(e) => {
+        const actionIcons = e.currentTarget.querySelectorAll(".action-icons")
+        actionIcons.forEach((icon) => {
+          const element = icon as HTMLElement
+          element.style.opacity = "1"
+          element.style.pointerEvents = "all"
+        })
+      }}
+      onMouseLeave={(e) => {
+        const actionIcons = e.currentTarget.querySelectorAll(".action-icons")
+        actionIcons.forEach((icon) => {
+          const element = icon as HTMLElement
+          element.style.opacity = "0"
+          element.style.pointerEvents = "none"
+        })
+      }}
+    >
       <Group>
         <Badge mb="sm" color="blue" variant="light" size="md">
           {token.name}
         </Badge>
         <ActionIcon
+          className="action-icons"
+          style={{
+            transition: "all 100ms linear",
+            opacity: 0,
+            pointerEvents: "none",
+          }}
           variant="light"
           color="red"
           mb="sm"
@@ -49,6 +69,12 @@ const TokenComponent = ({ token }) => {
           <IconTrash size={18} />
         </ActionIcon>
         <ActionIcon
+          className="action-icons"
+          style={{
+            transition: "all 100ms linear",
+            opacity: 0,
+            pointerEvents: "none",
+          }}
           variant="light"
           mb="sm"
           size={16}
@@ -59,21 +85,7 @@ const TokenComponent = ({ token }) => {
           <IconPencil size={18} />
         </ActionIcon>
       </Group>
-      <PasswordInput
-        w="100%"
-        value={token.token}
-        readOnly
-        // rightSection={
-        //   <ActionIcon
-        //     variant="subtle"
-        //     color="grey"
-        //     size="sm"
-        //     onClick={() => navigator.clipboard.writeText(token.token)}
-        //   >
-        //     <IconCopy size={16} />
-        //   </ActionIcon>
-        // }
-      />
+      <PasswordInput w="100%" value={token.token} readOnly />
       <Text size="xs" c="dimmed" mt="lg">
         Created: {new Date(token.createdAt).toLocaleDateString()}
       </Text>
