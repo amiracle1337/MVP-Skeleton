@@ -13,6 +13,8 @@ export const env = createEnv({
     LEMONSQUEEZY_API_KEY: z.string(),
     LEMONSQUEEZY_STORE_ID: z.string(),
     LOCAL_IP_ADDRESSES: z.string().optional(),
+    MAILTRAP_USERNAME: z.string().optional(),
+    MAILTRAP_PASSWORD: z.string().optional(),
   },
   client: {
     NEXT_PUBLIC_LEMONSQUEEZY_LIFETIME_PLAN_VARIANT_ID: z.string(),
@@ -36,5 +38,7 @@ export const env = createEnv({
     NEXT_PUBLIC_LEMONSQUEEZY_ANNUAL_PLAN_VARIANT_ID:
       process.env.NEXT_PUBLIC_LEMONSQUEEZY_ANNUAL_PLAN_VARIANT_ID,
     LOCAL_IP_ADDRESSES: process.env.LOCAL_IP_ADDRESSES,
+    MAILTRAP_USERNAME: process.env.MAILTRAP_USERNAME,
+    MAILTRAP_PASSWORD: process.env.MAILTRAP_PASSWORD,
   },
 })
