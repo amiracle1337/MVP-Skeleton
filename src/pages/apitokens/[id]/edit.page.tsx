@@ -34,6 +34,7 @@ export const EditApiToken = () => {
   const router = useRouter()
 
   const [apitoken] = useQuery(getApiToken, { id: id as string })
+  console.log("12", apitoken)
   const [updateApiTokenMutation] = useMutation(updateApiToken)
   const [selectedPermissions, setSelectedPermissions] = useState<ApiTokenPermission[]>([])
 
@@ -49,6 +50,21 @@ export const EditApiToken = () => {
         ? current.filter((p) => p !== permission)
         : [...current, permission]
     )
+  }
+
+  const onSubmit = async () => {
+    try {
+      const result = await updateApiTokenMutation({
+        id: id as string,
+        name: apitoken?.name as string,
+        permission: selectedPermissions,
+      })
+      await router.push(
+        Routes.SettingsPage({
+          tab: "tokens",
+        })
+      )
+    } catch (error) {}
   }
 
   // const onSubmit = async () => {
@@ -77,7 +93,7 @@ export const EditApiToken = () => {
               onChange={() => onPermissionChange(permission.value)}
             />
           ))}
-          {/* <Button onClick={onSubmit}>Update API Token</Button> */}
+          <Button onClick={onSubmit}>Update API Token</Button>
         </Stack>
       </Suspense>
     </Layout>
