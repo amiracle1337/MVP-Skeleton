@@ -17,22 +17,27 @@ export const sendEmail = async ({ subject, to, react }: Email) => {
 
   if (!react) throw new Error("this email doesn't have any content")
 
-  if (isDev) {
-    const html = render(react)
-    return nodemailerAppTransport.sendMail({
+  const html = render(react)
+
+  try {
+    if (isDev) {
+      return await nodemailerAppTransport.sendMail({
+        ...message,
+        html,
+      })
+    }
+    if (isStaging) {
+      return await nodemailerMailtrapTransport.sendMail({
+        ...message,
+        html,
+      })
+    }
+    return await resend.emails.send({
       ...message,
-      html,
+      react,
     })
+  } catch (error) {
+    console.error("Error sending email:", error)
+    throw error
   }
-  if (isStaging) {
-    const html = render(react)
-    return nodemailerMailtrapTransport.sendMail({
-      ...message,
-      html,
-    })
-  }
-  return resend.emails.send({
-    ...message,
-    react,
-  })
 }
