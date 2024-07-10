@@ -39,7 +39,7 @@ export async function getServerSideProps() {
   // Fetch data from external API
 
   const data = {
-    username: "test",
+    username: "test ssr fetch",
     bio: "test bio",
   }
 
