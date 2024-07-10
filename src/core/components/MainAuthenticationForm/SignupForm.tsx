@@ -5,7 +5,6 @@ import {
   Text,
   Paper,
   Group,
-  PaperProps,
   Button,
   Divider,
   Checkbox,
@@ -20,13 +19,15 @@ import { SignupInput, SignupInputType } from "src/features/auth/schemas"
 import Link from "next/link"
 import { Routes } from "@blitzjs/next"
 
-export const SignupForm: React.FC<{
-  toggle: () => void
-}> = ({ toggle }) => {
+type SignupFormProps = {
+  onSuccess?: () => void
+  toggle: () => void // Add toggle prop
+}
+
+export const SignupForm = (props: SignupFormProps) => {
   const [$signup, { isLoading }] = useMutation(signup)
 
   const form = useForm<SignupInputType>({
-    // validate: is client side validation checking form data, then we have server side validation with mutations
     validate: zodResolver(SignupInput),
     validateInputOnBlur: true,
     validateInputOnChange: ["terms"],
@@ -51,7 +52,16 @@ export const SignupForm: React.FC<{
 
         <form
           onSubmit={form.onSubmit(async (values) => {
-            await $signup(values)
+            try {
+              await $signup(values)
+              props.onSuccess?.()
+            } catch (error: any) {
+              if (error.code === "P2002" && error.meta?.target?.includes("email")) {
+                form.setFieldError("email", "This email is already being used")
+              } else {
+                form.setFieldError("form", error.toString())
+              }
+            }
           })}
         >
           <Stack>
@@ -93,7 +103,7 @@ export const SignupForm: React.FC<{
           </Stack>
 
           <Group justify="space-between" mt="xl">
-            <Anchor component="button" type="button" c="dimmed" size="xs">
+            <Anchor onClick={props.toggle} component="button" type="button" c="dimmed" size="xs">
               Already have an account? Login
             </Anchor>
             <Button disabled={!form.isValid()} loading={isLoading} type="submit" radius="xl">
@@ -105,3 +115,5 @@ export const SignupForm: React.FC<{
     </Flex>
   )
 }
+
+export default SignupForm
