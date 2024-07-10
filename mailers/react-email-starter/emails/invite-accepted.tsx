@@ -9,7 +9,7 @@ import { MainButton } from "../components/MainButton"
 export const EmailTemplateInviteAccepted: React.FC<{
   props: {}
 }> = ({}) => {
-  const signupUrl = `${URL_ORIGIN}/signup`
+  const signupUrl = `${URL_ORIGIN}/auth/signup`
   return (
     <Html>
       <Head />
