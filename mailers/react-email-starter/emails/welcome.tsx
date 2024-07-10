@@ -17,7 +17,7 @@ export const EmailTemplateWelcome: React.FC<{
     emailVerifyURL: string | null
   }
 }> = ({ props = defaultProps }) => {
-  const { name } = props
+  const { name, emailVerifyURL } = props
   const welcomeMessage = name ? `Hi ${name}` : "Hey there,"
 
   return (
@@ -32,7 +32,7 @@ export const EmailTemplateWelcome: React.FC<{
             <Text style={emailStyles.paragraph}>
               {welcomeMessage}, Welcome to {APP_NAME}.
             </Text>
-            <MainButton href="https://dashboard.stripe.com/login">
+            <MainButton href={emailVerifyURL || "https://artifo.co"}>
               Click here to verify your account!
             </MainButton>
             <Footer />

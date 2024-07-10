@@ -53,7 +53,7 @@ const Layout: React.FC<{ title?: string; children?: React.ReactNode }> = ({ titl
             href={Routes.Home()}
             fw={700}
           >
-            truffle
+            artifo
           </Anchor>
           <ImpersonatingUserNotice />
           {user && (

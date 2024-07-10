@@ -33,7 +33,7 @@ export const LoginForm: React.FC<{
     <Flex style={{ height: "100vh", width: "100%" }} align="center" justify="center">
       <Paper radius="md" p="xl" withBorder>
         <Text size="lg" fw={500}>
-          Welcome to {"truffle"}, login with
+          Welcome to {"artifo"}, login with
         </Text>
 
         <SocialButtonsAuth />
@@ -48,7 +48,7 @@ export const LoginForm: React.FC<{
           <TextInput
             required
             label="Email"
-            placeholder="hello@truffle.ai"
+            placeholder="elon@tesla.com"
             {...form.getInputProps("email")}
             radius="md"
           />

@@ -14,8 +14,8 @@ export const isProduction = railwayEnvironment?.toLowerCase() === "production"
 
 export const URL_ORIGIN = isStaging ? STAGING_URL : isDev ? DEV_URL : PROD_URL
 
-export const APP_NAME = "truffle"
-export const APP_FULL_TITLE = "truffle "
-export const APP_DESCRIPTION = "its all truffles"
+export const APP_NAME = "artifo"
+export const APP_FULL_TITLE = "artifo - your artificial CFO"
+export const APP_DESCRIPTION = "never worry about your finances again"
 export const APP_DEFAULT_IMAGE = `${URL_ORIGIN}/images/meta.jpg`
 export const APP_DEFAULT_URL = URL_ORIGIN

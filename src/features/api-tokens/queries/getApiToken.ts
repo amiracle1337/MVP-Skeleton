@@ -14,7 +14,6 @@ export default resolver.pipe(
       const apiToken = await db.apiToken.findFirst({
         where: { token: id, userId },
       })
-      console.log("Fetched API Token from DB:", apiToken) // Add this log
       return apiToken
     } catch (error) {
       console.error("Error fetching API token:", error)

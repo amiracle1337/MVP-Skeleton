@@ -36,7 +36,7 @@ export const SignupForm: React.FC<{
     <Flex style={{ height: "100vh", width: "100%" }} align="center" justify="center">
       <Paper radius="md" p="xl" withBorder>
         <Text size="lg" fw={500}>
-          Welcome to truffle, register with
+          Welcome to artifo, register with
         </Text>
 
         <Divider label="Or continue with email" labelPosition="center" my="lg" />
@@ -66,7 +66,7 @@ export const SignupForm: React.FC<{
             <TextInput
               required
               label="Email"
-              placeholder="hello@truffle.ai"
+              placeholder="elon@tesla.com"
               {...form.getInputProps("email")}
               radius="md"
             />
