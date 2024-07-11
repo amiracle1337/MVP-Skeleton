@@ -17,10 +17,13 @@ import { UserHeaderMenu } from "../components/Header/UserHeaderMenu"
 import { ImpersonatingUserNotice } from "src/features/admin/components/ImpersonationHeader"
 import { IconSearch } from "@tabler/icons-react"
 import { spotlight } from "@mantine/spotlight"
+import { useMediaQueries } from "src/styles/responsive/MediaQueryContext"
+import { isThisYear } from "date-fns"
 
 const Layout: React.FC<{ title?: string; children?: React.ReactNode }> = ({ title, children }) => {
   // const thisYear = new Date().getFullYear()
   const user = useCurrentUser()
+  const { isMobile } = useMediaQueries()
 
   return (
     <>
@@ -44,6 +47,7 @@ const Layout: React.FC<{ title?: string; children?: React.ReactNode }> = ({ titl
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
+            border: "none",
           }}
         >
           <Anchor
@@ -66,7 +70,8 @@ const Layout: React.FC<{ title?: string; children?: React.ReactNode }> = ({ titl
               />
               <UserHeaderMenu />
               <Group>
-                <Text c="gray.7">{user.username}</Text>
+                {/* if user is on mobile, dont show username */}
+                {!isMobile && <Text c="gray.7">{user.username}</Text>}
                 <UserProfileProgress />
               </Group>
               {!user.username && (
@@ -114,13 +119,15 @@ const Layout: React.FC<{ title?: string; children?: React.ReactNode }> = ({ titl
           </ErrorBoundary>
         </AppShell.Main>
 
-        {/* <AppShell.Footer p="md">
-          <Flex justify={"center"} align={"center"}>
-            <Text c="dimmed" fz="xs">
-              copywright {thisYear}
-            </Text>
-          </Flex>
-        </AppShell.Footer> */}
+        {!isMobile && (
+          <AppShell.Footer p="md">
+            <Flex justify={"center"} align={"center"}>
+              <Text c="dimmed" fz="xs">
+                copywright {isThisYear(new Date()) ? new Date().getFullYear() : ""} artifo
+              </Text>
+            </Flex>
+          </AppShell.Footer>
+        )}
       </AppShell>
     </>
   )
