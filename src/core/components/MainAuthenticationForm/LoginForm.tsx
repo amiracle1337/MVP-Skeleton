@@ -20,8 +20,8 @@ import { Routes } from "@blitzjs/next"
 import { SocialButtonsAuth } from "./SocialButtonAuth"
 
 export const LoginForm: React.FC<{
-  toggle: () => void
-}> = ({ toggle }) => {
+  onSuccess?: () => void
+}> = ({ onSuccess }) => {
   const [$login, { isLoading }] = useMutation(login)
 
   const form = useForm<LoginInputType>({
@@ -43,6 +43,7 @@ export const LoginForm: React.FC<{
         <form
           onSubmit={form.onSubmit(async (values) => {
             await $login(values)
+            onSuccess?.()
           })}
         >
           <TextInput
@@ -69,9 +70,10 @@ export const LoginForm: React.FC<{
           </Flex>
 
           <Group justify="space-between" mt="xl">
-            <Anchor onClick={toggle} component="button" type="button" c="dimmed" size="xs">
+            <Anchor component={Link} href={Routes.SignupPage()} color="dimmed" size="xs">
               {"Don't have an account? Register"}
             </Anchor>
+
             <Button disabled={!form.isValid()} loading={isLoading} type="submit" radius="xl">
               Login
             </Button>

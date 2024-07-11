@@ -21,7 +21,6 @@ import { Routes } from "@blitzjs/next"
 
 type SignupFormProps = {
   onSuccess?: () => void
-  toggle: () => void // Add toggle prop
 }
 
 export const SignupForm = (props: SignupFormProps) => {
@@ -103,7 +102,7 @@ export const SignupForm = (props: SignupFormProps) => {
           </Stack>
 
           <Group justify="space-between" mt="xl">
-            <Anchor onClick={props.toggle} component="button" type="button" c="dimmed" size="xs">
+            <Anchor component={Link} href={Routes.LoginPage()} c="dimmed" size="xs">
               Already have an account? Login
             </Anchor>
             <Button disabled={!form.isValid()} loading={isLoading} type="submit" radius="xl">
