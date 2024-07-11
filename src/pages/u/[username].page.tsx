@@ -1,9 +1,8 @@
 import { invoke } from "@blitzjs/rpc"
-import { BlitzPage } from "@blitzjs/auth"
+import { BlitzPage, getSession } from "@blitzjs/auth"
 import { Text, Stack, Button, Flex, Title } from "@mantine/core"
 import Layout from "src/core/layouts/Layout"
 import getUserForProfile from "src/features/users/queries/getUserForProfile"
-import { useCurrentUser } from "src/features/users/hooks/useCurrentUser"
 import { useDisclosure } from "@mantine/hooks"
 import { EditProfilePageModal } from "./EditProfilePageModal"
 
@@ -14,16 +13,15 @@ type ProfilePageProps = {
     username: string
     bio: string
     name: string
+    isOwner: boolean
   }
   userNotFound: boolean
 }
 
-export const ProfilePage: BlitzPage<ProfilePageProps> = (props) => {
+export const ProfilePage: BlitzPage<ProfilePageProps> = ({ user, userNotFound }) => {
   const [opened, { open, close }] = useDisclosure(false)
-  const currentUser = useCurrentUser()
-  const isOwner = currentUser?.id === props.user?.id
 
-  if (props.userNotFound) {
+  if (userNotFound) {
     return (
       <Layout>
         <Flex
@@ -46,13 +44,13 @@ export const ProfilePage: BlitzPage<ProfilePageProps> = (props) => {
   return (
     <>
       <Layout>
-        <EditProfilePageModal user={props.user} opened={opened} close={close} />
+        <EditProfilePageModal user={user} opened={opened} close={close} />
         <Stack>
-          {isOwner && <Button onClick={open}>Edit your profile</Button>}
-          {props.user && (
+          {user?.isOwner && <Button onClick={open}>Edit your profile</Button>}
+          {user && (
             <>
-              <Text>hello {props.user.username}</Text>
-              <Text>{props.user.bio}</Text>
+              <Text>hello {user.username}</Text>
+              <Text>{user.bio}</Text>
             </>
           )}
         </Stack>
@@ -68,6 +66,8 @@ export const ProfilePage: BlitzPage<ProfilePageProps> = (props) => {
 // getquery is used for client-side RPC calls
 export async function getServerSideProps(context) {
   const username = context.query.username as string
+  // could also use gssp from blitzjs/auth
+  const session = await getSession(context.req, context.res)
 
   try {
     const user = await invoke(getUserForProfile, { username })
@@ -81,11 +81,14 @@ export async function getServerSideProps(context) {
       }
     }
 
+    // Determine if the current user is the owner
+    const isOwner = session.userId === user.id
+
     // The object returned by getServerSideProps
     // is what gets passed to the page component as its props.
     return {
       props: {
-        user,
+        user: { ...user, isOwner },
         userNotFound: false,
       },
     }

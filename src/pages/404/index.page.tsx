@@ -1,21 +1,30 @@
 import Head from "next/head"
-import { ErrorComponent } from "@blitzjs/next"
+import { ErrorComponent, Routes } from "@blitzjs/next"
 import Layout from "src/core/layouts/Layout"
-import { Flex } from "@mantine/core"
+import { Flex, Text, Button, Title } from "@mantine/core"
+import { useRouter } from "next/router"
 
 export default function Page404() {
-  const statusCode = 404
-  const title = "This page could not be found"
+  const router = useRouter()
+
   return (
     <>
-      <Head>
-        <title>
-          {statusCode}: {title}
-        </title>
-      </Head>
       <Layout>
-        <Flex justify="center" align="center" style={{ height: "100vh", width: "100vw" }}>
-          <ErrorComponent statusCode={statusCode} title={title} />
+        <Flex
+          direction="column"
+          justify="center"
+          align="center"
+          style={{ height: "70vh", width: "100vw", textAlign: "center" }}
+        >
+          <Title size="xl" mt="md">
+            Oops! The page you are looking for does not exist.
+          </Title>
+          <Text size="md" color="dimmed" mt="sm">
+            It might have been moved or deleted.
+          </Text>
+          <Button mt="lg" onClick={() => router.push(Routes.Home())} variant="light">
+            Go to Homepage
+          </Button>
         </Flex>
       </Layout>
     </>
