@@ -2,7 +2,7 @@ import Head from "next/head"
 import React from "react"
 import { Routes } from "@blitzjs/next"
 import { Suspense } from "react"
-import { Group, Flex, Text, Anchor, Modal, Badge } from "@mantine/core"
+import { Group, Flex, Text, Anchor, Modal, Badge, Button } from "@mantine/core"
 import { AppShell } from "@mantine/core"
 import Link from "next/link"
 import { useCurrentUser } from "src/features/users/hooks/useCurrentUser"
@@ -19,11 +19,14 @@ import { IconSearch } from "@tabler/icons-react"
 import { spotlight } from "@mantine/spotlight"
 import { useMediaQueries } from "src/styles/responsive/MediaQueryContext"
 import { isThisYear } from "date-fns"
+import { useRouter } from "next/router"
 
 const Layout: React.FC<{ title?: string; children?: React.ReactNode }> = ({ title, children }) => {
-  // const thisYear = new Date().getFullYear()
   const user = useCurrentUser()
   const { isMobile } = useMediaQueries()
+  const router = useRouter()
+
+  const isLoginPage = router.pathname === Routes.LoginPage().pathname
 
   return (
     <>
@@ -60,7 +63,7 @@ const Layout: React.FC<{ title?: string; children?: React.ReactNode }> = ({ titl
             artifo
           </Anchor>
           <ImpersonatingUserNotice />
-          {user && (
+          {user ? (
             <Group>
               <IconSearch
                 color="grey"
@@ -93,6 +96,14 @@ const Layout: React.FC<{ title?: string; children?: React.ReactNode }> = ({ titl
                 Pro
               </Badge>
             </Group>
+          ) : (
+            !isLoginPage && (
+              <Group>
+                <Button component={Link} href={Routes.LoginPage()} variant="filled" size="xs">
+                  Login
+                </Button>
+              </Group>
+            )
           )}
         </AppShell.Header>
 
