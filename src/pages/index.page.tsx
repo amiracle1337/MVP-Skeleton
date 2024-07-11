@@ -5,7 +5,7 @@ import { useCurrentUser } from "src/features/users/hooks/useCurrentUser"
 const Home: BlitzPage = () => {
   const currentUser = useCurrentUser()
 
-  return <Layout title="Home"> hello world</Layout>
+  return <Layout title="Home">landingpage</Layout>
 }
 
 export default Home
