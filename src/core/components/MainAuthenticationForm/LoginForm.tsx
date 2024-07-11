@@ -49,7 +49,7 @@ export const LoginForm: React.FC<{
           <TextInput
             required
             label="Email"
-            placeholder="hello@truffle.ai"
+            placeholder="elon@tesla.com"
             {...form.getInputProps("email")}
             radius="md"
           />
