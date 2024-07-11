@@ -1,5 +1,5 @@
 import { useMutation } from "@blitzjs/rpc"
-import { Modal } from "@mantine/core"
+import { Loader, Modal } from "@mantine/core"
 import { useForm, zodResolver } from "@mantine/form"
 import updateProfile from "src/features/users/mutations/updateProfile"
 import { UpdateProfileInput, UpdateProfileInputType } from "src/features/users/schemas"
@@ -7,6 +7,7 @@ import { useRouter } from "next/router"
 import { EditProfileForm } from "src/features/users/forms/EditProfileForm"
 import { notifications } from "@mantine/notifications"
 import { Routes } from "@blitzjs/next"
+import { Suspense } from "react"
 
 const EditProfilePageModalInside = ({ user, close }) => {
   const router = useRouter()
@@ -47,7 +48,11 @@ const EditProfilePageModalInside = ({ user, close }) => {
 export const EditProfilePageModal = ({ user, opened, close }) => {
   return (
     <Modal keepMounted={false} opened={opened} onClose={close} title="Edit Profile">
-      {user && <EditProfilePageModalInside user={user} close={close} />}
+      {user && (
+        <Suspense fallback={<Loader />}>
+          <EditProfilePageModalInside user={user} close={close} />
+        </Suspense>
+      )}
     </Modal>
   )
 }
