@@ -26,7 +26,9 @@ const Layout: React.FC<{ title?: string; children?: React.ReactNode }> = ({ titl
   const { isMobile } = useMediaQueries()
   const router = useRouter()
 
-  const isLoginPage = router.pathname === Routes.LoginPage().pathname
+  const isAuthPage = [Routes.LoginPage().pathname, Routes.SignupPage().pathname].includes(
+    router.pathname
+  )
 
   return (
     <>
@@ -97,7 +99,7 @@ const Layout: React.FC<{ title?: string; children?: React.ReactNode }> = ({ titl
               </Badge>
             </Group>
           ) : (
-            !isLoginPage && (
+            !isAuthPage && (
               <Group>
                 <Button component={Link} href={Routes.LoginPage()} variant="filled" size="xs">
                   Login
