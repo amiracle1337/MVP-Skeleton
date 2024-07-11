@@ -10,14 +10,14 @@ import { Routes } from "@blitzjs/next"
 
 const EditProfilePageModalInside = ({ user, close }) => {
   const router = useRouter()
-  const [$updateProfile, { isLoading }] = useMutation(updateProfile, {})
+  const [$updateProfile, { isLoading }] = useMutation(updateProfile)
 
   const form = useForm<UpdateProfileInputType>({
     initialValues: {
-      name: user?.name || "",
-      username: user?.username || "",
-      bio: user?.bio || "",
-      avatarImageKey: user?.avatarImageKey || "",
+      name: user.name || "",
+      username: user.username || "",
+      bio: user.bio || "",
+      avatarImageKey: user.avatarImageKey || "",
     },
     validate: zodResolver(UpdateProfileInput),
     validateInputOnBlur: true,
