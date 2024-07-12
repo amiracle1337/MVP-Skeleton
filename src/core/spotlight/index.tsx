@@ -56,9 +56,6 @@ export function SpotlightWrapper() {
 
   return (
     <>
-      <Button color="red" onClick={spotlight.open}>
-        Open spotlight
-      </Button>
       <Spotlight
         actions={actions}
         nothingFound="Nothing found..."
