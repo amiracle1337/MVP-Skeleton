@@ -45,7 +45,7 @@ export const ProfilePage: BlitzPage<ProfilePageProps> = ({ user, userNotFound })
     <>
       <Layout>
         <EditProfilePageModal user={user} opened={opened} close={close} />
-        <Stack>
+        {/* <Stack>
           {user?.isOwner && <Button onClick={open}>Edit your profile</Button>}
           {user && (
             <>
@@ -53,7 +53,7 @@ export const ProfilePage: BlitzPage<ProfilePageProps> = ({ user, userNotFound })
               <Text>{user.bio}</Text>
             </>
           )}
-        </Stack>
+        </Stack> */}
       </Layout>
     </>
   )

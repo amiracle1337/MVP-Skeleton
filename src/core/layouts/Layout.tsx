@@ -26,9 +26,11 @@ const Layout: React.FC<{ title?: string; children?: React.ReactNode }> = ({ titl
   const { isMobile } = useMediaQueries()
   const router = useRouter()
 
-  const isAuthPage = [Routes.LoginPage().pathname, Routes.SignupPage().pathname].includes(
-    router.pathname
-  )
+  const isAuthPage = [
+    Routes.LoginPage().pathname,
+    Routes.RequestInvitePage().pathname,
+    Routes.SignupPage().pathname,
+  ].includes(router.pathname)
 
   return (
     <>
@@ -76,15 +78,9 @@ const Layout: React.FC<{ title?: string; children?: React.ReactNode }> = ({ titl
               <UserHeaderMenu />
               <Group>
                 {/* if user is on mobile, dont show username */}
-                {!isMobile && <Text c="gray.7">{user.username}</Text>}
+                {!isMobile && user.username && <Text c="gray.7">{user.username}</Text>}
                 <UserProfileProgress />
               </Group>
-              {!user.username && (
-                <Link href={Routes.EditProfilePage()}>
-                  <Text c="gray.7">{user.name}</Text>{" "}
-                </Link>
-              )}
-
               <Badge
                 color="red"
                 onClick={() => {
