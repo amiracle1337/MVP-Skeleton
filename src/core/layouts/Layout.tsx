@@ -110,7 +110,8 @@ const Layout: React.FC<{ title?: string; children?: React.ReactNode }> = ({ titl
             <Suspense fallback={<FullPageLoader />}>
               <Group>
                 {children}
-                {user?.username && (
+                {/* onboarding model not showing when onboarded false in db */}
+                {/* {user?.username && (
                   <Modal
                     size="xl"
                     closeOnClickOutside={false}
@@ -122,7 +123,7 @@ const Layout: React.FC<{ title?: string; children?: React.ReactNode }> = ({ titl
                   >
                     <OnboardingWizard />
                   </Modal>
-                )}
+                )} */}
               </Group>
             </Suspense>
           </ErrorBoundary>
