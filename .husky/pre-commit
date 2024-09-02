@@ -1,4 +1,8 @@
 #!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
+export PATH=$PATH:/opt/homebrew/bin
 
 npx pretty-quick --staged
+npx lint-staged
+		
+
