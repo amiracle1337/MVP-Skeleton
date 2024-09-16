@@ -4,7 +4,7 @@ I built a web app skeleton so that whenever I had a problem that I wanted to sol
 
 => **[SEE LIVE DEMO HERE](https://youtu.be/1VUZZ8K5zoo)** <=
 
-![Demo of MVP-skeleton](https://github.com/amiracle1337/MVP-Skeleton/blob/140d406d29eb3186a302d0e83a779289112e3e6f/public/demo%20of%20mvp-skeleton.gif)
+[![Demo of MVP-skeleton](https://github.com/amiracle1337/MVP-Skeleton/blob/140d406d29eb3186a302d0e83a779289112e3e6f/public/demo%20of%20mvp-skeleton.gif)](https://youtu.be/1VUZZ8K5zoo)
 
 ## Background
 I was tired of copy & pasting boiler plate code, and redoing basic functionality that I knew I needed across all my web apps I would build. This skeleton includes proper authentication with forgot and set new password, admin dashboard for full user control, invite-only & waitlist functionaity (perfect for when product is in beta), basic email flows for new users, spotlight search across the entire app, user profile, and much more!
